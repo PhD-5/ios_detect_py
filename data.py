@@ -16,6 +16,9 @@ metadata = {}
 # the shared libs of the app which is choosed
 shared_lib = []
 
+# check the protection
+# {u'arm64': {'Encrypted': True, 'Stack Canaries': True, 'ARC': True, 'PIE': True}, u'armv7': {'Encrypted': True, 'Stack Canaries': True, 'ARC': True, 'PIE': True}}
+protection_check_lables = dict()
 
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'

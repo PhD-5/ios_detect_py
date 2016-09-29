@@ -48,23 +48,12 @@ class protect_check():
     def check(self):
         self.client = data.client
         for arch in data.metadata['architectures']:
+            data.protection_check_lables[arch] = dict()
             self.tests = collections.defaultdict(dict)
             # Checks
             self._check_cryptid()
             self._check_pie()
             self._check_arc()
             self._check_stack_canaries()
-            # Print Output
-            # self.printer.notify(arch)
-            # for name, val in self.tests.items():
-            #     if val:
-            #         self.printer.notify('\t{:>20}: {}{:<30}{}'.format(name, Colors.G, 'OK', Colors.N))
-            #     else:
-            #         self.printer.error('\t{:>20}: {}{:<30}{}'.format(name, Colors.R, 'NO', Colors.N))
-
-            print arch
             for name, val in self.tests.items():
-                if val:
-                    print name, "OK"
-                else:
-                    print name, "NO"
+                data.protection_check_lables[arch][name] = val
