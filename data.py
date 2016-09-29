@@ -1,9 +1,22 @@
 import os
 import sys
 
+# this is the main ssh connection
+client = None
+
+# all installed app info
 app_dict = {}
+
+# app package name
+app_bundleID = ''
+
+# the metadata of the app which is choosed
 metadata = {}
+
+# the shared libs of the app which is choosed
 shared_lib = []
+
+
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')
