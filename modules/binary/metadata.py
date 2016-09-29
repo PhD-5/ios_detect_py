@@ -6,21 +6,20 @@ import plistlib
 
 
 class Metadata():
-    def __init__(self, client, app_name):
-        self.client = client
-        self.app = app_name
 
     def get_metadata(self):
-            """Retrieve metadata of the target app."""
-            # self._app = app_name
-            # if self._device._applist is None:
-            #     self._device._list_apps()
-            return self._retrieve_metadata()
+        self.client = data.client
+        self.app = data.app_bundleID
+        """Retrieve metadata of the target app."""
+        # self._app = app_name
+        # if self._device._applist is None:
+        #     self._device._list_apps()
+        return self._retrieve_metadata()
 
     def _retrieve_metadata(self):
         """Parse MobileInstallation.plist and the app's local Info.plist, and extract metadata."""
         # Content of the MobileInstallation plist
-        client = self.client
+        # client = self.client
         app_name = self.app
         plist_global = data.app_dict[app_name]
         uuid = plist_global['BundleContainer'].rsplit('/', 1)[-1]
@@ -116,6 +115,7 @@ class Metadata():
         cmd = '{lipo} -info {binary}'.format(lipo=data.DEVICE_TOOLS['LIPO'], binary=binary)
         out = Utils.cmd_block(self.client, cmd)
         # Parse output
-        msg = out[0].strip()
+        # msg = out[0].strip()
+        msg = out.strip()
         res = msg.rsplit(': ')[-1].split(' ')
         return res

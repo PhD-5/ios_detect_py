@@ -1,4 +1,4 @@
-import Utils.utils
+from Utils.utils import Utils
 import data
 import simplejson
 
@@ -22,7 +22,8 @@ def getInstalledAppList():
         app_options[i] = app
         i = i + 1
 
-    data.app_dict = app_options
+    # data.app_dict = app_options
+    data.app_dict = app_dict
 
     app_id = int(raw_input("plz choose which app to analyse: "))
     print 'you have choose [', app_id, ']', app_options[app_id]
