@@ -3,6 +3,8 @@ from util import cmd_block
 from util import sftp_get
 import simplejson
 import re
+import data
+from metadata import Metadata
 
 # ------ssh parameters------
 ip       = "192.168.3.248"
@@ -14,8 +16,8 @@ session_timeout = 60
 #------set up ssh client------
 client = paramiko.SSHClient()
 client.load_system_host_keys()
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
-client.connect(ip,port,username=username,password=password)
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect(ip, port, username=username, password=password)
 
 
 #------get install app plist and analyse------
@@ -66,12 +68,18 @@ if clutch_app_id != -1 :
     if not clutch_success:
         print 'clutch failed'
         exit(-1)
+    # for app_n in app_dict:
+    #     print app_dict[app_n]
 
 else:
     print 'the application is not encrypted'
 
 
-
+# data.app_dict = app_dict
+# app_metadata = Metadata(client, app_options[app_id])
+# data = app_metadata.get_metadata()
+# for key in data:
+#     print key, data[key]
 
 
 client.close()
