@@ -20,6 +20,9 @@ shared_lib = []
 # {u'arm64': {'Encrypted': True, 'Stack Canaries': True, 'ARC': True, 'PIE': True}, u'armv7': {'Encrypted': True, 'Stack Canaries': True, 'ARC': True, 'PIE': True}}
 protection_check_lables = dict()
 
+# static analyse file (xxx.ipa or mach-o)
+static_file_path = ''
+
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')

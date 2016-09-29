@@ -2,6 +2,7 @@ from Utils.utils import Utils
 import data
 import re
 import ssh
+import os
 
 
 #------get clutch -i result-----
@@ -30,10 +31,14 @@ def use_clutch():
             if m:
                 clutch_success = True
                 print m.group(1)
-                Utils.sftp_get(ssh.ip, ssh.port, ssh.username, ssh.password, m.group(1), './temp/decrypted.ipa')
+                Utils.sftp_get(ssh.ip, ssh.port, ssh.username, ssh.password, m.group(1), './temp/'+ data.app_bundleID+'.ipa')
+                data.static_file_path = os.path.abspath('.')+'/temp/' + data.app_bundleID+'.ipa'
         if not clutch_success:
             print 'clutch failed'
             exit(-1)
 
     else:
         print 'the application is not encrypted'
+        print data.metadata['binary_path']
+        Utils.sftp_get(ssh.ip,ssh.port,ssh.username,ssh.password,data.metadata['binary_path'],'./temp/'+data.metadata['binary_name'])
+        data.static_file_path = os.path.abspath('.')+'/temp/'+ data.metadata['binary_name']
