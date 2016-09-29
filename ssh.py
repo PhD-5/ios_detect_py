@@ -1,9 +1,13 @@
-import paramiko
-from Utils.utils import Utils
-from modules.metedata import Metadata
-import simplejson
 import re
+
+import paramiko
+import simplejson
+
+from Utils.utils import Utils
+from modules.binary.metadata import Metadata
+from modules.binary.shared_library import Shared_library
 import data
+
 
 
 # ------ssh parameters------
@@ -75,11 +79,12 @@ else:
     print 'the application is not encrypted'
 
 
-# data.app_dict = app_dict
-# app_metadata = Metadata(client, app_options[app_id])
-# data = app_metadata.get_metadata()
-# for key in data:
-#     print key, data[key]
+data.app_dict = app_dict
 
+Metadata(client, app_options[app_id]).get_metadata()
+Shared_library(client).get()
+
+print data.metadata
+print data.shared_lib
 
 client.close()

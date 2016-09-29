@@ -2,6 +2,8 @@ import os
 import sys
 
 app_dict = {}
+metadata = {}
+shared_lib = []
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')

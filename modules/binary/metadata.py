@@ -74,7 +74,11 @@ class Metadata():
             'url_handlers': url_handlers,
             'architectures': architectures,
         }
-        return metadata
+        try:
+            data.metadata = metadata
+            return True
+        except AttributeError:
+            return False
 
 
     def parse_plist(self, plist):
