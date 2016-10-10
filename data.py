@@ -23,6 +23,8 @@ protection_check_lables = dict()
 # static analyse file (xxx.ipa or mach-o)
 static_file_path = ''
 
+strings = []
+
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')
