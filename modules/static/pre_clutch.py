@@ -40,7 +40,7 @@ def use_clutch():
                 print m.group(1)
                 # Utils.sftp_get(ssh.ip, ssh.port, ssh.username, ssh.password, m.group(1), './temp/'+ data.app_bundleID+'.ipa')
                 # cmd = '{bin} -o {src} -d {des}'.format(bin=data.DEVICE_TOOLS['UNZIP'], src=m.group(1), des='/tmp/decrypted/')
-                cmd = '{bin} -o *.ipa -d {des}'.format(bin=data.DEVICE_TOOLS['UNZIP'], des='/tmp/decrypted/')
+                cmd = '{bin} -o /private/var/mobile/Documents/Dumped/*.ipa -d {des}'.format(bin=data.DEVICE_TOOLS['UNZIP'], des='/tmp/decrypted/')
                 out = Utils.cmd_block(client, cmd)
                 src = '/tmp/decrypted/Payload/' + data.metadata["binary_name"] + '.app/' + data.metadata["binary_name"]
                 # des = os.path.abspath('.')+'/temp/binary/' + data.metadata["binary_name"]

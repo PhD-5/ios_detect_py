@@ -24,6 +24,7 @@ protection_check_lables = dict()
 static_file_path = ''
 
 strings = []
+url = []
 
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
