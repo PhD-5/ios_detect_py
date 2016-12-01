@@ -1,6 +1,7 @@
 import os
 import re
 import paramiko
+import data
 
 # ======================================================================================================================
 # GENERAL UTILS
@@ -80,4 +81,37 @@ class Utils(object):
         t.connect(username=username, password=password)
         sftp = paramiko.SFTPClient.from_transport(t)
         sftp.get(remote_file, local_path)
-        t.close()
+
+    # @staticmethod
+    # def sftp_get_files(ip, port, username, password, remote_files, local_dir):
+    #     t = paramiko.Transport(ip, port)
+    #     t.connect(username=username, password=password)
+    #     sftp = paramiko.SFTPClient.from_transport(t)
+    #     for file in remote_files:
+    #         sftp.get(remote_file, local_path)
+
+    @staticmethod
+    def get_dataprotection(filelist):
+        """Get the Data Protection of the files contained in 'filelist'."""
+        computed = []
+        for el in filelist:
+            if el:
+                fname = Utils.escape_path(el.strip())
+                dp = '{bin} -f {fname}'.format(bin=data.DEVICE_TOOLS['FILEDP'], fname=fname)
+                dp += ' 2>&1'                                            # needed because by default FileDP prints to STDERR
+                res = Utils.cmd_block(data.client, dp).split("\n")
+                # Parse class
+                cl = res[0].rsplit(None, 1)[-1]
+                computed.append((fname, cl))
+        return computed
+
+    @staticmethod
+    def openurl(url):
+        cmd = '{uiopen} {u}'.format(uiopen=data.DEVICE_TOOLS['UIOPEN'], u=url)
+        Utils.cmd_block(data.client, cmd)
+
+    @staticmethod
+    def kill_by_name(bin_name):
+        cmd = 'killall -9 {}'.format(bin_name)
+        Utils.cmd_block(data.client, cmd)
+

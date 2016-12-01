@@ -16,7 +16,9 @@ class String():
                     continue
                 if o.netloc:
                     data.url.append(s)
-        # for index, url in enumerate(data.url):
-        #     print index, url
+                    # values = (data.metadata["uuid"], s)
+                    # data.db.execute('INSERT INTO strings VALUES (?, ?)', values)
+        for index, url in enumerate(data.url):
+            print index, url
 
 

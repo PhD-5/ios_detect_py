@@ -1,4 +1,5 @@
 import os
+from Utils.database import DBServer
 from Utils.utils import Utils
 import data
 import plistlib
@@ -74,6 +75,26 @@ class Metadata():
             'architectures': architectures,
         }
         try:
+            values = (
+                uuid,
+                name,
+                app_version,
+                bundle_id,
+                bundle_directory,
+                data_directory,
+                binary_directory,
+                binary_path,
+                binary_name,
+                entitlements,
+                platform_version,
+                sdk_version,
+                minimum_os,
+                url_handlers,
+                architectures
+            )
+            # print values
+            # data.db.execute("INSERT INTO metadata VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
+
             data.metadata = metadata
             return True
         except AttributeError:

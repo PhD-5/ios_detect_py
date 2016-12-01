@@ -1,13 +1,15 @@
-import shutil
+import re
+import os
+
 from Utils.utils import Utils
 import data
-import re
-import ssh
-import os
-import zipfile
+
 
 
 #------get clutch -i result-----
+from temp import ssh
+
+
 def use_clutch():
     client = data.client
     clutch_i = Utils.cmd_block(client, 'clutch -i')
@@ -59,7 +61,7 @@ def use_clutch():
     else:
         print 'the application is not encrypted'
         print data.metadata['binary_path']
-        Utils.sftp_get(ssh.ip,ssh.port,ssh.username,ssh.password,data.metadata['binary_path'],'./temp/binary/'+data.metadata['binary_name'])
+        Utils.sftp_get(ssh.ip, ssh.port, ssh.username, ssh.password,data.metadata['binary_path'],'./temp/binary/'+data.metadata['binary_name'])
         data.static_file_path = os.path.abspath('.')+'/temp/binary/' + data.metadata['binary_name']
         cmd = 'strings {bin_file}'.format(bin_file=data.metadata['binary_path'])
         out = Utils.cmd_block(client, cmd).split('\n')
