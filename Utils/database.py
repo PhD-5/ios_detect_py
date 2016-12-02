@@ -1,7 +1,7 @@
 import data
 import sqlite3
 class DBServer():
-    def setup(self):
+    def __init__(self):
         try:
             con = sqlite3.connect("ios.db")
             c = con.cursor()

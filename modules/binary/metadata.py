@@ -5,7 +5,6 @@ import data
 import plistlib
 
 
-
 class Metadata():
 
     def get_metadata(self):

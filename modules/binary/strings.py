@@ -6,19 +6,23 @@ import data
 class String():
     def __init__(self):
         self.strings = data.strings
-        data.url = []
+        print "----------------strings--------------------"
+        for s in self.strings:
+            print s
 
     def get_url(self):
+        url = []
         for s in self.strings:
             o = urlparse(s)
             if o.scheme == 'http' or o.scheme == 'https':
                 if re.search('%@', o.netloc):
                     continue
                 if o.netloc:
-                    data.url.append(s)
+                    url.append(s)
                     # values = (data.metadata["uuid"], s)
                     # data.db.execute('INSERT INTO strings VALUES (?, ?)', values)
-        for index, url in enumerate(data.url):
-            print index, url
+        print("----------------get_url---------------------")
+        for u in url:
+            print u
 
 

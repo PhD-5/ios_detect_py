@@ -2,8 +2,8 @@ from openvas_lib import VulnscanManager, VulnscanException
 from openvas_lib import report_parser
 
 from Utils.utils import Utils
+import config
 import data
-from temp import config
 
 
 class openvas():

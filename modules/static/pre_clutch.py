@@ -1,13 +1,14 @@
 import re
 import os
 
+from Utils import ssh
 from Utils.utils import Utils
 import data
 
 
 
+
 #------get clutch -i result-----
-from temp import ssh
 
 
 def use_clutch():

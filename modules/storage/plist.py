@@ -28,5 +28,6 @@ class Plist():
         # Add data protection class
         retrieved_files = Utils.get_dataprotection(out)
 
+        print "-------------------plists----------------------"
         for file_lable in retrieved_files:
             print file_lable[0], "protection:", file_lable[1]
