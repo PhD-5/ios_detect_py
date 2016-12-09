@@ -1,8 +1,13 @@
+#coding=utf-8
 import os
 import re
 import paramiko
 import data
 import simplejson
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 # ======================================================================================================================
 # GENERAL UTILS
@@ -65,6 +70,9 @@ class Utils():
         """Make the string regex-ready by escaping it."""
         return re.escape(str)
 
+    # ==================================================================================================================
+    #  SSH UTILS
+    # ==================================================================================================================
     @staticmethod
     def cmd_block(client, cmd):
         print 'remote shell:', cmd
@@ -80,8 +88,9 @@ class Utils():
         # -----set up sftp to get decrypted ipa file-----
         t = paramiko.Transport(ip, port)
         t.connect(username=username, password=password)
+        print '{} -> {}'.format(remote_file, local_path)
         sftp = paramiko.SFTPClient.from_transport(t)
-        sftp.get(remote_file, local_path)
+        sftp.get(remote_file,local_path)
 
     # @staticmethod
     # def sftp_get_files(ip, port, username, password, remote_files, local_dir):

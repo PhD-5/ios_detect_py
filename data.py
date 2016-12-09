@@ -27,6 +27,7 @@ protection_check_lables = dict()
 # static analyse file (xxx.ipa or mach-o)
 static_file_path = ''
 
+#strings in mach-o binary file
 strings = []
 
 
