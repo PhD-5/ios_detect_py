@@ -18,3 +18,6 @@ server_user = "top"
 server_password = "ubuntu"
 
 ssh_port = 22
+
+socket_ip = '172.20.17.3'
+socket_port = 9002

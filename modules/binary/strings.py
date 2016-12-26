@@ -19,8 +19,9 @@ class String():
             # data.strings = Utils.cmd_block(data.client, cmd_strings).split('\n')
         self.strings = data.strings
         print "----------------strings--------------------"
-        for s in self.strings:
-            print s
+        print "strings count:",len(self.strings)
+        # for s in self.strings:
+        #     print s
 
     def get_url(self):
         url = []
@@ -34,7 +35,8 @@ class String():
                     # values = (data.metadata["uuid"], s)
                     # data.db.execute('INSERT INTO strings VALUES (?, ?)', values)
         print("----------------get_url---------------------")
-        for u in url:
-            print u
+        print "url count:", len(url)
+        # for u in url:
+        #     print u
 
 
