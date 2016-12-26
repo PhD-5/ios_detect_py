@@ -21,10 +21,10 @@ class SocketServerThread(threading.Thread):
             input_data = conn.recv(2048)
             input_data = input_data[0:-1]
             print input_data
-            self.parse_json(app_info,input_data)
-            if data == 'DONE':
+            if input_data == 'DONE':
                 print 'need close'
                 break
+            self.parse_json(app_info,input_data)
         conn.close()
 
 
