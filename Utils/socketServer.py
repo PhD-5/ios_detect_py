@@ -22,7 +22,9 @@ class SocketServerThread(threading.Thread):
             input_data = input_data[0:-1]
             print input_data
             if input_data == 'DONE':
-                print 'need close'
+                print 'socket need close...'
+                print 'start analyse dynamic info...'
+                self.parse_dynamic_info(app_info)
                 break
             self.parse_json(app_info,input_data)
         conn.close()
@@ -36,18 +38,18 @@ class SocketServerThread(threading.Thread):
                 type = json_dict['type']
                 if(type=='input'):
                     app_info.user_input.append(json_dict['msg'])
-                elif (type == 'Traffic'):
-                    app_info.traffic_json_list.append(json_dict['msg'])
-                elif(type=='MITM'):
+                elif (type == 'MITM'):
                     app_info.mitm_list.append(json_dict['msg'])
+                elif (type == 'Traffic'):
+                    app_info.traffic_json_list.append(json_dict)
                 elif (type == 'CCCrypt'):
-                    app_info.cccrtpy_json_list.append(json_dict['msg'])
+                    app_info.cccrtpy_json_list.append(json_dict)
                 elif (type == 'KeyChain'):
-                    app_info.keychain_json_list.append(json_dict['msg'])
+                    app_info.keychain_json_list.append(json_dict)
                 elif (type == 'NSUserDefaults'):
-                    app_info.userdefault_json_list.append(json_dict['msg'])
+                    app_info.userdefault_json_list.append(json_dict)
                 elif (type == 'Plist'):
-                    app_info.plist_json_list.append(json_dict['msg'])
+                    app_info.plist_json_list.append(json_dict)
                 elif (type == 'URLScheme'):
                     app_info.urlscheme_list.append(json_dict['msg'])
         except BaseException:
@@ -61,3 +63,33 @@ class SocketServerThread(threading.Thread):
         print "NSUserDefault:", len(app_info.userdefault_json_list)
         print "Plist:        ", len(app_info.plist_json_list)
         print "URLScheme:    ", len(app_info.urlscheme_list)
+
+
+    def parse_dynamic_info(self,app_info):
+        user_input = app_info.user_input
+        for item in app_info.traffic_json_list :
+            self.check_input(item['msg']['url'],user_input)
+            if (item['msg'].has_key('body')):
+                self.check_input(item['msg']['body'],user_input)
+
+        for item in app_info.keychain_json_list:
+            if(item['msg'].has_key('attributes')):
+                value = item['msg']['attributes']['kSecValueData']
+            if(item['msg'].has_key('attributesToUpdate')):
+                value = item['msg']['attributesToUpdate']['kSecValueData']
+            self.check_input(value,user_input)
+
+        for item in app_info.plist_json_list:
+            value = item['msg']['content']
+            self.check_input(value,user_input)
+
+        for item in app_info.userdefault_json_list:
+            value = item['msg']['content']
+            self.check_input(value,user_input)
+
+
+    def check_input(self,str,user_input):
+        for each_input in user_input:
+            if(each_input in str):
+                return True
+        return False
