@@ -70,22 +70,29 @@ class SocketServerThread(threading.Thread):
         for item in app_info.traffic_json_list :
             self.check_input(item['msg']['url'],user_input)
             if (item['msg'].has_key('body')):
-                self.check_input(item['msg']['body'],user_input)
+                if(self.check_input(item['msg']['body'],user_input)):
+                    app_info.sensitive_json['traffic'].append(item)
+
 
         for item in app_info.keychain_json_list:
             if(item['msg'].has_key('attributes')):
                 value = item['msg']['attributes']['kSecValueData']
             if(item['msg'].has_key('attributesToUpdate')):
                 value = item['msg']['attributesToUpdate']['kSecValueData']
-            self.check_input(value,user_input)
+            if(self.check_input(value,user_input)):
+                app_info.sensitive_json['keychain'].append(item)
 
         for item in app_info.plist_json_list:
             value = item['msg']['content']
-            self.check_input(value,user_input)
+            if(self.check_input(value,user_input)):
+                app_info.sensitive_json['plist'].append(item)
 
         for item in app_info.userdefault_json_list:
             value = item['msg']['content']
-            self.check_input(value,user_input)
+            if(self.check_input(value,user_input)):
+                app_info.sensitive_json['nsuserdefaults'].append(item)
+
+        print app_info.sensitive_json
 
 
     def check_input(self,str,user_input):
