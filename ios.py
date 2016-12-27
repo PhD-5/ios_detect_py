@@ -4,6 +4,7 @@ from modules import *
 from Utils import *
 from PreProcess import pre_clutch
 import threading
+from AppDynamicInfo import AppDynamicInfo
 
 class ios():
     def __init__(self):
@@ -22,7 +23,8 @@ class ios():
 
     def detect(self):
         # start local socket server to receive socket msg from iphone
-        t = SocketServerThread()
+        app_dynamic_info = AppDynamicInfo(data.app_bundleID)
+        t = SocketServerThread(app_dynamic_info)
         t.start()
 
         # Metadata().get_metadata()
@@ -34,11 +36,15 @@ class ios():
         # static_analyzer().do_analyse()
         # Plist().get()
         # Sql().get()
-        String().get_url()
+        # String().get_url()
         # openvas().launch()
         # openvas().parse()
 
         t.join()
+
+        # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
+        fuzzer = url_scheme_fuzzer(app_dynamic_info)
+        fuzzer.fuzz()
 
     def clean(self):
         data.client.close()

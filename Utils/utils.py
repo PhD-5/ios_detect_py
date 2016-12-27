@@ -117,7 +117,7 @@ class Utils():
 
     @staticmethod
     def openurl(url):
-        cmd = '{uiopen} {u}'.format(uiopen=data.DEVICE_TOOLS['UIOPEN'], u=url)
+        cmd = "{uiopen} {u}".format(uiopen=data.DEVICE_TOOLS['UIOPEN'], u=url)
         Utils.cmd_block(data.client, cmd)
 
     @staticmethod

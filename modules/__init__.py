@@ -8,3 +8,4 @@ from storage.sql import Sql
 from static.static_analyse import static_analyzer
 from server.scan import Scan
 from server.openvas import openvas
+from dynamic.url_scheme_fuzzer import url_scheme_fuzzer

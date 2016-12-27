@@ -5,11 +5,14 @@ from AppDynamicInfo import  AppDynamicInfo
 import data
 import threading
 class SocketServerThread(threading.Thread):
+    def __init__(self,app_dy_info):
+        threading.Thread.__init__(self)
+        self.app_info = app_dy_info
+
     def run(self):
         self.start_server();
 
     def start_server(self):
-        app_info = AppDynamicInfo(data.app_bundleID)
         HOST = config.socket_ip
         PORT = config.socket_port
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,9 +27,9 @@ class SocketServerThread(threading.Thread):
             if input_data == 'DONE':
                 print 'socket need close...'
                 print 'start analyse dynamic info...'
-                self.parse_dynamic_info(app_info)
+                self.parse_dynamic_info(self.app_info)
                 break
-            self.parse_json(app_info,input_data)
+            self.parse_json(self.app_info,input_data)
         conn.close()
 
 
