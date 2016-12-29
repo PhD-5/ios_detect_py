@@ -1,6 +1,9 @@
 import os
 import sys
 
+# project start time, also is the project home directory in ./temp
+start_time = ''
+
 # this is the main ssh connection
 client = None
 

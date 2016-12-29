@@ -27,6 +27,6 @@ def set_ssl_conn(ip, port, username, password):
     c = paramiko.SSHClient()
     c.load_system_host_keys()
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    c.connect(ip, port, username=username, password=password)
+    c.connect(ip, int(port), username=username, password=password)
     return c
 

@@ -1,14 +1,17 @@
+from PreProcess import build_home_dir
 import config
 import data
 from modules import *
 from Utils import *
 from PreProcess import pre_clutch
-import threading
 from AppDynamicInfo import AppDynamicInfo
 
 class ios():
     def __init__(self):
+        # get current time as root dir
+        build_home_dir.build()
 
+        # setup ssh client
         data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
         # data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
         self.db = DBServer()

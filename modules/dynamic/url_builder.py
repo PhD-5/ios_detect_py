@@ -61,28 +61,8 @@ class url_builder:
 
 
 if __name__=='__main__':
-    # app_info = AppDynamicInfo('com.test.123')
-    # app_info.urlscheme_list = ['scheme://root:password@www.myweb.com/path/to/file.html?a=1&b=2#fragment','http://test.com/file']
-    # result = url_builder(app_info).build()
-    # print result
-    factor = ['a','aa','aaa']
-    query = urlparse('https://www.myweb.com/p?A=1&B=2').query
-    query_component = query.split('&')
-    query_count = len(query_component)
-    query_result=[]
-    query_temp=[]
-    query_index=0
-    for i in range(len(query_component)):
-        query_temp = query_result
-        query_result = []
-        for j in range(len(factor)):
-            cur_query  = query_component[i]
-            cur_factor = factor[j]
-            cur_query = cur_query[0:cur_query.index('=')+1]
-            cur_query = cur_query+cur_factor
-            if len(query_temp)==0:
-                query_result.append(cur_query)
-            for each in query_temp:
-                query_result.append(each+'&'+cur_query)
+    url = 'scheme://root:password@www.myweb.com/path/to/file.html?a=1&b=2#fragment'
+    print urlparse(url)
 
-    print query_result
+    mytuple = ('http','www.a.com','a/b/c','params','a=1&b=2','fragment')
+    print urlunparse(mytuple)

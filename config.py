@@ -1,23 +1,28 @@
-# iphone_ip    = "192.168.3.248"
-# socket_port  = 9001
-# ssh_port     = 22
-# ssh_username = "root"
-# ssh_password = "alpine"
+import ConfigParser
 
-# mobile_ip = "192.168.2.4"
-mobile_ip = '172.20.17.4'
-mobile_user = "root"
-mobile_password = "alpine"
+print 'config begin...'
+config = ConfigParser.SafeConfigParser()
+config.read("./config/para_config.conf")
 
-omp_ip = "192.168.229.136"
-omp_user = "admin"
-omp_password = "admin"
+mobile_ip = config.get('mobile','mobile_ip')
+mobile_user = config.get('mobile','mobile_user')
+mobile_password = config.get('mobile','mobile_password')
 
-server_ip = "192.168.229.136"
-server_user = "top"
-server_password = "ubuntu"
+omp_ip = config.get('omp','omp_ip')
+omp_user = config.get('omp','omp_ip')
+omp_password = config.get('omp','omp_ip')
 
-ssh_port = 22
+server_ip = config.get('server','server_ip')
+server_user = config.get('server','server_user')
+server_password = config.get('server','server_password')
 
-socket_ip = '172.20.17.3'
-socket_port = 9002
+ssh_port = config.get('ssh','ssh_port')
+
+socket_ip = config.get('socket','socket_ip')
+socket_port = config.get('socket','socket_port')
+
+print 'config end...'
+
+class c:
+    def read_file(self):
+        ssh_port

@@ -55,7 +55,7 @@ def clutch():
                 source = '{path}/{bundle_id}/{binary}'.format(path=m.group(1),
                                                               bundle_id=data.metadata['bundle_id'],
                                                               binary=data.metadata['binary_name'])
-                des = './temp/binary/'+data.metadata["binary_name"]
+                des = ('./temp/{}/binary/').format(data.start_time)+data.metadata["binary_name"]
                 print '{} to {}'.format(str(source), des)
                 Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password, str(source), des)
 
@@ -72,8 +72,8 @@ def clutch():
     else:
         print 'the application is not encrypted'
         print data.metadata['binary_path']
-        Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password,data.metadata['binary_path'],'./temp/binary/'+data.metadata['binary_name'])
-        data.static_file_path = os.path.abspath('.')+'/temp/binary/' + data.metadata['binary_name']
+        Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password,data.metadata['binary_path'],'./temp/{}/binary/'.format(data.start_time)+data.metadata['binary_name'])
+        data.static_file_path = os.path.abspath('.')+ ('/temp/{}/binary/'.format(data.start_time)) + data.metadata['binary_name']
         # cmd = 'strings {bin_file}'.format(bin_file=data.metadata['binary_path'])
         # out = Utils.cmd_block(client, cmd).split('\n')
         # data.strings = out

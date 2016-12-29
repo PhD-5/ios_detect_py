@@ -16,7 +16,7 @@ class SocketServerThread(threading.Thread):
         HOST = config.socket_ip
         PORT = config.socket_port
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((HOST, PORT))
+        s.bind((HOST, int(PORT)))
         s.listen(1)
         while 1:
             print "accepting..."
