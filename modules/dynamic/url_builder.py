@@ -1,6 +1,6 @@
 from urlparse import urlparse,urlunparse
 import data
-import AppDynamicInfo
+import os
 
 class url_builder:
 
@@ -11,7 +11,8 @@ class url_builder:
 
     def build(self):
         # read fuzz.txt to get fuzz factors
-        fuzz_txt = open('config/fuzz.txt')
+        print os.path.abspath('.')
+        fuzz_txt = open('./config/fuzz.txt')
         lines = fuzz_txt.readlines()
         for line in lines:
             self.fuzz_factors.append(line.strip('\n'))

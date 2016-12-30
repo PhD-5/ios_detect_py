@@ -1,18 +1,19 @@
 import os
+import threading
+import data
 
-from PreProcess import pre_clutch
 
+class static_analyzer(threading.Thread):
 
-class static_analyzer():
+    def run(self):
+        self.do_analyse()
 
     def do_analyse(self):
-        # pre_clutch.use_clutch()
-
         # call the static.jar
-        # print data.static_file_path
-
         file_separator = os.path.sep
-        # os.chdir(os.path.abspath('.')+file_separator+'lib')
-        # cmd = 'java -jar ' + 'ios-vulnerability-detection_fat.jar ' + data.static_file_path
-        # print cmd
-        # os.system(cmd)
+        os.chdir(os.path.abspath('.')+file_separator+'lib')
+        print 'start thread to do static analyse...'
+        cmd = 'java -jar ' + 'ios-vulnerability-detection_fat.jar ' + data.static_file_path
+        print cmd
+        os.system(cmd)
+

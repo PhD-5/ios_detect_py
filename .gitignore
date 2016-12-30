@@ -1,3 +1,5 @@
 temp
 *.pyc
 .idea
+lib/detemp
+lib/report
