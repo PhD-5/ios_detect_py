@@ -10,10 +10,7 @@ class static_analyzer(threading.Thread):
 
     def do_analyse(self):
         # call the static.jar
-        file_separator = os.path.sep
-        os.chdir(os.path.abspath('.')+file_separator+'lib')
         print 'start thread to do static analyse...'
         cmd = 'java -jar ' + 'ios-vulnerability-detection_fat.jar ' + data.static_file_path
         print cmd
         os.system(cmd)
-

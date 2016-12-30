@@ -27,6 +27,8 @@ class ios():
 
     def detect(self):
         # start java static analyse
+        file_separator = os.path.sep
+        os.chdir(os.path.abspath('.') + file_separator + 'lib')
         t_static = static_analyzer()
         t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
