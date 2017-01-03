@@ -41,15 +41,15 @@ class SocketServerThread(threading.Thread):
                 elif (type == 'MITM'):
                     app_info.mitm_list.append(json_dict['msg'])
                 elif (type == 'Traffic'):
-                    app_info.traffic_json_list.append(json_dict)
+                    app_info.traffic_json_list.append(json_dict['msg'])
                 elif (type == 'CCCrypt'):
-                    app_info.cccrtpy_json_list.append(json_dict)
+                    app_info.cccrtpy_json_list.append(json_dict['msg'])
                 elif (type == 'KeyChain'):
-                    app_info.keychain_json_list.append(json_dict)
+                    app_info.keychain_json_list.append(json_dict['msg'])
                 elif (type == 'NSUserDefaults'):
-                    app_info.userdefault_json_list.append(json_dict)
+                    app_info.userdefault_json_list.append(json_dict['msg'])
                 elif (type == 'Plist'):
-                    app_info.plist_json_list.append(json_dict)
+                    app_info.plist_json_list.append(json_dict['msg'])
                 elif (type == 'URLScheme'):
                     app_info.urlscheme_list.append(json_dict['msg'])
         except BaseException:

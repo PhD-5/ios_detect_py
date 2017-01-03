@@ -63,17 +63,18 @@ class ios():
         t_socket.join()
 
         # detect sensitive content according to user input
-        input_json_parser = input_parser()
-        input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
+        # input_json_parser = input_parser()
+        # input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
 
         # detect Hard Code
+        String().get_strings()
         hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
         hardcode_detect.start_detect()
         print 'hardcode:',hardcode_detect.result
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
-        fuzzer = url_scheme_fuzzer(app_dynamic_info)
-        fuzzer.fuzz()
+        # fuzzer = url_scheme_fuzzer(app_dynamic_info)
+        # fuzzer.fuzz()
 
 
         # because static analyse cost long time, so join in the last

@@ -22,8 +22,10 @@ class HarCodeDetect:
 
     def init_black_list_from_dynamic(self,json_list):
         for json in json_list:
-            self.black_list.append(json['iv'])
-            self.black_list.append(json['key'])
+            if json['iv'] not in self.black_list:
+                self.black_list.append(json['iv'])
+            if json['key']not in self.black_list:
+                self.black_list.append(json['key'])
 
 
     def init_black_list_from_txt(self):
@@ -34,8 +36,9 @@ class HarCodeDetect:
             self.black_list.append(line)
 
     def start_detect(self):
-        strings = ['745198699@qq.com','admin','1','2','www.baidu.com/1/1.html']
-        for str in strings:
+        print 'the black list is: ',self.black_list
+        for str in data.strings:
+            print str
             if str in self.black_list:
                 self.result.append(str)
             self.regex_match(str)
