@@ -6,6 +6,7 @@ from Utils import *
 from PreProcess import pre_clutch
 from AppDynamicInfo import AppDynamicInfo
 import os
+from PreProcess import should_install
 
 class ios():
     def __init__(self):
@@ -17,6 +18,10 @@ class ios():
         # data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
         self.db = DBServer()
         self.db.on()
+
+        # should install ipa from local
+        should_install.ask_get_user_choose()
+
         Utils.getInstalledAppList()
         #--2016.12.09--yjb--preprocess
         Metadata().get_metadata()

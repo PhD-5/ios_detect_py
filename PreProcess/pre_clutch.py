@@ -55,7 +55,7 @@ def clutch():
                 source = '{path}/{bundle_id}/{binary}'.format(path=m.group(1),
                                                               bundle_id=data.metadata['bundle_id'],
                                                               binary=data.metadata['binary_name'])
-                des = ('./temp/{}/binary/').format(data.start_time)+data.metadata["binary_name"]
+                des = ('{}/temp/{}/binary/').format(os.path.abspath('.'),data.start_time)+data.metadata["binary_name"]
                 print '{} to {}'.format(str(source), des)
                 Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password, str(source), des)
 

@@ -1042,3 +1042,40 @@
 2016.12.30 at 11:04:12.883 [INFO]  - ready analyse idb :/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2016-12-30-11-03-49/ida/IDAPython/IDAPython.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2016-12-30-11-03-49/ida/DamnVulnerableIOSApp.i64
 2016.12.30 at 11:06:15.740 [INFO]  - start analyse rule pool [1]
 2016.12.30 at 11:06:16.022 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 10:01:18.175 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 10:01:18.254 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 10:01:18.604 [INFO]  - input is a mach-o!
+2017.01.03 at 10:01:18.917 [INFO]  - ipa已破解
+2017.01.03 at 10:01:18.918 [INFO]  - ipa已破解
+2017.01.03 at 10:01:18.933 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017-01-03-02-00-51/binary/DamnVulnerableIOSApp
+2017.01.03 at 10:01:36.843 [ERROR]  - generate idb failed
+2017.01.03 at 10:01:36.865 [ERROR]  - the path of ida may be wrong
+2017.01.03 at 10:02:29.946 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 10:02:29.949 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 10:02:30.078 [INFO]  - input is a mach-o!
+2017.01.03 at 10:02:30.292 [INFO]  - ipa已破解
+2017.01.03 at 10:02:30.294 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017-01-03-02-02-16/binary/BlockSample
+2017.01.03 at 11:03:56.019 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 11:03:56.217 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 11:03:56.687 [INFO]  - input is a mach-o!
+2017.01.03 at 11:03:57.089 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B ./temp/2017-01-03-03-02-14/binary/bearoil
+2017.01.03 at 11:04:11.407 [ERROR]  - generate idb failed
+2017.01.03 at 11:04:11.430 [ERROR]  - the path of ida may be wrong
+2017.01.03 at 11:13:41.406 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 11:13:41.422 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 11:13:41.549 [INFO]  - input is a mach-o!
+2017.01.03 at 11:13:41.662 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B ./temp/2017-01-03-03-13-12/binary/bearoil
+2017.01.03 at 11:13:49.704 [ERROR]  - generate idb failed
+2017.01.03 at 11:13:49.720 [ERROR]  - the path of ida may be wrong
+2017.01.03 at 11:14:48.347 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 11:14:48.372 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 11:14:48.517 [INFO]  - input is a mach-o!
+2017.01.03 at 11:14:48.673 [INFO]  - ipa已破解
+2017.01.03 at 11:14:48.673 [INFO]  - ipa已破解
+2017.01.03 at 11:14:48.675 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017-01-03-03-14-20/binary/bearoil
+2017.01.03 at 11:21:22.105 [INFO]  - generate idb success
+2017.01.03 at 11:21:22.136 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017-01-03-03-14-20/binary/bearoil.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida
+2017.01.03 at 11:21:22.212 [INFO]  - copy success
+2017.01.03 at 11:21:22.213 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida
+2017.01.03 at 11:21:22.216 [INFO]  - copy success
+2017.01.03 at 11:21:22.216 [INFO]  - ready analyse idb :/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida/IDAPython/IDAPython.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida/bearoil.i64

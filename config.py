@@ -21,6 +21,8 @@ ssh_port = config.get('ssh','ssh_port')
 socket_ip = config.get('socket','socket_ip')
 socket_port = config.get('socket','socket_port')
 
+respring_wait = config.get('other','respring_wait')
+
 print 'config end...'
 
 class c:
