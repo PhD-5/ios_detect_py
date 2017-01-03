@@ -1,12 +1,13 @@
 from PreProcess import build_home_dir
-import config
-import data
+from PreProcess import should_install
+from PreProcess import pre_clutch
 from modules import *
 from Utils import *
-from PreProcess import pre_clutch
 from AppDynamicInfo import AppDynamicInfo
 import os
-from PreProcess import should_install
+import config
+import data
+
 
 class ios():
     def __init__(self):
@@ -58,7 +59,17 @@ class ios():
         # openvas().launch()
         # openvas().parse()
 
+        # end of dynamic detect
         t_socket.join()
+
+        # detect sensitive content according to user input
+        input_json_parser = input_parser()
+        input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
+
+        # detect Hard Code
+        hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
+        hardcode_detect.start_detect()
+        print 'hardcode:',hardcode_detect.result
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
         fuzzer = url_scheme_fuzzer(app_dynamic_info)

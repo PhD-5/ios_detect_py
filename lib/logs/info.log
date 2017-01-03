@@ -1146,3 +1146,35 @@
 2017.01.03 at 13:54:48.877 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-54-37/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-54-37/ida/VirtualDemoForiOS.i64
 2017.01.03 at 13:54:54.182 [INFO]  - start analyse rule pool [1]
 2017.01.03 at 13:54:54.189 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 16:02:23.451 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 16:02:23.556 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 16:02:23.686 [INFO]  - input is a mach-o!
+2017.01.03 at 16:02:24.009 [INFO]  - ipa已破解
+2017.01.03 at 16:02:24.009 [INFO]  - ipa已破解
+2017.01.03 at 16:02:24.011 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_16_02_09/binary/DamnVulnerableIOSApp
+2017.01.03 at 16:02:54.731 [INFO]  - generate idb success
+2017.01.03 at 16:02:54.752 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_16_02_09/binary/DamnVulnerableIOSApp.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-02-23/ida
+2017.01.03 at 16:02:54.872 [INFO]  - copy success
+2017.01.03 at 16:02:54.873 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-02-23/ida
+2017.01.03 at 16:02:54.878 [INFO]  - copy success
+2017.01.03 at 16:02:54.878 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-02-23/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-02-23/ida/DamnVulnerableIOSApp.i64
+2017.01.03 at 16:07:25.032 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 16:07:25.246 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 16:28:02.166 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 16:28:02.705 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 16:28:02.889 [INFO]  - input is a mach-o!
+2017.01.03 at 16:28:03.053 [INFO]  - ipa已破解
+2017.01.03 at 16:28:03.053 [INFO]  - ipa已破解
+2017.01.03 at 16:28:03.055 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_16_27_52/binary/DamnVulnerableIOSApp
+2017.01.03 at 16:29:38.135 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 16:29:38.154 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 16:29:38.271 [INFO]  - input is a mach-o!
+2017.01.03 at 16:29:38.427 [INFO]  - ipa已破解
+2017.01.03 at 16:29:38.428 [INFO]  - ipa已破解
+2017.01.03 at 16:29:38.429 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_16_29_30/binary/DamnVulnerableIOSApp
+2017.01.03 at 16:30:04.172 [INFO]  - generate idb success
+2017.01.03 at 16:30:04.195 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_16_29_30/binary/DamnVulnerableIOSApp.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-29-38/ida
+2017.01.03 at 16:30:04.271 [INFO]  - copy success
+2017.01.03 at 16:30:04.272 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-29-38/ida
+2017.01.03 at 16:30:04.277 [INFO]  - copy success
+2017.01.03 at 16:30:04.278 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-29-38/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-16-29-38/ida/DamnVulnerableIOSApp.i64

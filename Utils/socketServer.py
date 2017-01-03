@@ -1,8 +1,6 @@
 import socket
 import config
 import json
-from AppDynamicInfo import  AppDynamicInfo
-import data
 import threading
 class SocketServerThread(threading.Thread):
     def __init__(self,app_dy_info):
@@ -26,13 +24,12 @@ class SocketServerThread(threading.Thread):
             print input_data
             if input_data == 'DONE':
                 print 'socket need close...'
-                print 'start analyse dynamic info...'
-                self.parse_dynamic_info(self.app_info)
+                print 'dynamic analyse is done...'
                 break
             self.parse_json(self.app_info,input_data)
         conn.close()
 
-
+    # classify and store jsons according to type
     def parse_json(self,app_info, json_str):
 
         try:
@@ -67,39 +64,3 @@ class SocketServerThread(threading.Thread):
         print "Plist:        ", len(app_info.plist_json_list)
         print "URLScheme:    ", len(app_info.urlscheme_list)
 
-
-    def parse_dynamic_info(self,app_info):
-        user_input = app_info.user_input
-        for item in app_info.traffic_json_list :
-            self.check_input(item['msg']['url'],user_input)
-            if (item['msg'].has_key('body')):
-                if(self.check_input(item['msg']['body'],user_input)):
-                    app_info.sensitive_json['traffic'].append(item)
-
-
-        for item in app_info.keychain_json_list:
-            if(item['msg'].has_key('attributes')):
-                value = item['msg']['attributes']['kSecValueData']
-            if(item['msg'].has_key('attributesToUpdate')):
-                value = item['msg']['attributesToUpdate']['kSecValueData']
-            if(self.check_input(value,user_input)):
-                app_info.sensitive_json['keychain'].append(item)
-
-        for item in app_info.plist_json_list:
-            value = item['msg']['content']
-            if(self.check_input(value,user_input)):
-                app_info.sensitive_json['plist'].append(item)
-
-        for item in app_info.userdefault_json_list:
-            value = item['msg']['content']
-            if(self.check_input(value,user_input)):
-                app_info.sensitive_json['nsuserdefaults'].append(item)
-
-        print app_info.sensitive_json
-
-
-    def check_input(self,str,user_input):
-        for each_input in user_input:
-            if(each_input in str):
-                return True
-        return False

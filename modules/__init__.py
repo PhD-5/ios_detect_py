@@ -2,6 +2,7 @@ from binary.sharedlibrary import SharedLibrary
 from binary.protect_checks import protect_check
 from binary.strings import String
 from binary.metadata import Metadata
+from binary.HardCode import HarCodeDetect
 from storage.plist import Plist
 from storage.keychain_dump import Keychain
 from storage.sql import Sql
@@ -9,3 +10,4 @@ from static.static_analyse import static_analyzer
 from server.scan import Scan
 from server.openvas import openvas
 from dynamic.url_scheme_fuzzer import url_scheme_fuzzer
+from dynamic.input_json_parser import input_parser
