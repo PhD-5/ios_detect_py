@@ -56,9 +56,10 @@ class url_builder:
 
 
     def build_from_static(self):
-        for url_scheme in data.metadata['url_handlers']:
-            for factor in self.fuzz_factors:
-                self.url_results.append(url_scheme + '://' + factor)
+        if data.metadata['url_handlers']!=None:
+            for url_scheme in data.metadata['url_handlers']:
+                for factor in self.fuzz_factors:
+                    self.url_results.append(url_scheme + '://' + factor)
 
 
 if __name__=='__main__':

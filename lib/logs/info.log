@@ -1079,3 +1079,70 @@
 2017.01.03 at 11:21:22.213 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida
 2017.01.03 at 11:21:22.216 [INFO]  - copy success
 2017.01.03 at 11:21:22.216 [INFO]  - ready analyse idb :/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida/IDAPython/IDAPython.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-11-14-48/ida/bearoil.i64
+2017.01.03 at 11:39:05.374 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 11:39:05.376 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 13:42:16.411 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 13:42:16.440 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 13:42:16.565 [INFO]  - input is a mach-o!
+2017.01.03 at 13:42:16.785 [INFO]  - ipa已破解
+2017.01.03 at 13:42:16.787 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_42_03/binary/VirtualDemoForiOS
+2017.01.03 at 13:42:24.465 [INFO]  - generate idb success
+2017.01.03 at 13:42:24.465 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_42_03/binary/VirtualDemoForiOS.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-42-16/ida
+2017.01.03 at 13:42:24.526 [INFO]  - copy success
+2017.01.03 at 13:42:24.526 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-42-16/ida
+2017.01.03 at 13:42:24.533 [INFO]  - copy success
+2017.01.03 at 13:42:24.534 [INFO]  - ready analyse idb :/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-42-16/ida/IDAPython/IDAPython.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-42-16/ida/VirtualDemoForiOS.i64
+2017.01.03 at 13:42:29.455 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 13:42:29.465 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 13:44:19.621 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 13:44:19.627 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 13:44:19.730 [INFO]  - input is a mach-o!
+2017.01.03 at 13:44:19.751 [INFO]  - ipa已破解
+2017.01.03 at 13:44:19.753 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_44_11/binary/VirtualDemoForiOS
+2017.01.03 at 13:44:22.881 [INFO]  - generate idb success
+2017.01.03 at 13:44:22.882 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_44_11/binary/VirtualDemoForiOS.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-44-19/ida
+2017.01.03 at 13:44:22.886 [INFO]  - copy success
+2017.01.03 at 13:44:22.886 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-44-19/ida
+2017.01.03 at 13:44:22.892 [INFO]  - copy success
+2017.01.03 at 13:44:22.893 [INFO]  - ready analyse idb :/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-44-19/ida/IDAPython/IDAPython.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-44-19/ida/VirtualDemoForiOS.i64
+2017.01.03 at 13:44:27.785 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 13:44:27.797 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 13:48:02.209 [INFO]  - idaPath:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 13:48:02.214 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 13:48:02.323 [INFO]  - input is a mach-o!
+2017.01.03 at 13:48:02.454 [INFO]  - ipa已破解
+2017.01.03 at 13:48:02.456 [INFO]  - ready exe cmd:/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_47_51/binary/VirtualDemoForiOS
+2017.01.03 at 13:48:08.526 [INFO]  - generate idb success
+2017.01.03 at 13:48:08.526 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_47_51/binary/VirtualDemoForiOS.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-48-02/ida
+2017.01.03 at 13:48:08.728 [INFO]  - copy success
+2017.01.03 at 13:48:08.728 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-48-02/ida
+2017.01.03 at 13:48:08.746 [INFO]  - copy success
+2017.01.03 at 13:48:08.747 [INFO]  - ready analyse idb :/Applications/IDA_Pro_6.5/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-48-02/ida/IDAPython/IDAPython.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-48-02/ida/VirtualDemoForiOS.i64
+2017.01.03 at 13:48:13.191 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 13:48:13.205 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 13:50:30.402 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 13:50:30.417 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 13:50:30.546 [INFO]  - input is a mach-o!
+2017.01.03 at 13:50:30.677 [INFO]  - ipa已破解
+2017.01.03 at 13:50:30.679 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_50_23/binary/VirtualDemoForiOS
+2017.01.03 at 13:50:39.966 [INFO]  - generate idb success
+2017.01.03 at 13:50:39.980 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_50_23/binary/VirtualDemoForiOS.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-50-30/ida
+2017.01.03 at 13:50:40.044 [INFO]  - copy success
+2017.01.03 at 13:50:40.045 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-50-30/ida
+2017.01.03 at 13:50:40.052 [INFO]  - copy success
+2017.01.03 at 13:50:40.053 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-50-30/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-50-30/ida/VirtualDemoForiOS.i64
+2017.01.03 at 13:50:49.504 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 13:50:49.512 [INFO]  - start analyse rule pool [2]
+2017.01.03 at 13:54:37.073 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.03 at 13:54:37.137 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.03 at 13:54:37.336 [INFO]  - input is a mach-o!
+2017.01.03 at 13:54:37.481 [INFO]  - ipa已破解
+2017.01.03 at 13:54:37.483 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_54_26/binary/VirtualDemoForiOS
+2017.01.03 at 13:54:48.788 [INFO]  - generate idb success
+2017.01.03 at 13:54:48.806 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_13_54_26/binary/VirtualDemoForiOS.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-54-37/ida
+2017.01.03 at 13:54:48.870 [INFO]  - copy success
+2017.01.03 at 13:54:48.871 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-54-37/ida
+2017.01.03 at 13:54:48.876 [INFO]  - copy success
+2017.01.03 at 13:54:48.877 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-54-37/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-03-13-54-37/ida/VirtualDemoForiOS.i64
+2017.01.03 at 13:54:54.182 [INFO]  - start analyse rule pool [1]
+2017.01.03 at 13:54:54.189 [INFO]  - start analyse rule pool [2]

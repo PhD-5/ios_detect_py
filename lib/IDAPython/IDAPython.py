@@ -161,8 +161,8 @@ def main():
 			
 		func_name = idc.GetFunctionName(func)
 		
-		#print 'start analyse [ ',func_name,' ]'
-		
+		print 'start analyse [ ',func_name,' ]'
+		print idc.SegName(func)
 		regs.clear()
 		regs['X0'] = getX0FromFuncName(func_name)
 		regs['X1'] = 'Unknown'
@@ -186,14 +186,8 @@ def main():
 				parse_Other(addr)
 				#print idc.GetMnem(addr)
 				
-				'''print idc.GetDisasm(addr)
-				lable = idc.GetOpnd(addr, 0)
-				if lable in BL_dict:
-					if func_name not in BL_dict[lable]:
-						BL_dict[lable].append(func_name)
-				else:
-					BL_dict[lable] = [func_name]
-				'''		
+		writeResult.writeMsg(BL_dict)
+		BL_dict.clear()
 			
 			# _objc_msgSend, _objc_msgSend_Super, _objc_msgSend_stret
 			#if idc.GetOpnd(addr, 0) == '_objc_msgSend':
@@ -204,14 +198,15 @@ def main():
 		for me in BL_dict[key]:
 			print key,':',me
 	'''
-	showResult();
-	writeResult.writeMsg(BL_dict)
+	#showResult();
+	#writeResult.writeMsg(BL_dict)
 	#writeResult.writeMsg(msg_send_dict)
 
 	
 	
 if __name__ == '__main__':
 	main()
+	writeResult.writeToXml()
 	Exit(0)
 			
 			
