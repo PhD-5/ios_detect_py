@@ -147,16 +147,18 @@ class Utils():
         app_dict = json_dict['User']
         app_options = dict()
 
+        print '======================================'
         i = 0
         for app in app_dict.keys():
             print i, ' : ', app
             app_options[i] = app
             i += 1
-
+        print '======================================'
         # data.app_dict = app_options
         data.app_dict = app_dict
 
         app_id = int(raw_input("plz choose which app to analyse: "))
+        print '======================================'
         print 'you have choose [', app_id, ']', app_options[app_id]
         data.app_bundleID = app_options[app_id]
 

@@ -38,9 +38,9 @@ class HarCodeDetect:
     def start_detect(self):
         print 'the black list is: ',self.black_list
         for str in data.strings:
-            print str
             if str in self.black_list:
-                self.result.append(str)
+                if str not in self.result:
+                    self.result.append(str)
             self.regex_match(str)
 
     def regex_match(self,str):
@@ -49,11 +49,19 @@ class HarCodeDetect:
         phone_match= self.phonenumber_parttern.search(str)
         url_match  = self.url_pattern.search(str)
         if mail_match :
-            self.result.append(mail_match.group())
+            str = mail_match.group()
+            if str not in self.result:
+                self.result.append(mail_match.group())
         if ip_match:
-            self.result.append(ip_match.group())
+            str = ip_match.group()
+            if str not in self.result:
+                self.result.append(ip_match.group())
         if phone_match:
-            self.result.append(phone_match.group())
+            str = phone_match.group()
+            if str not in self.result:
+                self.result.append(phone_match.group())
         if url_match:
-            self.result.append(url_match.group())
+            str = url_match.group()
+            if str not in self.result:
+                self.result.append(url_match.group())
 

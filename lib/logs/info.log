@@ -1221,3 +1221,46 @@
 2017.01.03 at 17:15:50.281 [INFO]  - ipa已破解
 2017.01.03 at 17:15:50.281 [INFO]  - ipa已破解
 2017.01.03 at 17:15:50.283 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_03_17_15_10/binary/MPBBank
+2017.01.04 at 15:27:48.656 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.04 at 15:27:48.774 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.04 at 15:27:49.015 [INFO]  - input is a mach-o!
+2017.01.04 at 15:27:49.269 [INFO]  - ipa已破解
+2017.01.04 at 15:27:49.270 [INFO]  - ipa已破解
+2017.01.04 at 15:27:49.271 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_15_26_31/binary/MPBBank
+2017.01.04 at 15:29:42.804 [ERROR]  - generate idb failed
+2017.01.04 at 15:29:42.805 [ERROR]  - the path of ida may be wrong
+2017.01.04 at 16:09:08.415 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.04 at 16:09:08.454 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.04 at 16:09:08.579 [INFO]  - input is a mach-o!
+2017.01.04 at 16:09:08.773 [INFO]  - ipa已破解
+2017.01.04 at 16:09:08.775 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_16_08_58/binary/BlockSample
+2017.01.04 at 16:09:20.376 [INFO]  - generate idb success
+2017.01.04 at 16:09:20.389 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_16_08_58/binary/BlockSample.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-09-08/ida
+2017.01.04 at 16:09:20.474 [INFO]  - copy success
+2017.01.04 at 16:09:20.475 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-09-08/ida
+2017.01.04 at 16:09:20.482 [INFO]  - copy success
+2017.01.04 at 16:09:20.482 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-09-08/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-09-08/ida/BlockSample.i64
+2017.01.04 at 16:12:15.802 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.04 at 16:12:15.828 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.04 at 16:12:15.950 [INFO]  - input is a mach-o!
+2017.01.04 at 16:12:16.073 [INFO]  - ipa已破解
+2017.01.04 at 16:12:16.074 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_16_12_05/binary/BlockSample
+2017.01.04 at 16:12:28.048 [INFO]  - generate idb success
+2017.01.04 at 16:12:28.067 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_16_12_05/binary/BlockSample.i64 /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-12-15/ida
+2017.01.04 at 16:12:28.138 [INFO]  - copy success
+2017.01.04 at 16:12:28.139 [INFO]  - ready exe:cp -r /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/IDAPython /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-12-15/ida
+2017.01.04 at 16:12:28.178 [INFO]  - copy success
+2017.01.04 at 16:12:28.178 [INFO]  - ready analyse idb :/Applications/idaq.app/Contents/MacOS/idaq64 -OIDAPython:/Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-12-15/ida/IDAPython/IDAPython_sqlite.py /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/detemp/2017-01-04-16-12-15/ida/BlockSample.i64
+2017.01.04 at 16:12:38.416 [INFO]  - start analyse rule pool [1]
+2017.01.04 at 16:12:38.426 [INFO]  - start analyse rule pool [2]
+2017.01.04 at 16:15:40.565 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.04 at 16:15:41.106 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.04 at 16:15:41.600 [INFO]  - input is a mach-o!
+2017.01.04 at 16:15:41.884 [INFO]  - ipa已破解
+2017.01.04 at 16:15:41.885 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_16_15_07/binary/BlockSample
+2017.01.04 at 16:17:15.517 [INFO]  - idaPath:/Applications/idaq.app/Contents/MacOS/idaq64
+2017.01.04 at 16:17:15.553 [INFO]  - /Users/konghaohao/Documents/git_workspace/ios_detect_py/lib/rule
+2017.01.04 at 16:17:15.715 [INFO]  - input is a mach-o!
+2017.01.04 at 16:17:15.897 [INFO]  - ipa已破解
+2017.01.04 at 16:17:15.898 [INFO]  - ipa已破解
+2017.01.04 at 16:17:15.900 [INFO]  - ready exe cmd:/Applications/idaq.app/Contents/MacOS/idaq64 -A -B /Users/konghaohao/Documents/git_workspace/ios_detect_py/temp/2017_01_04_16_16_11/binary/PockPower

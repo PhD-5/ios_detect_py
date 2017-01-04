@@ -3,10 +3,11 @@ from PreProcess import should_install
 from PreProcess import pre_clutch
 from modules import *
 from Utils import *
+import data
 from AppDynamicInfo import AppDynamicInfo
 import os
 import config
-import data
+import time
 
 
 class ios():
@@ -38,10 +39,32 @@ class ios():
         t_static = static_analyzer()
         t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
+        time.sleep(3) #make sure java -jar in thread can get into directory lib
         os.chdir(os.path.abspath('..'))
 
-        # start local socket server to receive socket msg from iphone
+        # store the dynamic json results
         app_dynamic_info = AppDynamicInfo(data.app_bundleID)
+
+        # ask for should need detect MITM
+        while True:
+            user_input = raw_input('Do you want to detect MITE? [Y/N]')
+            if user_input == 'Y' or user_input == 'y':
+                print '================================================================='
+                print '=   If you want to detect the MITM, please config on phone:     ='
+                print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
+                print '================================================================='
+                t_mitm_socket = SocketServerThread(app_dynamic_info)
+                t_mitm_socket.start()
+                t_mitm_socket.join()
+                time.sleep(3)
+                break
+            elif user_input == 'N' or user_input == 'n':
+                break
+            else:
+                print 'Invalid input! Please input Y or N\n'
+
+        # start local socket server to receive socket msg from iphone
+        print 'Ready to start other detect, please CLOSE the MITM...'
         t_socket = SocketServerThread(app_dynamic_info)
         t_socket.start()
 

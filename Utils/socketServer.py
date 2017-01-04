@@ -29,6 +29,7 @@ class SocketServerThread(threading.Thread):
             self.parse_json(self.app_info,input_data)
         conn.close()
 
+
     # classify and store jsons according to type
     def parse_json(self,app_info, json_str):
 
