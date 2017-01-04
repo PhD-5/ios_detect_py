@@ -15,23 +15,20 @@ class ios():
         pre_clutch.clutch()
 
     def detect(self):
-        # Metadata().get_metadata()
-        # scan_task = Scan("127.0.0.1", "test_")
-        # scan_task.openvas_start()
-        # scan_task.creat_target()
+
+        # openvas().launch('127.0.0.1')
         # SharedLibrary().get()
         # protect_check().check()
         # static_analyzer().do_analyse()
         # Plist().get()
         # Sql().get()
-        String().get_url()
-        # openvas().launch()
-        # openvas().parse()
+        # String().get_url()
+        pass
 
     def clean(self):
         data.client.close()
         self.db.down()
-        # data.omp_client.close()
+        data.omp_client.close()
 
 
 ios().detect()
