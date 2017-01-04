@@ -25,6 +25,3 @@ respring_wait = config.get('other','respring_wait')
 
 print 'config end...'
 
-class c:
-    def read_file(self):
-        ssh_port

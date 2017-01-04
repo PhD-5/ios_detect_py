@@ -73,6 +73,8 @@ class ios():
         # scan_task = Scan("127.0.0.1", "test_")
         # scan_task.openvas_start()
         # scan_task.creat_target()
+
+        # openvas().launch('127.0.0.1')
         # SharedLibrary().get()
         # protect_check().check()
         # static_analyzer().do_analyse()
@@ -106,7 +108,7 @@ class ios():
     def clean(self):
         data.client.close()
         self.db.down()
-        # data.omp_client.close()
+        data.omp_client.close()
 
 
 ios().detect()

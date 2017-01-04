@@ -1,11 +1,9 @@
 #-*- coding:utf-8 -*-
 import re
 import os
-
 import config
 from Utils.utils import Utils
 import data
-
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
