@@ -78,8 +78,7 @@ class ios():
         # SharedLibrary().get()
         # protect_check().check()
         # static_analyzer().do_analyse()
-        # Plist().get()
-        Sql().get()
+
         # String().get_url()
         # openvas().launch()
         # openvas().parse()
@@ -92,6 +91,10 @@ class ios():
         # detect sensitive content according to user input
         # input_json_parser = input_parser()
         # input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
+
+        # detect sensitive data in files in sandbox
+        Plist().get()
+        Sql().get()
 
         # detect Hard Code
         String().get_strings()

@@ -1,5 +1,6 @@
 import data
 from Utils.utils import Utils
+from check_plist import Cheker
 
 class Plist():
 
@@ -34,3 +35,8 @@ class Plist():
         print "-------------------plists----------------------"
         for file_lable in retrieved_files:
             print file_lable[0], "protection:", file_lable[1]
+
+        # start check plist sensitive data
+        check = Cheker(out)
+        check.start_check()
+        print check.results
