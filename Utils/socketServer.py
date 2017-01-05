@@ -2,6 +2,7 @@ import socket
 import config
 import json
 import threading
+import data
 class SocketServerThread(threading.Thread):
     def __init__(self,app_dy_info):
         threading.Thread.__init__(self)
@@ -22,7 +23,7 @@ class SocketServerThread(threading.Thread):
             input_data = conn.recv(2048)
             input_data = input_data[0:-1]
             print input_data
-            if input_data == 'DONE':
+            if input_data == ('DONE:'+data.app_bundleID):
                 print 'socket need close...'
                 print 'dynamic analyse is done...'
                 break
