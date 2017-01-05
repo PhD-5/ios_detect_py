@@ -18,8 +18,11 @@ class Plist():
         dirs = [data.metadata['bundle_directory'], data.metadata['data_directory']]
         dirs_str = ' '.join(dirs)
         cmd = '{bin} {dirs_str} -type f -name "*.plist"'.format(bin=data.DEVICE_TOOLS['FIND'], dirs_str=dirs_str)
-        out = Utils.cmd_block(self.client, cmd).split("\n")
-
+        temp = Utils.cmd_block(self.client, cmd).split("\n")
+        out = []
+        for file in temp:
+            if file != '':
+                out.append(file)
         # No files found
         if not out:
             print("No Plist files found")

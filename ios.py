@@ -79,13 +79,15 @@ class ios():
         # protect_check().check()
         # static_analyzer().do_analyse()
         # Plist().get()
-        # Sql().get()
+        Sql().get()
         # String().get_url()
         # openvas().launch()
         # openvas().parse()
 
         # end of dynamic detect
         t_socket.join()
+        # copy the input data to class data
+        data.input_list = app_dynamic_info.user_input
 
         # detect sensitive content according to user input
         # input_json_parser = input_parser()

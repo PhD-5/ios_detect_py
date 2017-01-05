@@ -91,6 +91,7 @@ class Utils():
         print '{} -> {}'.format(remote_file, local_path)
         sftp = paramiko.SFTPClient.from_transport(t)
         sftp.get(remote_file,local_path)
+        t.close()
 
     @staticmethod
     def sftp_put(ip, port, username, password, remote_path, local_file):
@@ -99,6 +100,7 @@ class Utils():
         sftp = paramiko.SFTPClient.from_transport(t)
         print '{} -> {}'.format(local_file, remote_path)
         sftp.put(localpath=local_file,remotepath=remote_path)
+        t.close()
 
     # @staticmethod
     # def sftp_get_files(ip, port, username, password, remote_files, local_dir):

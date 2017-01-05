@@ -33,6 +33,9 @@ static_file_path = ''
 #strings in mach-o binary file
 strings = []
 
+#input strings got from dynamic detect
+input_list = []
+
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')
