@@ -6,9 +6,10 @@ import subprocess
 import signal
 
 import config
-import  data
+import data
 
-class Cheker:
+
+class Checker:
 
     def __init__(self, files):
         print files
@@ -44,7 +45,7 @@ class Cheker:
 
             try:
                 signal.signal(signal.SIGALRM, self.my_handler)
-                signal.alarm(5)
+                signal.alarm(60*2)
 
                 self.parse_plist(local_file_path)
 

@@ -1,6 +1,7 @@
 import paramiko
 import os
 import sqlite3
+import signal
 
 import config
 import data
@@ -34,13 +35,22 @@ class Checker:
         for file in self.files:
             self.cur_db = file
             print 'getting db file ',file,' from iPhone.'
-            sep = os.path.sep
             file_name = '{}_{}'.format(os.path.basename(file),count)
             local_file_path = './temp/{}/files/{}'.format(data.start_time,file_name)
             sftp.get(file, local_file_path)
             print 'got the db file: ',local_file_path
             print 'start db file check'
-            self.read_db(local_file_path)
+            # set time_out
+            try:
+                signal.signal(signal.SIGALRM, self.my_handler)
+                signal.alarm(60*2)
+
+                self.read_db(local_file_path)
+
+                signal.alarm(0)
+            except AssertionError:
+                print 'time_out:',file
+
             count+=1
         print 'db file check DONE!'
         t.close()
@@ -71,5 +81,5 @@ class Checker:
                 except:
                     print 'read row errer,',row
 
-# c = Checker()
-# c.read_db('/Users/konghaohao/Desktop/CoreData.sqlite')
+    def my_handler(self, signum, frame):
+        raise AssertionError

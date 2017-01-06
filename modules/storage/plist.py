@@ -1,6 +1,6 @@
 import data
 from Utils.utils import Utils
-from check_plist import Cheker
+from check_plist import Checker
 
 class Plist():
 
@@ -37,6 +37,6 @@ class Plist():
             print file_lable[0], "protection:", file_lable[1]
 
         # start check plist sensitive data
-        check = Cheker(out)
+        check = Checker(out)
         check.start_check()
         print 'plist result:', check.results
