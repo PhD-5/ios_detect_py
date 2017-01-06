@@ -14,6 +14,8 @@ class Checker:
         self.black_list = data.input_list
         self.read_txt()
         self.results=dict()
+        self.cur_db=''
+        self.cur_table=''
 
     def read_txt(self):
         file = open('./config/sensitive.txt')
@@ -30,13 +32,14 @@ class Checker:
         sftp = paramiko.SFTPClient.from_transport(t)
         count =0
         for file in self.files:
+            self.cur_db = file
             print 'getting db file ',file,' from iPhone.'
             sep = os.path.sep
             file_name = '{}_{}'.format(os.path.basename(file),count)
             local_file_path = './temp/{}/files/{}'.format(data.start_time,file_name)
             sftp.get(file, local_file_path)
             print 'got the db file: ',local_file_path
-            print 'start check'
+            print 'start db file check'
             self.read_db(local_file_path)
             count+=1
         print 'db file check DONE!'
@@ -50,19 +53,23 @@ class Checker:
         tables=c.fetchall()
         print tables
         for table in tables:
+            self.cur_table=table[0]
             query = 'select * from '+table[0]
             c.execute(query)
             print query
             for row in c:
-                self.check_row(row,file,table)
+                self.check_row(row)
         conn.close()
 
-    def check_row(self,row,file,table):
+    def check_row(self,row):
         for i in range(len(row)):
             for black_item in self.black_list:
-                if black_item in str(row[i]):
-                    self.results[file] = (table,row)
-                    return
+                try:
+                    if black_item in str(row[i]):
+                        self.results[self.cur_db] = (self.cur_table,row,black_item)
+                        return
+                except:
+                    print 'read row errer,',row
 
 # c = Checker()
 # c.read_db('/Users/konghaohao/Desktop/CoreData.sqlite')

@@ -92,15 +92,16 @@ class ios():
         # input_json_parser = input_parser()
         # input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
 
-        # detect sensitive data in files in sandbox
-        Plist().get()
-        Sql().get()
-
         # detect Hard Code
         String().get_strings()
         hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
         hardcode_detect.start_detect()
         print 'hardcode:',hardcode_detect.result
+
+        # detect sensitive data in files in sandbox
+        Sql().get()
+        Plist().get()
+
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
         # fuzzer = url_scheme_fuzzer(app_dynamic_info)

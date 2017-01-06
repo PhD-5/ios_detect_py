@@ -39,4 +39,4 @@ class Plist():
         # start check plist sensitive data
         check = Cheker(out)
         check.start_check()
-        print check.results
+        print 'plist result:', check.results

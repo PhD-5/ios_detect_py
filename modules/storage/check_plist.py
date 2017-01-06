@@ -2,6 +2,8 @@
 import plistlib
 import paramiko
 import os
+import subprocess
+import signal
 
 import config
 import  data
@@ -38,14 +40,25 @@ class Cheker:
             local_file_path = './temp/{}/files/{}'.format(data.start_time, file_name)
             sftp.get(file, local_file_path)
             print 'got the plist file: ', local_file_path
-            print 'start check'
-            self.parse_plist(local_file_path)
+            print 'start plist check'
+
+            try:
+                signal.signal(signal.SIGALRM, self.my_handler)
+                signal.alarm(5)
+
+                self.parse_plist(local_file_path)
+
+                signal.alarm(0)
+            except AssertionError:
+                print 'time_out:',file
+
             count += 1
         print 'plist file check DONE!'
         t.close()
 
     def parse_plist(self, file):
-        os.system('plutil -convert xml1 '+file) # 防止使用plistlib解析plist文件报错
+        pl_cmd = 'plutil -convert xml1 '+file
+        subprocess.call(pl_cmd,shell=True)# 防止使用plistlib解析plist文件报错
         try:
             pl = plistlib.readPlist(file)
             key_path = []
@@ -63,7 +76,12 @@ class Cheker:
                 self.parse_element(item[key], key_path)
                 key_path.remove(key)
         else:
-            print key_path, ":", item
+            # print key_path, ":", item
             for black_item in self.black_list:
-                if (black_item in key_path) or (black_item in item):
-                    self.results[self.cur_file]=(key_path, item)
+                if (black_item in str(key_path)) or (black_item in str(item)):
+                    print
+                    self.results[self.cur_file]=(str(key_path), str(item), black_item)
+
+
+    def my_handler(sell, signum, frame):
+        raise AssertionError
