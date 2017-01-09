@@ -13,6 +13,7 @@ class Generator:
         self.write_transport_info()
         self.write_storage_info()
 
+
         self.document.save('./temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID))
 
         #write app info
@@ -24,17 +25,17 @@ class Generator:
     def write_app_info(self):
         self.document.add_heading(u"应用详情",level=1)
 
-        self.document.add_paragraph(u'检测时间：', style='ListBullet')
+        self.document.add_paragraph(u'检测时间：', style='List Bullet')
         self.document.add_paragraph(data.start_time)
-        self.document.add_paragraph(u'应用ID：', style='ListBullet')
+        self.document.add_paragraph(u'应用ID：', style='List Bullet')
         self.document.add_paragraph(data.app_bundleID)
-        self.document.add_paragraph(u'应用名称：', style='ListBullet')
+        self.document.add_paragraph(u'应用名称：', style='List Bullet')
         self.document.add_paragraph(data.metadata['name'])
-        self.document.add_paragraph(u'应用版本：', style='ListBullet')
+        self.document.add_paragraph(u'应用版本：', style='List Bullet')
         self.document.add_paragraph(data.metadata['app_version'])
-        self.document.add_paragraph(u'Bundle路径：', style='ListBullet')
+        self.document.add_paragraph(u'Bundle路径：', style='List Bullet')
         self.document.add_paragraph(data.metadata['bundle_directory'])
-        self.document.add_paragraph(u'Data路径：', style='ListBullet')
+        self.document.add_paragraph(u'Data路径：', style='List Bullet')
         self.document.add_paragraph(data.metadata['data_directory'])
 
     def write_binary_info(self):
@@ -42,7 +43,7 @@ class Generator:
 
         self.document.add_heading(u"二进制保护措施检测", level=2)
         table = self.document.add_table(rows=1, cols=5)
-        table.style = 'TableGrid'
+        table.style = 'Table Grid'
         head_cell = table.rows[0].cells
         head_cell[0].text = u'架构'
         head_cell[1].text = 'Encrypted'
@@ -59,7 +60,7 @@ class Generator:
 
         self.document.add_heading(u"依赖库检测", level=2)
         table_share_lib = self.document.add_table(rows=1, cols=1)
-        table_share_lib.style = 'TableGrid'
+        table_share_lib.style = 'Table Grid'
         head_cell_lib = table_share_lib.rows[0].cells
         head_cell_lib[0].text = 'Shared Library'
         for lib in data.shared_lib:
@@ -69,7 +70,7 @@ class Generator:
 
         self.document.add_heading(u"硬编码", level=2)
         table_hard_code = self.document.add_table(rows=1, cols=1)
-        table_hard_code.style = 'TableGrid'
+        table_hard_code.style = 'Table Grid'
         head_hard_code = table_hard_code.rows[0].cells
         head_hard_code[0].text = 'HardCode:'
         if len(data.hardcode) == 0:
