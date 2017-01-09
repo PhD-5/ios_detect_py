@@ -27,6 +27,9 @@ shared_lib = []
 # {u'arm64': {'Encrypted': True, 'Stack Canaries': True, 'ARC': True, 'PIE': True}, u'armv7': {'Encrypted': True, 'Stack Canaries': True, 'ARC': True, 'PIE': True}}
 protection_check_lables = dict()
 
+# hardcode
+hardcode = []
+
 # static analyse file (xxx.ipa or mach-o)
 static_file_path = ''
 

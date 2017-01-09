@@ -3,6 +3,7 @@ from PreProcess import should_install
 from PreProcess import pre_clutch
 from modules import *
 from Utils import *
+from Report.DocGenerator import Generator
 import data
 from AppDynamicInfo import AppDynamicInfo
 import os
@@ -75,8 +76,8 @@ class ios():
         # scan_task.creat_target()
 
         # openvas().launch('127.0.0.1')
-        # SharedLibrary().get()
-        # protect_check().check()
+        SharedLibrary().get()
+        protect_check().check()
         # static_analyzer().do_analyse()
 
         # String().get_url()
@@ -110,6 +111,10 @@ class ios():
 
         # because static analyse cost long time, so join in the last
         t_static.join()
+
+        # generate report
+        report_gen = Generator()
+        report_gen.generate()
 
     def clean(self):
         data.client.close()

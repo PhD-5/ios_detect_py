@@ -11,7 +11,11 @@ class SharedLibrary():
         out = Utils.cmd_block(self.client, cmd).split("\n")
         if out:
             try:
-                data.shared_lib = out
+                del out[0]
+                for i in out:
+                    i = i.strip('\t')
+                    if len(i)>0:
+                        data.shared_lib.append(i)
                 print "--------------------shared_library-------------------"
                 for l in out:
                     print l

@@ -42,6 +42,7 @@ class HarCodeDetect:
                 if str not in self.result:
                     self.result.append(str)
             self.regex_match(str)
+        data.hardcode = self.result
 
     def regex_match(self,str):
         mail_match = self.mail_parttern.search(str)
