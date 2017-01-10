@@ -87,7 +87,10 @@ class ios():
         # end of dynamic detect
         t_socket.join()
         # copy the input data to class data
-        data.input_list = set(app_dynamic_info.user_input)
+        input_md5_list = get_md5(app_dynamic_info.user_input)
+        input_md5_list.extend(app_dynamic_info.user_input)
+        data.input_list = set(input_md5_list)
+
 
         # detect sensitive content according to user input
         input_json_parser = input_parser()
