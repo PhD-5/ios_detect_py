@@ -37,8 +37,8 @@ class ios():
         # start java static analyse
         file_separator = os.path.sep
         os.chdir(os.path.abspath('.') + file_separator + 'lib')
-        t_static = static_analyzer()
-        t_static.start()
+        # t_static = static_analyzer()
+        # t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
         time.sleep(3) #make sure java -jar in thread can get into directory lib
         os.chdir(os.path.abspath('..'))
@@ -90,27 +90,39 @@ class ios():
         data.input_list = app_dynamic_info.user_input
 
         # detect sensitive content according to user input
-        # input_json_parser = input_parser()
-        # input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
+        input_json_parser = input_parser()
+        input_json_parser.parse_dynamic_info_for_input(app_dynamic_info)
+        data.dynamic_sensitive_json = app_dynamic_info.sensitive_json
+
+        # parse traffic json
+        traffic_parser = TrafficParser(app_dynamic_info.traffic_json_list)
+        traffic_parser.start_parser()
+        data.traffic_unsafe_result = traffic_parser.result
+
+        # parse MITM json
+        mitm_parser = MitmParser(app_dynamic_info.mitm_list)
+        mitm_parser.start_parse()
+        data.mitm_results = mitm_parser.results
 
         # detect Hard Code
-        String().get_strings()
-        hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
-        hardcode_detect.start_detect()
-        print 'hardcode:',hardcode_detect.result
+        # String().get_strings()
+        # hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
+        # hardcode_detect.start_detect()
+        # print 'hardcode:',hardcode_detect.result
 
         # detect sensitive data in files in sandbox
-        Sql().get()
-        Plist().get()
+        # Sql().get()
+        # Plist().get()
 
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
         # fuzzer = url_scheme_fuzzer(app_dynamic_info)
         # fuzzer.fuzz()
+        # data.fuzz_result = fuzzer.results
 
 
         # because static analyse cost long time, so join in the last
-        t_static.join()
+        # t_static.join()
 
         # generate report
         report_gen = Generator()

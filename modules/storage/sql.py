@@ -45,4 +45,5 @@ class Sql():
         # check db file for sensitive data
         check = Checker(out)
         check.start_check()
+        data.db_file_results = check.results
         print 'db result: ', check.results

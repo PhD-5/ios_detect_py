@@ -39,6 +39,21 @@ strings = []
 #input strings got from dynamic detect
 input_list = []
 
+# traffic detect result
+traffic_unsafe_result = []
+
+# mitm result
+mitm_results = dict()
+
+#dynamic sensitive json
+dynamic_sensitive_json = dict()
+
+# fuzz result
+fuzz_result = dict()
+
+# local file check results
+db_file_results = dict()
+plist_file_results = dict()
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')

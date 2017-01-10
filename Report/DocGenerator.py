@@ -64,7 +64,6 @@ class Generator:
         head_cell_lib = table_share_lib.rows[0].cells
         head_cell_lib[0].text = 'Shared Library'
         for lib in data.shared_lib:
-            print 'lib:',lib
             row_lib_cells = table_share_lib.add_row().cells
             row_lib_cells[0].text = lib
 
@@ -83,8 +82,50 @@ class Generator:
     def write_transport_info(self):
         self.document.add_heading(u"传输层检测结果", level=1)
         self.document.add_heading(u"中间人攻击检测", level=2)
+        cols_count = len(data.mitm_results.keys())+1
+        table_1 = self.document.add_table(rows=1, cols=cols_count)
+        table_1.style = 'Table Grid'
+        head_1_cell = table_1.rows[0].cells
+        head_1_cell[0].text = u'漏洞类型'
+        i=1
+        for item in data.mitm_results.keys():
+            head_1_cell[i].text = data.mitm_results.keys()[i-1]
+            i+=1
+        row_1_cell = table_1.add_row().cells
+        row_1_cell[0].text = u'漏洞统计'
+        i=1
+        for key in data.mitm_results.keys():
+            row_1_cell[i].text = str(data.mitm_results[key])
+            i+=1
+
         self.document.add_heading(u"不安全协议使用", level=2)
+        table_2 = self.document.add_table(rows=1,cols=1)
+        table_2.style = 'Table Grid'
+        head_2_cell = table_2.rows[0].cells
+        head_2_cell[0].text = u'未使用https'
+        for item in data.traffic_unsafe_result:
+            row_2_cell = table_2.add_row().cells
+            row_2_cell[0].text = item
+        if len(data.traffic_unsafe_result)==0:
+            row_2_cell = table_2.add_row().cells
+            row_2_cell[0].text = u"无"
+
         self.document.add_heading(u"敏感信息传输", level=2)
+        table_3 = self.document.add_table(rows=1, cols=3)
+        table_3.style = 'Table Grid'
+        head_3_cell = table_3.rows[0].cells
+        head_3_cell[0].text = 'url'
+        head_3_cell[1].text = 'body'
+        head_3_cell[2].text = u'敏感内容'
+        for item in data.dynamic_sensitive_json['traffic']:
+            print item
+            row_3_cell = table_3.add_row().cells
+            row_3_cell[0].text = item[0]['url']
+            if item[0].has_key('body'):
+                row_3_cell[1].text = item[0]['body']
+            else:
+                row_3_cell[1].text = u"无"
+            row_3_cell[2].text = item[1]
 
     def write_storage_info(self):
         self.document.add_heading(u"存储层检测结果", level=1)
