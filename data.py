@@ -37,7 +37,7 @@ static_file_path = ''
 strings = []
 
 #input strings got from dynamic detect
-input_list = []
+input_list = None
 
 # traffic detect result
 traffic_unsafe_result = []
@@ -51,9 +51,12 @@ dynamic_sensitive_json = dict()
 # fuzz result
 fuzz_result = dict()
 
-# local file check results
+# local files check results
 db_file_results = dict()
 plist_file_results = dict()
+
+# local files protection check
+local_file_protection = []
 
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')

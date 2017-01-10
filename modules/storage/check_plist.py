@@ -14,7 +14,7 @@ class Checker:
     def __init__(self, files):
         print files
         self.files = files
-        self.black_list = data.input_list
+        self.black_list = list(data.input_list)
         self.read_txt()
         self.results = dict()
         self.cur_file = ''
@@ -81,7 +81,12 @@ class Checker:
             for black_item in self.black_list:
                 if (black_item in str(key_path)) or (black_item in str(item)):
                     print
-                    self.results[self.cur_file]=(str(key_path), str(item), black_item)
+                    if not self.results.has_key(self.cur_file):
+                        self.results[self.cur_file] = []
+                    info = (str(key_path), str(item), black_item)
+                    self.results[self.cur_file].append(info)
+
+
 
 
     def my_handler(sell, signum, frame):

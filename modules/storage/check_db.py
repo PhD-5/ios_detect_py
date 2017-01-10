@@ -12,7 +12,7 @@ class Checker:
     def __init__(self,files):
         print files
         self.files = files
-        self.black_list = data.input_list
+        self.black_list = list(data.input_list)
         self.read_txt()
         self.results=dict()
         self.cur_db=''
@@ -76,7 +76,10 @@ class Checker:
             for black_item in self.black_list:
                 try:
                     if black_item in str(row[i]):
-                        self.results[self.cur_db] = (self.cur_table,row,black_item)
+                        if not self.results.has_key(self.cur_db):
+                            self.results[self.cur_db]=[]
+                        info = (self.cur_table,row,black_item)
+                        self.results[self.cur_db].append(info)
                         return
                 except:
                     print 'read row errer,',row

@@ -87,7 +87,7 @@ class ios():
         # end of dynamic detect
         t_socket.join()
         # copy the input data to class data
-        data.input_list = app_dynamic_info.user_input
+        data.input_list = set(app_dynamic_info.user_input)
 
         # detect sensitive content according to user input
         input_json_parser = input_parser()
@@ -111,8 +111,8 @@ class ios():
         # print 'hardcode:',hardcode_detect.result
 
         # detect sensitive data in files in sandbox
-        # Sql().get()
-        # Plist().get()
+        Sql().get()
+        Plist().get()
 
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)

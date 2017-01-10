@@ -38,9 +38,10 @@ class Sql():
             return
         # Add data protection class
         retrieved_files = Utils.get_dataprotection(out)
-        print "-------------------sqlite----------------------"
-        for file_lable in retrieved_files:
-            print file_lable[0], "protection:", file_lable[1]
+        data.local_file_protection.extend(retrieved_files)
+        # print "-------------------sqlite----------------------"
+        # for file_lable in retrieved_files:
+        #     print file_lable[0], "protection:", file_lable[1]
 
         # check db file for sensitive data
         check = Checker(out)
