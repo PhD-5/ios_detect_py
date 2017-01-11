@@ -4,6 +4,7 @@ import os
 import config
 from Utils.utils import Utils
 import data
+import DumpDecrypted
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -64,8 +65,9 @@ def clutch():
                 data.static_file_path = des
 
         if not clutch_success:
-            print 'clutch failed'
-            exit(-1)
+            print 'clutch failed! try dumpdecrypted...'
+            DumpDecrypted.dump_binary()
+
 
     else:
         print 'the application is not encrypted'
