@@ -188,7 +188,10 @@ class Generator:
         head3_cells[3].text = u'敏感数据'
         for item in data.dynamic_sensitive_json['plist']:
             row1_cells = table3.add_row().cells
-            row1_cells[0].text = item[0]['filepath']
+            if item[0].has_key('filepath'):
+                row1_cells[0].text = item[0]['filepath']
+            elif item[0].has_key('url'):
+                row1_cells[0].text = item[0]['url']
             row1_cells[1].text = str(item[0]['content'])
             row1_cells[2].text = item[0]['sourceType']
             row1_cells[3].text = '-'.join(item[1])
