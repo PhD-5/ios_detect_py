@@ -93,6 +93,13 @@ class Generator:
             else:
                 row_cells[1].text = 'Safe'
 
+        self.document.add_heading(u"反注入检测", level=2)
+        if data.segment_dict.has_key('__RESTRICT') and '__restrict' in data.segment_dict['data.segment_dict']:
+            self.document.add_paragraph(u"采用了[__RESTRICT,__restrict]，具备一定的反注入能力")
+        else:
+            self.document.add_paragraph(u"不具备反注入能力，建议添加[__RESTRICT,__restrict]")
+
+
     def write_transport_info(self):
         self.document.add_heading(u"传输层检测结果", level=1)
         self.document.add_heading(u"中间人攻击检测", level=2)

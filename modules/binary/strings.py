@@ -19,8 +19,8 @@ class String():
                 data.strings = result_str[1].split('\n')
                 # data.strings = Utils.cmd_block(data.client, cmd_strings).split('\n')
         self.strings = data.strings
-        print "----------------strings--------------------"
-        print "strings count:", len(self.strings)
+        # print "----------------strings--------------------"
+        # print "strings count:", len(self.strings)
         # for s in self.strings:
         #     print s
 

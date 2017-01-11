@@ -20,6 +20,9 @@ app_bundleID = ''
 # the metadata of the app which is choosed
 metadata = {}
 
+# segment and section info
+segment_dict={}
+
 # the shared libs of the app which is choosed
 shared_lib = []
 
