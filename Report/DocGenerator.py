@@ -172,11 +172,11 @@ class Generator:
         head2_cells[2].text = u'数据类型'
         head2_cells[3].text = u'敏感数据'
         for item in data.dynamic_sensitive_json['nsuserdefaults']:
-            row1_cells = table2.add_row().cells
-            row1_cells[0].text = item[0]['key']
-            row1_cells[1].text = str(item[0]['content'])
-            row1_cells[2].text = item[0]['sourceType']
-            row1_cells[3].text = '-'.join(item[1])
+            row2_cells = table2.add_row().cells
+            row2_cells[0].text = item[0]['key']
+            row2_cells[1].text = str(item[0]['content'])
+            row2_cells[2].text = item[0]['sourceType']
+            row2_cells[3].text = '-'.join(item[1])
 
         self.document.add_heading(u"Plist", level=3)
         table3 = self.document.add_table(rows=1, cols=4)
@@ -187,18 +187,30 @@ class Generator:
         head3_cells[2].text = u'数据类型'
         head3_cells[3].text = u'敏感数据'
         for item in data.dynamic_sensitive_json['plist']:
-            row1_cells = table3.add_row().cells
+            row3_cells = table3.add_row().cells
             if item[0].has_key('filepath'):
-                row1_cells[0].text = item[0]['filepath']
+                row3_cells[0].text = item[0]['filepath']
             elif item[0].has_key('url'):
-                row1_cells[0].text = item[0]['url']
-            row1_cells[1].text = str(item[0]['content'])
-            row1_cells[2].text = item[0]['sourceType']
-            row1_cells[3].text = '-'.join(item[1])
+                row3_cells[0].text = item[0]['url']
+            row3_cells[1].text = str(item[0]['content'])
+            row3_cells[2].text = item[0]['sourceType']
+            row3_cells[3].text = '-'.join(item[1])
 
 
         self.document.add_heading(u"本地审计检测结果", level=2)
         self.document.add_heading(u"KeyChain", level=3)
+        table4 = self.document.add_table(rows=1, cols=1)
+        table4.style = 'Table Grid'
+        head4_cells = table4.rows[0].cells
+        head4_cells[0].text = u'可疑的KeyChain信息'
+        if len(data.keychain_values) == 0:
+            row4_cells = table4.add_row().cells
+            row4_cells[0].text = u'无'
+        else:
+            for item in data.keychain_values:
+                row4_cells = table4.add_row().cells
+                row4_cells[0].text = item
+
         self.document.add_heading(u"数据库文件", level=3)
         for file_path in data.db_file_results.keys():
             self.document.add_paragraph(u'文件路径：'+file_path)

@@ -55,6 +55,9 @@ fuzz_result = dict()
 db_file_results = dict()
 plist_file_results = dict()
 
+# keychain values
+keychain_values = []
+
 # local files protection check
 local_file_protection = []
 

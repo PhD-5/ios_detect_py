@@ -1,37 +1,41 @@
 import data
 from Utils.utils import Utils
+import config
 
 class Keychain():
 
-    # ==================================================================================================================
-    # UTILS
-    # ==================================================================================================================
     def __init__(self):
         self.client = data.client
-        self.options = dict()
-        # self.options['filter'] = data.metadata['binary_name']
-        # self.options['output'] = self.local_op.build_temp_path_for_file(self, "keychain-dump.txt")
+        self.send_tool()
+        self.all_keychain_values=[]
+        self.results=[]
 
-    # ==================================================================================================================
-    # RUN
-    # ==================================================================================================================
+    def send_tool(self):
+        Utils.sftp_put(ip=config.mobile_ip, port=config.ssh_port,
+                       username=config.mobile_user, password=config.mobile_password,
+                       local_file="./tools/keychain_dumper", remote_path='./keychain_dumper')
+
+
     def dump(self):
         # Composing the command string
-        cmd = '{}'.format(data.DEVICE_TOOLS['KEYCHAINDUMPER'])
-        # cmd += ' | grep "{}" -A 3 -B2'.format(self.options['filter'])
+        cmd = './keychain_dumper'
 
         # Dump Keychain
         out = Utils.cmd_block(self.client, cmd)
 
-        print out
+        lines = out.split('\n')
 
-        # Check output
-        # if out and filter(lambda x: "README" not in x, out):
-        #     # Save to file
-        #     outfile = self.options['output'] if self.options['output'] else None
-        #     print out
-        # else:
-        #     if self.options['filter']:
-        #         print('No content matches the filter. Ensure the screen is unlocked before dumping the keychain')
-        #     else:
-        #         print('No content found. Ensure the screen is unlocked before dumping the keychain')
+        for line in lines:
+            if line.startswith('Keychain Data:') and not '(null)' in line:
+                content = line[15:]
+                if content:
+                    self.all_keychain_values.append(content)
+        self.filter()
+
+    def filter(self):
+        for value in self.all_keychain_values:
+            if value in data.input_list:
+                self.results.append(value)
+
+
+

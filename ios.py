@@ -76,8 +76,8 @@ class ios():
         # scan_task.creat_target()
 
         # openvas().launch('127.0.0.1')
-        SharedLibrary().get()
-        protect_check().check()
+        # SharedLibrary().get()
+        # protect_check().check()
         # static_analyzer().do_analyse()
 
         # String().get_url()
@@ -108,15 +108,19 @@ class ios():
         data.mitm_results = mitm_parser.results
 
         # detect Hard Code
-        # String().get_strings()
-        # hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
-        # hardcode_detect.start_detect()
+        String().get_strings()
+        hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
+        hardcode_detect.start_detect()
         # print 'hardcode:',hardcode_detect.result
 
         # detect sensitive data in files in sandbox
         Sql().get()
         Plist().get()
 
+        # detect keychain
+        keychain_checker = Keychain()
+        keychain_checker.dump()
+        data.keychain_values = keychain_checker.results
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
         # fuzzer = url_scheme_fuzzer(app_dynamic_info)

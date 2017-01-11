@@ -80,7 +80,6 @@ class Checker:
             # print key_path, ":", item
             for black_item in self.black_list:
                 if (black_item in str(key_path)) or (black_item in str(item)):
-                    print
                     if not self.results.has_key(self.cur_file):
                         self.results[self.cur_file] = []
                     info = (str(key_path), str(item), black_item)
