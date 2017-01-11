@@ -11,7 +11,7 @@ class static_analyzer(threading.Thread):
     def do_analyse(self):
         # call the static.jar
         print 'start thread to do static analyse...'
-        cmd = 'java -jar ' + 'ios-vulnerability-detection_fat.jar ' + data.static_file_path
+        cmd = 'java -jar ' + 'ios-vulnerability-detection_fat.jar {} ../temp/{}/report'.format(data.static_file_path, data.start_time)
         print cmd
         # os.system(cmd)
         subprocess.call(cmd, shell=True)
