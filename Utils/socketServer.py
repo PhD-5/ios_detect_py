@@ -28,6 +28,7 @@ class SocketServerThread(threading.Thread):
                 print 'dynamic analyse is done...'
                 break
             self.parse_json(self.app_info,input_data)
+        print 'connect closing...'
         conn.close()
 
 

@@ -10,6 +10,10 @@ sys.setdefaultencoding("utf-8")
 
 class String():
 
+    def __init__(self):
+        self.strings = []
+        self.urls = []
+
     def get_strings(self):
         # --2016.12.09--yjb--check and get string in Mach-o file
         if (len(data.strings) == 0):
@@ -37,7 +41,6 @@ class String():
                     # data.db.execute('INSERT INTO strings VALUES (?, ?)', values)
         print("----------------get_url---------------------")
         print "url count:", len(url)
-        # for u in url:
-        #     print u
+        self.url = url
 
 

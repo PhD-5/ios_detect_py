@@ -18,7 +18,7 @@ class ios():
 
         # setup ssh client
         data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
-        # data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
+        data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
         self.db = DBServer()
         self.db.on()
 
@@ -29,9 +29,6 @@ class ios():
         #--2016.12.09--yjb--preprocess
         Metadata().get_metadata()
         pre_clutch.clutch()
-
-
-
 
     def detect(self):
         # start java static analyse
@@ -48,7 +45,7 @@ class ios():
 
         # ask for should need detect MITM
         while True:
-            user_input = raw_input('Do you want to detect MITE? [Y/N]')
+            user_input = raw_input('Do you want to detect MITM? [Y/N]')
             if user_input == 'Y' or user_input == 'y':
                 print '================================================================='
                 print '=   If you want to detect the MITM, please config on phone:     ='
@@ -69,23 +66,22 @@ class ios():
         t_socket = SocketServerThread(app_dynamic_info)
         t_socket.start()
 
+        SharedLibrary().get()
+        protect_check().check()
+        String().get_strings()
 
-        # Metadata().get_metadata()
+        String().get_url()
         # scan_task = Scan("127.0.0.1", "test_")
         # scan_task.openvas_start()
         # scan_task.creat_target()
-
         # openvas().launch('127.0.0.1')
-        # SharedLibrary().get()
-        # protect_check().check()
-        # static_analyzer().do_analyse()
-
-        # String().get_url()
         # openvas().launch()
         # openvas().parse()
 
-        # end of dynamic detect
+        ##########################end of dynamic detect####################
         t_socket.join()
+
+
         # copy the input data to class data
         input_md5_list = get_md5(app_dynamic_info.user_input)
         input_md5_list.extend(app_dynamic_info.user_input)
@@ -108,7 +104,6 @@ class ios():
         data.mitm_results = mitm_parser.results
 
         # detect Hard Code
-        String().get_strings()
         hardcode_detect = HarCodeDetect(app_dynamic_info.cccrtpy_json_list)
         hardcode_detect.start_detect()
         # print 'hardcode:',hardcode_detect.result
