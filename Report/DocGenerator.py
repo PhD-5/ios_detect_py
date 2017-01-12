@@ -1,6 +1,8 @@
 #coding=utf-8
 from docx import Document
 import data
+from ParseStaticXML import XMLParser
+
 class Generator:
 
     def __init__(self):
@@ -12,6 +14,7 @@ class Generator:
         self.write_binary_info()
         self.write_transport_info()
         self.write_storage_info()
+        self.write_static_results()
 
 
         self.document.save('./temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID))
@@ -103,21 +106,24 @@ class Generator:
     def write_transport_info(self):
         self.document.add_heading(u"传输层检测结果", level=1)
         self.document.add_heading(u"中间人攻击检测", level=2)
-        cols_count = len(data.mitm_results.keys())+1
-        table_1 = self.document.add_table(rows=1, cols=cols_count)
-        table_1.style = 'Table Grid'
-        head_1_cell = table_1.rows[0].cells
-        head_1_cell[0].text = u'漏洞类型'
-        i=1
-        for item in data.mitm_results.keys():
-            head_1_cell[i].text = data.mitm_results.keys()[i-1]
-            i+=1
-        row_1_cell = table_1.add_row().cells
-        row_1_cell[0].text = u'漏洞统计'
-        i=1
-        for key in data.mitm_results.keys():
-            row_1_cell[i].text = str(data.mitm_results[key])
-            i+=1
+        if len(data.mitm_results.keys())==0:
+            self.document.add_paragraph(u"未发现中间人攻击漏洞")
+        else:
+            cols_count = len(data.mitm_results.keys())+1
+            table_1 = self.document.add_table(rows=1, cols=cols_count)
+            table_1.style = 'Table Grid'
+            head_1_cell = table_1.rows[0].cells
+            head_1_cell[0].text = u'漏洞类型'
+            i=1
+            for item in data.mitm_results.keys():
+                head_1_cell[i].text = data.mitm_results.keys()[i-1]
+                i+=1
+            row_1_cell = table_1.add_row().cells
+            row_1_cell[0].text = u'漏洞统计'
+            i=1
+            for key in data.mitm_results.keys():
+                row_1_cell[i].text = str(data.mitm_results[key])
+                i+=1
 
         self.document.add_heading(u"不安全协议使用", level=2)
         table_2 = self.document.add_table(rows=1,cols=1)
@@ -259,6 +265,52 @@ class Generator:
             row7_cells[0].text = item[0]
             row7_cells[1].text = item[1]
 
-if __name__=='__main__':
-    data = dict()
-    Generator().generate()
+
+    def write_static_results(self):
+        xml_parser = XMLParser()
+        xml_parser.start_parse()
+        unsafe_matchs = xml_parser.unsecure_match_results
+        safes_unmatch = xml_parser.secure_not_match_results
+        print unsafe_matchs
+        print safes_unmatch
+        self.document.add_heading(u"反汇编检测结果", level=1)
+        self.document.add_heading(u"不安全代码检测结果", level=2)
+        if len(unsafe_matchs.keys())==0:
+            self.document.add_paragraph(u"无内容")
+        for fun in unsafe_matchs.keys():
+            self.document.add_heading(fun, level=3)
+            table = self.document.add_table(rows=1, cols=5)
+            table.style = 'Table Grid'
+            head_cell = table.rows[0].cells
+            head_cell[0].text = u'规则id'
+            head_cell[1].text = u'规则名称'
+            head_cell[2].text = u'规则描述'
+            head_cell[3].text = u'解决方法'
+            head_cell[4].text = u'危险等级'
+            for rule in unsafe_matchs[fun]:
+                cells = table.add_row().cells
+                cells[0].text = rule._id
+                cells[1].text = rule._name
+                cells[2].text = rule._desc
+                cells[3].text = rule._solution
+                cells[4].text = rule._risk_level
+
+        self.document.add_heading(u"保护措施检测结果", level=2)
+        if len(safes_unmatch)==0:
+            self.document.add_paragraph(u"无内容")
+        else:
+            table = self.document.add_table(rows=1, cols=5)
+            table.style = 'Table Grid'
+            head_cell = table.rows[0].cells
+            head_cell[0].text = u'规则id'
+            head_cell[1].text = u'规则名称'
+            head_cell[2].text = u'规则描述'
+            head_cell[3].text = u'解决方法'
+            head_cell[4].text = u'危险等级'
+            for rule in safes_unmatch:
+                cells = table.add_row().cells
+                cells[0].text = rule._id
+                cells[1].text = rule._name
+                cells[2].text = rule._desc
+                cells[3].text = rule._solution
+                cells[4].text = rule._risk_level

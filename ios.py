@@ -18,9 +18,9 @@ class ios():
 
         # setup ssh client
         data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
-        data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
-        self.db = DBServer()
-        self.db.on()
+        # data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
+        # self.db = DBServer()
+        # self.db.on()
 
         # should install ipa from local
         should_install.ask_get_user_choose()
@@ -34,10 +34,10 @@ class ios():
         # start java static analyse
         file_separator = os.path.sep
         os.chdir(os.path.abspath('.') + file_separator + 'lib')
-        # t_static = static_analyzer()
-        # t_static.start()
+        t_static = static_analyzer()
+        t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
-        time.sleep(3) #make sure java -jar in thread can get into directory lib
+        time.sleep(2) #make sure java -jar in thread can get into directory lib
         os.chdir(os.path.abspath('..'))
 
         # store the dynamic json results
@@ -124,7 +124,7 @@ class ios():
 
 
         # because static analyse cost long time, so join in the last
-        # t_static.join()
+        t_static.join()
 
         # generate report
         report_gen = Generator()
