@@ -78,7 +78,7 @@ class Checker:
                     if black_item in str(row[i]):
                         if not self.results.has_key(self.cur_db):
                             self.results[self.cur_db]=[]
-                        info = (self.cur_table,row,black_item)
+                        info = (self.cur_table,str(row),black_item)
                         self.results[self.cur_db].append(info)
                         return
                 except:

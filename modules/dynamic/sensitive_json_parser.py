@@ -39,10 +39,10 @@ class input_parser:
 
         print app_info.sensitive_json
 
-    def check_input(self, str, user_input):
+    def check_input(self, value, user_input):
         match=[]
         for each_input in user_input:
-            if (each_input in str):
+            if each_input in str(value):
                 match.append(each_input)
         if len(match)>0:
             return set(match)

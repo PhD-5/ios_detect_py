@@ -34,8 +34,8 @@ class ios():
         # start java static analyse
         file_separator = os.path.sep
         os.chdir(os.path.abspath('.') + file_separator + 'lib')
-        t_static = static_analyzer()
-        t_static.start()
+        # t_static = static_analyzer()
+        # t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
         time.sleep(3) #make sure java -jar in thread can get into directory lib
         os.chdir(os.path.abspath('..'))
@@ -70,7 +70,7 @@ class ios():
         protect_check().check()
         String().get_strings()
 
-        String().get_url()
+        # String().get_url()
         # scan_task = Scan("127.0.0.1", "test_")
         # scan_task.openvas_start()
         # scan_task.creat_target()
@@ -118,18 +118,17 @@ class ios():
         data.keychain_values = keychain_checker.results
 
         # start url fuzz (after dynamic, because need the urlsheme info got from dynamic detect)
-        fuzzer = url_scheme_fuzzer(app_dynamic_info)
-        fuzzer.fuzz()
-        data.fuzz_result = fuzzer.results
+        # fuzzer = url_scheme_fuzzer(app_dynamic_info)
+        # fuzzer.fuzz()
+        # data.fuzz_result = fuzzer.results
 
 
         # because static analyse cost long time, so join in the last
-        t_static.join()
+        # t_static.join()
 
         # generate report
         report_gen = Generator()
         report_gen.generate()
-
     def clean(self):
         data.client.close()
         self.db.down()
