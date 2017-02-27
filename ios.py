@@ -1,6 +1,4 @@
-from PreProcess import build_home_dir
-from PreProcess import should_install
-from PreProcess import pre_clutch
+from PreProcess import *
 from modules import *
 from Utils import *
 from Report.DocGenerator import Generator
@@ -13,20 +11,13 @@ import time
 
 class ios():
     def __init__(self):
-        # get current time as root dir
-        build_home_dir.build()
 
-        # setup ssh client
+        build_home_dir.build()
         data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
-        # data.omp_client = set_ssl_conn(config.server_ip, config.port, config.server_user, config.server_password)
         # self.db = DBServer()
         # self.db.on()
-
-        # should install ipa from local
-        should_install.ask_get_user_choose()
-
+        should_install.ask_for_user_choose()
         Utils.getInstalledAppList()
-        #--2016.12.09--yjb--preprocess
         Metadata().get_metadata()
         pre_clutch.clutch()
 
@@ -37,7 +28,7 @@ class ios():
         t_static = static_analyzer()
         t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
-        time.sleep(2) #make sure java -jar in thread can get into directory lib
+        time.sleep(2)  # make sure java -jar in thread can get into directory lib
         os.chdir(os.path.abspath('..'))
 
         # store the dynamic json results
@@ -62,7 +53,7 @@ class ios():
                 print 'Invalid input! Please input Y or N\n'
 
         # start local socket server to receive socket msg from iphone
-        print 'Ready to start other detect, please CLOSE the MITM...'
+        print 'Ready to start other detects, please CLOSE the MITM...'
         t_socket = SocketServerThread(app_dynamic_info)
         t_socket.start()
 
@@ -70,15 +61,11 @@ class ios():
         protect_check().check()
         String().get_strings()
 
-        # String().get_url()
-        # scan_task = Scan("127.0.0.1", "test_")
-        # scan_task.openvas_start()
-        # scan_task.creat_target()
-        # openvas().launch('127.0.0.1')
-        # openvas().launch()
-        # openvas().parse()
+        hosts = ','.join(String().get_url(data.strings))
+        # Nessus().scan(hosts, data.app_bundleID)1
 
-        ##########################end of dynamic detect####################
+
+        # #########################end of dynamic detect####################
         t_socket.join()
 
 
@@ -129,10 +116,10 @@ class ios():
         # generate report
         report_gen = Generator()
         report_gen.generate()
+
     def clean(self):
         data.client.close()
         self.db.down()
-        data.omp_client.close()
 
 
 ios().detect()

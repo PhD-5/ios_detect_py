@@ -7,9 +7,11 @@ import plistlib
 
 class Metadata():
 
-    def get_metadata(self):
-        self.client = data.client
+    def __init__(self):
         self.app = data.app_bundleID
+        self.client = data.client
+
+    def get_metadata(self):
         """Retrieve metadata of the target app."""
         # self._app = app_name
         # if self._device._applist is None:
@@ -20,31 +22,31 @@ class Metadata():
         """Parse MobileInstallation.plist and the app's local Info.plist, and extract metadata."""
         # Content of the MobileInstallation plist
         # client = self.client
-        app_name = self.app
-        plist_global = data.app_dict[app_name]
-        uuid = plist_global['BundleContainer'].rsplit('/', 1)[-1]
-        name = plist_global['Path'].rsplit('/', 1)[-1]
-        bundle_id = plist_global['CFBundleIdentifier']
-        bundle_directory = plist_global['BundleContainer']
-        data_directory = plist_global['Container']
-        binary_directory = plist_global['Path']
+        # data in LastLauchServicesMap.plist
+        global_info = data.app_dict[self.app]
+        uuid = global_info['BundleContainer'].rsplit('/', 1)[-1]
+        name = global_info['Path'].rsplit('/', 1)[-1]
+        bundle_id = global_info['CFBundleIdentifier']
+        bundle_directory = global_info['BundleContainer']
+        data_directory = global_info['Container']
+        binary_directory = global_info['Path']
         try:
-            entitlements = plist_global['Entitlements']
-        except:
+            entitlements = global_info['Entitlements']
+        except KeyError:
             entitlements = None
 
         # Content of the app's local Info.plist
-        path_local = Utils.escape_path('%s/Info.plist' % plist_global['Path'])
-        plist_local = self.parse_plist(path_local)
-        platform_version = plist_local['DTPlatformVersion']
-        sdk_version = plist_local['DTSDKName']
-        minimum_os = plist_local['MinimumOSVersion']
-        app_version_long  = plist_local['CFBundleVersion']
-        app_version_short = plist_local['CFBundleShortVersionString']
+        path = Utils.escape_path('%s/Info.plist' % binary_directory)
+        info_plist = self.parse_plist(path)
+        platform_version = info_plist['DTPlatformVersion']
+        sdk_version = info_plist['DTSDKName']
+        minimum_os = info_plist['MinimumOSVersion']
+        app_version_long = info_plist['CFBundleVersion']
+        app_version_short = info_plist['CFBundleShortVersionString']
         app_version = '{} ({})'.format(app_version_long, app_version_short)
         try:
-            url_handlers = plist_local['CFBundleURLTypes'][0]['CFBundleURLSchemes']
-        except:
+            url_handlers = info_plist['CFBundleURLTypes'][0]['CFBundleURLSchemes']
+        except KeyError:
             url_handlers = None
 
         # Compose binary path
@@ -99,7 +101,6 @@ class Metadata():
         except AttributeError:
             return False
 
-
     def parse_plist(self, plist):
         """Given a plist file, copy it to temp folder, convert it to XML, and run plutil on it."""
         # Copy the plist
@@ -108,13 +109,10 @@ class Metadata():
         self.file_copy(plist, plist_copy)
         # Convert to xml
         cmd = '{plutil} -convert xml1 {plist}'.format(plutil=data.DEVICE_TOOLS['PLUTIL'], plist=plist_copy)
-        # self.command_blocking(cmd, internal=True)
         Utils.cmd_block(self.client, cmd)
         # Cat the content
         cmd = 'cat {}'.format(plist_copy)
-        # out = self.command_blocking(cmd, internal=True)
         out = Utils.cmd_block(self.client, cmd)
-
         # Parse it with plistlib
         out = str(''.join(out).encode('utf-8'))
         pl = plistlib.readPlistFromString(out)
@@ -135,7 +133,6 @@ class Metadata():
         cmd = '{lipo} -info {binary}'.format(lipo=data.DEVICE_TOOLS['LIPO'], binary=binary)
         out = Utils.cmd_block(self.client, cmd)
         # Parse output
-        # msg = out[0].strip()
         msg = out.strip()
         res = msg.rsplit(': ')[-1].split(' ')
         return res

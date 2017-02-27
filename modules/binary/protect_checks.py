@@ -3,17 +3,22 @@ import collections
 import data
 from Utils.utils import Utils
 
-class protect_check():
 
+class protect_check():
     # ==================================================================================================================
     # UTILS
     # ==================================================================================================================
+    def __init__(self):
+        self.tests = collections.defaultdict(dict)
+        self.client = data.client
+
     def __run_otool(self, query, grep=None):
         """Run otool against a specific architecture."""
         cmd = '{bin} {query} {app}'.format(bin=data.DEVICE_TOOLS['OTOOL'],
-                                              query=query,
-                                              app=data.metadata['binary_path'])
-        if grep: cmd = '%s | grep -Ei "%s"' % (cmd, grep)
+                                           query=query,
+                                           app=data.metadata['binary_path'])
+        if grep:
+            cmd = "%s | grep -Ei \"%s\"" % (cmd, grep)
         out = Utils.cmd_block(self.client, cmd).split("\n")
         return out
 
@@ -46,10 +51,8 @@ class protect_check():
     # RUN
     # ==================================================================================================================
     def check(self):
-        self.client = data.client
         for arch in data.metadata['architectures']:
             data.protection_check_lables[arch] = dict()
-            self.tests = collections.defaultdict(dict)
             # Checks
             self._check_cryptid()
             self._check_pie()

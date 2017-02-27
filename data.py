@@ -21,7 +21,7 @@ app_bundleID = ''
 metadata = {}
 
 # segment and section info
-segment_dict={}
+segment_dict = {}
 
 # the shared libs of the app which is choosed
 shared_lib = []
@@ -113,8 +113,5 @@ DEVICE_SETUP = {
 }
 
 DEVICE_TOOLS = dict([(k, v['COMMAND']) for k, v in DEVICE_SETUP['TOOLS'].iteritems() if v['COMMAND'] is not None])
-
-format_xml = 'a994b278-1f62-11e1-96ac-406186ea4fc5'
-format_csv = 'c1645568-627a-11e3-a660-406186ea4fc5'
 
 crash_report_folder = '/var/mobile/Library/Logs/CrashReporter'

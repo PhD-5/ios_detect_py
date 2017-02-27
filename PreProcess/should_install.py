@@ -1,12 +1,12 @@
 import os
 from Utils import Utils
-import config
 import data
 from modules.dynamic.open_app import open_some_app
 import time
 import config
 
-def ask_get_user_choose():
+
+def ask_for_user_choose():
     print 'iOS Detect Start!'
     while True:
         print '\n[1]: I have installed the app .'
@@ -32,12 +32,12 @@ def install_ipa_from_local():
         else:
             print 'installing ipa ...'
             #sftp to iPhone
-            Utils.sftp_put(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password, '/tmp/defect/temp.ipa', ipa_path)
+            Utils.sftp_put(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password, '/tmp/detect/temp.ipa', ipa_path)
             #install ipa use ipainstaller
-            Utils.cmd_block(data.client, "ipainstaller /tmp/defect/temp.ipa")
+            Utils.cmd_block(data.client, "ipainstaller /tmp/detect/temp.ipa")
             # respring ...
             open_some_app("com.bigboss.respring")
             print('respring...')
-            time.sleep(int(config.respring_wait))
+            time.sleep(int(config.respring_time))
             break
 

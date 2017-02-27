@@ -14,11 +14,9 @@ class SharedLibrary():
                 del out[0]
                 for i in out:
                     i = i.strip('\t')
-                    if len(i)>0:
+                    if len(i) > 0:
                         data.shared_lib.append(i)
                 # print "--------------------shared_library-------------------"
-                # for l in out:
-                #     print l
                 return True
             except AttributeError:
                 return False

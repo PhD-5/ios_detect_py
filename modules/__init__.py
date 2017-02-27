@@ -7,9 +7,8 @@ from storage.plist import Plist
 from storage.keychain_dump import Keychain
 from storage.sql import Sql
 from static.static_analyse import static_analyzer
-from server.scan import Scan
-from server.openvas import openvas
 from dynamic.url_scheme_fuzzer import url_scheme_fuzzer
 from dynamic.sensitive_json_parser import input_parser
 from dynamic.traffic_json_parser import TrafficParser
 from dynamic.mitm_json_parser import MitmParser
+from server.nessus import Nessus

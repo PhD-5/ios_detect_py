@@ -3,13 +3,15 @@ import config
 import json
 import threading
 import data
+
+
 class SocketServerThread(threading.Thread):
-    def __init__(self,app_dy_info):
+    def __init__(self, app_dy_info):
         threading.Thread.__init__(self)
         self.app_info = app_dy_info
 
     def run(self):
-        self.start_server();
+        self.start_server()
 
     def start_server(self):
         HOST = config.socket_ip
@@ -23,21 +25,20 @@ class SocketServerThread(threading.Thread):
             input_data = conn.recv(2048)
             input_data = input_data[0:-1]
             print input_data
-            if input_data == ('DONE:'+data.app_bundleID):
-                print 'socket need close...'
+            if input_data == ('DONE:' + data.app_bundleID):
+                print 'SOCKET SHUT DOWN'
                 print 'dynamic analyse is done...'
                 break
-            self.parse_json(self.app_info,input_data)
+            self.parse_json(self.app_info, input_data)
         print 'connect closing...'
         conn.close()
 
-
     # classify and store jsons according to type
-    def parse_json(self,app_info, json_str):
+    def parse_json(self, app_info, json_str):
 
         try:
             json_dict = json.loads(json_str)
-            if(json_dict['bundle'] == app_info.bundle_id):
+            if json_dict['bundle'] == app_info.bundle_id:
                 type = json_dict['type']
                 if(type=='input'):
                     app_info.user_input.append(json_dict['msg'])

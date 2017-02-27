@@ -12,7 +12,6 @@ class String():
 
     def __init__(self):
         self.strings = []
-        self.urls = []
 
     def get_strings(self):
         # --2016.12.09--yjb--check and get string in Mach-o file
@@ -28,19 +27,20 @@ class String():
         # for s in self.strings:
         #     print s
 
-    def get_url(self):
-        url = []
-        for s in self.strings:
+    def get_url(self, strings):
+        domains = []
+        for s in strings:
             o = urlparse(s)
             if o.scheme == 'http' or o.scheme == 'https':
                 if re.search('%@', o.netloc):
                     continue
                 if o.netloc:
-                    url.append(s)
+                    domain = o.hostname
+                    if domain not in domains:
+                        domains.append(domain)
                     # values = (data.metadata["uuid"], s)
                     # data.db.execute('INSERT INTO strings VALUES (?, ?)', values)
-        print("----------------get_url---------------------")
-        print "url count:", len(url)
-        self.url = url
+        print domains
+        return domains
 
 

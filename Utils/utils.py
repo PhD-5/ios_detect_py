@@ -4,6 +4,7 @@ import re
 import paramiko
 import data
 import simplejson
+import pipes
 
 import sys
 reload(sys)
@@ -19,7 +20,6 @@ class Utils():
     @staticmethod
     def escape_path(path):
         """Escape the given path."""
-        import pipes
         path = path.strip(''''"''')  # strip occasional single/double quotes from both sides
         return pipes.quote(path)
 
@@ -147,20 +147,17 @@ class Utils():
         Utils.cmd_block(client, 'rm /var/mobile/Library/MobileInstallation/temp.json')
         json_dict = simplejson.loads(json)
         app_dict = json_dict['User']
-        app_options = dict()
-
-        print '======================================'
-        i = 0
-        for app in app_dict.keys():
-            print i, ' : ', app
-            app_options[i] = app
-            i += 1
-        print '======================================'
-        # data.app_dict = app_options
         data.app_dict = app_dict
+        Utils.cut_off()
+        apps = app_dict.keys()
+        for app in apps:
+            print('[{}] {}'.format(apps.index(app), app))
+        app_index = int(raw_input("plz choose which app to analyse: "))
+        data.app_bundleID = apps[app_index]
+        print('Start analyzing {}'.format(data.app_bundleID))
+        Utils.cut_off()
 
-        app_id = int(raw_input("plz choose which app to analyse: "))
+
+    @staticmethod
+    def cut_off():
         print '======================================'
-        print 'you have choose [', app_id, ']', app_options[app_id]
-        data.app_bundleID = app_options[app_id]
-
