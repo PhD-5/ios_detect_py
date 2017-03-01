@@ -2,6 +2,7 @@ import requests
 import json
 import sys
 import time
+import data
 
 class Nessus():
     def __init__(self):
@@ -102,11 +103,11 @@ class Nessus():
         return fid
 
     def download(self, sid, fid):
-        data = self.connect('GET', '/scans/{0}/export/{1}/download'.format(sid, fid))
-        filename = 'nessus_{0}_{1}.nessus'.format(sid, fid)
+        nessus_data = self.connect('GET', '/scans/{0}/export/{1}/download'.format(sid, fid))
+        filename = './temp/{}/report/{}.nessus'.format(data.start_time, data.app_bundleID)
         print('Saving scan results to {0}.'.format(filename))
         with open(filename, 'w') as f:
-            f.write(data)
+            f.write(nessus_data)
 
     def delete(self, sid):
         self.connect('DELETE', '/scans/{0}'.format(sid))

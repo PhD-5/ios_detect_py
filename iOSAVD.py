@@ -84,7 +84,7 @@ class IOS():
     @staticmethod
     def server_scan():
         hosts = ','.join(String().get_url(data.strings))
-        # Nessus().scan(hosts, data.app_bundleID)1
+        Nessus().scan(hosts, data.app_bundleID)
 
     def analyse(self):
         # copy the input data to class data
@@ -111,10 +111,9 @@ class IOS():
         hardcode_detect = HarCodeDetect(self.app_dynamic_info.cccrtpy_json_list)
         hardcode_detect.start_detect()
         # print 'hardcode:',hardcode_detect.result
-        # start url fuzz (after dynamic, because need the urlscheme info got from dynamic detect)
-        # fuzzer = url_scheme_fuzzer(app_dynamic_info)
-        # fuzzer.fuzz()
-        # data.fuzz_result = fuzzer.results
+
+        fuzzer = url_scheme_fuzzer(self.app_dynamic_info)
+        fuzzer.fuzz()
 
     def run(self):
         self.start_static_analyse()

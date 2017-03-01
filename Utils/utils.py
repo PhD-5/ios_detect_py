@@ -75,7 +75,7 @@ class Utils():
     # ==================================================================================================================
     @staticmethod
     def cmd_block(client, cmd):
-        print 'remote shell:', cmd
+        # print 'remote shell:', cmd
         stdin, out, err = client.exec_command(cmd)
         if type(out) is tuple: out = out[0]
         str = ''
@@ -88,7 +88,7 @@ class Utils():
         # -----set up sftp to get decrypted ipa file-----
         t = paramiko.Transport(ip, port)
         t.connect(username=username, password=password)
-        print '{} -> {}'.format(remote_file, local_path)
+        # print '{} -> {}'.format(remote_file, local_path)
         sftp = paramiko.SFTPClient.from_transport(t)
         sftp.get(remote_file,local_path)
         t.close()
@@ -98,7 +98,7 @@ class Utils():
         t = paramiko.Transport(ip, port)
         t.connect(username=username, password=password)
         sftp = paramiko.SFTPClient.from_transport(t)
-        print '{} -> {}'.format(local_file, remote_path)
+        # print '{} -> {}'.format(local_file, remote_path)
         sftp.put(localpath=local_file,remotepath=remote_path)
         t.close()
 

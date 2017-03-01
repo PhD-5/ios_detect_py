@@ -1,10 +1,10 @@
-from urlparse import urlparse,urlunparse
+from urlparse import urlparse, urlunparse
 import data
 import os
 
-class url_builder:
 
-    def __init__(self,app_info):
+class url_builder:
+    def __init__(self, app_info):
         self.urlscheme_json_list = app_info.urlscheme_list
         self.fuzz_factors = []
         self.url_results = []
@@ -23,16 +23,15 @@ class url_builder:
         # build url from static detect (only use scheme info)
         self.build_from_static()
 
-        print 'url fuzz:',self.url_results
+        print 'url fuzz:', self.url_results
         return self.url_results
-
 
     def build_from_dynamic(self):
         for url_json in self.urlscheme_json_list:
             url = url_json['absoluteString']
             url_component = urlparse(url)
-            if(url_component.query!=''):
-                print 'query:',url_component.query
+            if url_component.query != '':
+                print 'query:', url_component.query
                 query = url_component.query
                 query_component = query.split('&')
                 query_result = []
@@ -51,20 +50,19 @@ class url_builder:
                             query_result.append(each + '&' + cur_query)
 
             for each in query_result:
-                self.url_results.append(urlunparse((url_component.scheme,url_component.netloc,url_component.path,
-                                                   url_component.params,each,url_component.fragment)))
-
+                self.url_results.append(urlunparse((url_component.scheme, url_component.netloc, url_component.path,
+                                                   url_component.params, each, url_component.fragment)))
 
     def build_from_static(self):
-        if data.metadata['url_handlers']!=None:
+        if data.metadata['url_handlers'] is not None:
             for url_scheme in data.metadata['url_handlers']:
                 for factor in self.fuzz_factors:
                     self.url_results.append(url_scheme + '://' + factor)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     url = 'scheme://root:password@www.myweb.com/path/to/file.html?a=1&b=2#fragment'
     print urlparse(url)
 
-    mytuple = ('http','www.a.com','a/b/c','params','a=1&b=2','fragment')
+    mytuple = ('http', 'www.a.com', 'a/b/c', 'params', 'a=1&b=2', 'fragment')
     print urlunparse(mytuple)
