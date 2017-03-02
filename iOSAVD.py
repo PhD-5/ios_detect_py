@@ -18,6 +18,7 @@ class IOS():
         self.t_static = static_analyzer()
         self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
         self.t_socket = SocketServerThread(self.app_dynamic_info)
+        self.server = Nessus()
 
     @staticmethod
     def prepare_for_basic_info():
@@ -37,6 +38,7 @@ class IOS():
 
     def finish_static_analyse(self):
         self.t_static.join()
+        print "Static analyse has been done"
         return True
 
     def start_dynamic_check(self):
@@ -64,7 +66,12 @@ class IOS():
 
     def finish_dynamic_check(self):
         self.t_socket.join()
+        print "Dynamic check has been done."
         return True
+
+    def finish_server_scan(self):
+        self.server.join()
+        print "Server scan done"
 
     @staticmethod
     def storage_check():
@@ -81,10 +88,10 @@ class IOS():
         protect_check().check()
         String().get_strings()
 
-    @staticmethod
-    def server_scan():
+    def server_scan(self):
         hosts = ','.join(String().get_url(data.strings))
-        Nessus().scan(hosts, data.app_bundleID)
+        self.server.set_args(hosts, data.app_bundleID)
+        self.server.start()
 
     def analyse(self):
         # copy the input data to class data
@@ -119,14 +126,16 @@ class IOS():
         self.start_static_analyse()
         self.start_dynamic_check()
         IOS.binary_check()
-        IOS.server_scan()
+        self.server_scan()
         if self.finish_dynamic_check():
             self.analyse()
             IOS.storage_check()
         if self.finish_static_analyse():
             report_gen = Generator()
             report_gen.generate()
-        self.clean()
+        if self.finish_server_scan():
+            print "ALL DONE"
+            self.clean()
 
     def clean(self):
         data.client.close()

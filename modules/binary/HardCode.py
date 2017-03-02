@@ -35,7 +35,7 @@ class HarCodeDetect:
             self.black_list.append(line)
 
     def start_detect(self):
-        print 'the black list is: ', self.black_list
+        # print 'the black list is: ', self.black_list
         for str in data.strings:
             if str in self.black_list:
                 if str not in self.result:

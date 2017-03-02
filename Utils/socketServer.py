@@ -28,7 +28,7 @@ class SocketServerThread(threading.Thread):
             # print input_data
             if input_data == ('DONE:' + data.app_bundleID):
                 print 'SOCKET SHUT DOWN'
-                print 'dynamic analyse is done...'
+                # print 'dynamic analyse is done...'
                 break
             self.parse_json(self.app_info, input_data)
         print 'connect closing...'

@@ -11,7 +11,7 @@ class url_builder:
 
     def build(self):
         # read fuzz.txt to get fuzz factors
-        print os.path.abspath('.')
+        # print os.path.abspath('.')
         fuzz_txt = open('./config/fuzz.txt')
         lines = fuzz_txt.readlines()
         for line in lines:
@@ -31,7 +31,7 @@ class url_builder:
             url = url_json['absoluteString']
             url_component = urlparse(url)
             if url_component.query != '':
-                print 'query:', url_component.query
+                # print 'query:', url_component.query
                 query = url_component.query
                 query_component = query.split('&')
                 query_result = []
@@ -62,7 +62,7 @@ class url_builder:
 
 if __name__ == '__main__':
     url = 'scheme://root:password@www.myweb.com/path/to/file.html?a=1&b=2#fragment'
-    print urlparse(url)
+    # print urlparse(url)
 
     mytuple = ('http', 'www.a.com', 'a/b/c', 'params', 'a=1&b=2', 'fragment')
-    print urlunparse(mytuple)
+    # print urlunparse(mytuple)

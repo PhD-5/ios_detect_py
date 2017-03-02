@@ -19,7 +19,7 @@ class XMLParser:
                 self.parse_xml(os.path.join(report_dir, file))
 
     def parse_xml(self,file_path):
-        print file_path
+        # print file_path
         DOMTree = xml.dom.minidom.parse(file_path)
         report = DOMTree.documentElement
 

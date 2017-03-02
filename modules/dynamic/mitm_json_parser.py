@@ -13,4 +13,4 @@ class MitmParser:
             else:
                 self.results[item] = 1
 
-        print self.results
+        # print self.results

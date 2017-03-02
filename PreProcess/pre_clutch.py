@@ -6,11 +6,12 @@ from Utils.utils import Utils
 import data
 import DumpDecrypted
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-#------get clutch -i result-----
+# ------get clutch -i result-----
 def clutch():
     client = data.client
     clutch_i = Utils.cmd_block(client, 'clutch -i')
@@ -57,11 +58,14 @@ def clutch():
     else:
         print 'the application is not encrypted'
         print data.metadata['binary_path']
+        print data.metadata['binary_name']
+        cmd = 'cp {} /tmp/temp.binary'.format(data.metadata['binary_path'])
+        Utils.cmd_block(data.client, cmd)
         Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password,
-                       data.metadata['binary_path'],
-                       './temp/{}/binary/'.format(data.start_time) + data.metadata['binary_name'])
+                       '/tmp/temp.binary',
+                       './temp/{}/binary/'.format(data.start_time) + data.metadata['bundle_id'])
         data.static_file_path = os.path.abspath('.') + ('/temp/{}/binary/'.format(data.start_time)) + data.metadata[
-            'binary_name']
+            'bundle_id']
 
 
 

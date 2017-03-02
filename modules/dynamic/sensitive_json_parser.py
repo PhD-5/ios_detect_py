@@ -37,7 +37,7 @@ class input_parser:
             if info:
                 app_info.sensitive_json['nsuserdefaults'].append((item, info))
 
-        print app_info.sensitive_json
+        # print app_info.sensitive_json
 
     def check_input(self, value, user_input):
         match=[]

@@ -11,7 +11,7 @@ class url_scheme_fuzzer():
         # get urls from url_builder
         self.builder = url_builder(app_info)
         self.fuzz_inputs = self.builder.build()
-        print self.fuzz_inputs
+        # print self.fuzz_inputs
 
     def delete_old_reports(self):
         cmd = 'rm -f `find {} -type f | grep {}`'.format(data.crash_report_folder, self.app)

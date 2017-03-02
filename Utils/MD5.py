@@ -1,7 +1,7 @@
 import hashlib
 
 def get_md5(input_set):
-    print 'input is :', input_set
+    # print 'input is :', input_set
     temp_list = []
     for input in input_set:
         m = hashlib.md5()

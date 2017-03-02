@@ -40,7 +40,7 @@ class String():
                         domains.append(domain)
                     # values = (data.metadata["uuid"], s)
                     # data.db.execute('INSERT INTO strings VALUES (?, ?)', values)
-        print domains
+        # print domains
         return domains
 
 

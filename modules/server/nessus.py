@@ -3,18 +3,30 @@ import json
 import sys
 import time
 import data
+import threading
 
-class Nessus():
+
+class Nessus(threading.Thread):
     def __init__(self):
+        threading.Thread.__init__(self)
         self.url = 'https://localhost:8834'
         self.usr = 'admin'
         self.pwd = 'password'
         self.token = ''
         self.verify = False
+        # self.targets = ''
+        # self.app = ''
         requests.packages.urllib3.disable_warnings()
         self.login()
         policies = self.get_policies()
         self.policy_id = policies['Basic Network Scan']
+
+    def run(self):
+        self.scan()
+
+    def set_args(self, targets, app):
+        self.targets = targets
+        self.app = app
 
     def build_url(self, resource):
         return '{0}{1}'.format(self.url, resource)
@@ -112,13 +124,15 @@ class Nessus():
     def delete(self, sid):
         self.connect('DELETE', '/scans/{0}'.format(sid))
 
-    def scan(self, target, app):
+    def scan(self):
+        target = self.targets
+        app = self.app
         scan_data = self.add(app, 'Test urls in {0}'.format(app), target, self.policy_id)
         scan_id = scan_data['id']
         scan_uuid = self.launch(scan_id)
         history_id = self.get_history_ids(scan_id)[scan_uuid]
         while self.status(scan_id, history_id) != 'completed':
-            print time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
+            # print time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
             time.sleep(10)
 
         print('Exporting the completed scan.')

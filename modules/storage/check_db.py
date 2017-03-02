@@ -10,7 +10,7 @@ import data
 class Checker:
 
     def __init__(self,files):
-        print files
+        # print files
         self.files = files
         self.black_list = list(data.input_list)
         self.read_txt()
@@ -34,12 +34,12 @@ class Checker:
         count =0
         for file in self.files:
             self.cur_db = file
-            print 'getting db file ',file,' from iPhone.'
+            # print 'getting db file ',file,' from iPhone.'
             file_name = '{}_{}'.format(os.path.basename(file),count)
             local_file_path = './temp/{}/files/{}'.format(data.start_time,file_name)
             sftp.get(file, local_file_path)
-            print 'got the db file: ',local_file_path
-            print 'start db file check'
+            # print 'got the db file: ',local_file_path
+            # print 'start db file check'
             # set time_out
             try:
                 signal.signal(signal.SIGALRM, self.my_handler)
@@ -61,12 +61,12 @@ class Checker:
         # get all tables
         c.execute("select name from sqlite_master where type='table' order by name")
         tables=c.fetchall()
-        print tables
+        # print tables
         for table in tables:
             self.cur_table=table[0]
             query = 'select * from '+table[0]
             c.execute(query)
-            print query
+            # print query
             for row in c:
                 self.check_row(row)
         conn.close()

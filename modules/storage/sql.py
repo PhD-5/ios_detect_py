@@ -17,9 +17,9 @@ class Sql():
     def get(self):
         # Compose cmd string
         dirs = [data.metadata['bundle_directory'], data.metadata['data_directory']]
-        print 'dirs:',dirs
+        # print 'dirs:',dirs
         dirs_str = ' '.join(dirs)
-        print 'dirs_str:',dirs_str
+        # print 'dirs_str:',dirs_str
         cmd = '{bin} {dirs_str} -type f -name "*.sqlite"'.format(bin=data.DEVICE_TOOLS['FIND'], dirs_str=dirs_str)
 
         temp = Utils.cmd_block(self.client, cmd).split("\n")
@@ -31,7 +31,7 @@ class Sql():
             if db != '':
                 out.append(db)
 
-        print 'sqlite:',out
+        # print 'sqlite:',out
         # No files found
         if not out:
             print("No SQL files found")

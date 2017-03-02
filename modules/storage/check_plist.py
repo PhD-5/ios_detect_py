@@ -12,7 +12,7 @@ import data
 class Checker:
 
     def __init__(self, files):
-        print files
+        # print files
         self.files = files
         self.black_list = list(data.input_list)
         self.read_txt()
@@ -35,13 +35,13 @@ class Checker:
         count = 0
         for file in self.files:
             self.cur_file=file
-            print 'getting plist file ', file, ' from iPhone.'
+            # print 'getting plist file ', file, ' from iPhone.'
             sep = os.path.sep
             file_name = '{}_{}'.format(os.path.basename(file), count)
             local_file_path = './temp/{}/files/{}'.format(data.start_time, file_name)
             sftp.get(file, local_file_path)
-            print 'got the plist file: ', local_file_path
-            print 'start plist check'
+            # print 'got the plist file: ', local_file_path
+            # print 'start plist check'
 
             try:
                 signal.signal(signal.SIGALRM, self.my_handler)

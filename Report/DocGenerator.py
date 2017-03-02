@@ -145,7 +145,7 @@ class Generator:
         head_3_cell[1].text = 'body'
         head_3_cell[2].text = u'敏感内容'
         for item in data.dynamic_sensitive_json['traffic']:
-            print item
+            # print item
             row_3_cell = table_3.add_row().cells
             row_3_cell[0].text = item[0]['url']
             if item[0].has_key('body'):
@@ -271,8 +271,8 @@ class Generator:
         xml_parser.start_parse()
         unsafe_matchs = xml_parser.unsecure_match_results
         safes_unmatch = xml_parser.secure_not_match_results
-        print unsafe_matchs
-        print safes_unmatch
+        # print unsafe_matchs
+        # print safes_unmatch
         self.document.add_heading(u"反汇编检测结果", level=1)
         self.document.add_heading(u"不安全代码检测结果", level=2)
         if len(unsafe_matchs.keys())==0:
