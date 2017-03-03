@@ -42,7 +42,7 @@ class IOS():
         return True
 
     def start_dynamic_check(self):
-        # ask for should need detect MITM
+        self.t_socket.start()
         while True:
             user_input = raw_input('Do you want to detect MITM? [Y/N]')
             if user_input == 'Y' or user_input == 'y':
@@ -50,19 +50,18 @@ class IOS():
                 print '=   If you want to detect the MITM, please config on phone:     ='
                 print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
                 print '================================================================='
-                t_mitm_socket = SocketServerThread(self.app_dynamic_info)
-                t_mitm_socket.start()
-                t_mitm_socket.join()
-                time.sleep(3)
+                print "MITM detect start"
+                while not data.MITM_Done:
+                    time.sleep(2)
+                print "MITM detect done"
+                print "Change settings to start runtime check"
                 break
             elif user_input == 'N' or user_input == 'n':
+                data.MITM_Done = True
+                print "Change settings to start runtime check"
                 break
             else:
                 print 'Invalid input! Please input Y or N\n'
-
-        # start local socket server to receive socket msg from iphone
-        print 'Ready to start other detects, please CLOSE the MITM...'
-        self.t_socket.start()
 
     def finish_dynamic_check(self):
         self.t_socket.join()

@@ -21,18 +21,16 @@ class SocketServerThread(threading.Thread):
         s.listen(1)
         print 'accepting data from the application...'
         while 1:
-            # print "accepting..."
             conn, addr = s.accept()
             input_data = conn.recv(2048)
             input_data = input_data[0:-1]
-            # print input_data
             if input_data == ('DONE:' + data.app_bundleID):
-                print 'SOCKET SHUT DOWN'
-                # print 'dynamic analyse is done...'
-                break
+                if data.MITM_Done:
+                    s.close()
+                    break
+                if not data.MITM_Done:
+                    data.MITM_Done = True
             self.parse_json(self.app_info, input_data)
-        print 'connect closing...'
-        conn.close()
 
     # classify and store jsons according to type
     def parse_json(self, app_info, json_str):
@@ -59,6 +57,7 @@ class SocketServerThread(threading.Thread):
                     app_info.urlscheme_list.append(json_dict['msg'])
         except BaseException:
             print "parse json error"
+            print json_str
 
         # print "input:        ", len(app_info.user_input)
         # print "traffic:      ", len(app_info.traffic_json_list)

@@ -6,6 +6,7 @@ from Utils.utils import Utils
 import data
 import DumpDecrypted
 import sys
+import bin_get
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -44,12 +45,7 @@ def clutch():
                 source = '{path}/{bundle_id}/{binary}'.format(path=m.group(1),
                                                               bundle_id=data.metadata['bundle_id'],
                                                               binary=data.metadata['binary_name'])
-                des = '{}/temp/{}/binary/'.format(os.path.abspath('.'), data.start_time) + data.metadata["binary_name"]
-                print '{} to {}'.format(str(source), des)
-                Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password,
-                               str(source), des)
-
-                data.static_file_path = des
+                data.static_file_path = bin_get.via_sftp(source)
 
         if not clutch_success:
             print 'Failed to clutch! Try to dump the decrypted app into a file. '
@@ -57,15 +53,8 @@ def clutch():
 
     else:
         print 'the application is not encrypted'
-        print data.metadata['binary_path']
-        print data.metadata['binary_name']
-        cmd = 'cp {} /tmp/temp.binary'.format(data.metadata['binary_path'])
-        Utils.cmd_block(data.client, cmd)
-        Utils.sftp_get(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password,
-                       '/tmp/temp.binary',
-                       './temp/{}/binary/'.format(data.start_time) + data.metadata['bundle_id'])
-        data.static_file_path = os.path.abspath('.') + ('/temp/{}/binary/'.format(data.start_time)) + data.metadata[
-            'bundle_id']
+        data.static_file_path = bin_get.via_sftp(data.metadata['binary_path'])
+
 
 
 

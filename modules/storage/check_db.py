@@ -9,7 +9,7 @@ import data
 
 class Checker:
 
-    def __init__(self,files):
+    def __init__(self, files):
         # print files
         self.files = files
         self.black_list = list(data.input_list)

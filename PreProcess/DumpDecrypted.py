@@ -2,6 +2,7 @@ from Utils.utils import Utils
 import data
 import config
 import os
+import bin_get
 
 
 def dump_binary():
@@ -17,11 +18,7 @@ def dump_binary():
     Utils.cmd_block(data.client, dump_cmd)
 
     # get decrypted file from iphone
-    Utils.sftp_get(ip=config.mobile_ip, port=config.ssh_port,
-                   username=config.mobile_user, password=config.mobile_password,
-                   local_path='./temp/{}/binary/'.format(data.start_time)+data.metadata['binary_name'],
-                   remote_file='./{}.decrypted'.format(data.metadata['binary_name']))
-    data.static_file_path = os.path.abspath('.') + ('/temp/{}/binary/'.format(data.start_time)) + data.metadata[
-        'binary_name']
+    remote_file = './{}.decrypted'.format(data.metadata['binary_name'])
+    data.static_file_path = bin_get.via_sftp(remote_file)
 
 

@@ -64,6 +64,8 @@ keychain_values = []
 # local files protection check
 local_file_protection = []
 
+MITM_Done = False
+
 DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')
 PATH_DEVICETOOLS = os.path.join(PATH_LIBS, 'devicetools')
