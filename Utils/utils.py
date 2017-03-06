@@ -5,7 +5,7 @@ import paramiko
 import data
 import simplejson
 import pipes
-
+from clint.textui import colored, puts, indent
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -148,16 +148,39 @@ class Utils():
         json_dict = simplejson.loads(json)
         app_dict = json_dict['User']
         data.app_dict = app_dict
-        Utils.cut_off()
+        # Utils.cut_off()
+        # Utils.printy('Application list', 1)
         apps = app_dict.keys()
         for app in apps:
-            print('[{}] {}'.format(apps.index(app), app))
-        app_index = int(raw_input("plz choose which app to analyse: "))
+            Utils.printy('[{}] {}'.format(apps.index(app), app), 1)
+        app_index = int(raw_input(colored.yellow("> >> >>> Choose the app to analyze: > ")))
         data.app_bundleID = apps[app_index]
-        print('Start analyzing {}'.format(data.app_bundleID))
-        Utils.cut_off()
+        # print('Start analyzing {}'.format(data.app_bundleID))
+        # Utils.cut_off()
 
 
     @staticmethod
     def cut_off():
-        print '======================================'
+        with indent(4, quote=' '):
+            for i in range(0, 30):
+                # print u'\u1368',
+                print ". ",
+            print
+
+    @staticmethod
+    def printy(s, status):
+        colors = ['green', 'white', 'red', 'cyan', 'yellow']
+        with indent(4, quote='......   '):
+            str = '{:10}'.format(s)
+            puts(getattr(colored, colors[status])(str))
+
+    @staticmethod
+    def printy_result(s, status):
+        with indent(4, quote='......   '):
+            str = '{:.<40}'.format(s)
+            if status:
+                puts(getattr(colored, 'green')(str + '[OK]'))
+            else:
+                puts(getattr(colored, 'red')(str + '[ERROR]'))
+
+

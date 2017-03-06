@@ -3,6 +3,7 @@ import config
 import json
 import threading
 import data
+from Utils import Utils
 
 
 class SocketServerThread(threading.Thread):
@@ -19,7 +20,7 @@ class SocketServerThread(threading.Thread):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((HOST, int(PORT)))
         s.listen(1)
-        print 'accepting data from the application...'
+        Utils.printy('Start server to receive data from application.', 0)
         while 1:
             conn, addr = s.accept()
             input_data = conn.recv(2048)
@@ -56,8 +57,9 @@ class SocketServerThread(threading.Thread):
                 elif type == 'URLScheme':
                     app_info.urlscheme_list.append(json_dict['msg'])
         except BaseException:
-            print "parse json error"
-            print json_str
+            # print "parse json error"
+            # print json_str
+            pass
 
         # print "input:        ", len(app_info.user_input)
         # print "traffic:      ", len(app_info.traffic_json_list)

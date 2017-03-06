@@ -2,7 +2,7 @@ import paramiko
 import os
 import sqlite3
 import signal
-
+from Utils import Utils
 import config
 import data
 
@@ -52,7 +52,7 @@ class Checker:
                 print 'time_out:',file
 
             count+=1
-        print 'db file check DONE!'
+        Utils.printy_result('Database Check.', 1)
         t.close()
 
     def read_db(self,file):

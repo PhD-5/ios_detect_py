@@ -22,14 +22,14 @@ class url_scheme_fuzzer():
         count = 0
         for url in self.fuzz_inputs:
             count += 1
-            print '[{}/{}]fuzzing...[{}]'.format(count, total_count, url)
+            # print '[{}/{}]fuzzing...[{}]'.format(count, total_count, url)
             time.sleep(1)
             self.delete_old_reports()
             Utils.openurl(url)
             time.sleep(2)
             Utils.kill_by_name(self.app)
             self.results[url] = self.crashed()
-        print 'fuzz complete!'
+        Utils.printy_result('Fuzz', True)
         data.fuzz_result = self.results
 
     def crashed(self):

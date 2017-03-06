@@ -7,11 +7,12 @@ from AppDynamicInfo import AppDynamicInfo
 import os
 import config
 import time
+import clint
+import socket
 
 
 class IOS():
     def __init__(self):
-        data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
         IOS.prepare_for_basic_info()
         # self.db = DBServer()
         # self.db.on()
@@ -22,6 +23,15 @@ class IOS():
 
     @staticmethod
     def prepare_for_basic_info():
+        while True:
+            try:
+                Utils.printy('Conneting..', 0)
+                data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
+                break
+            except socket.error:
+                time.sleep(5)
+                Utils.printy_result('Operation timed out.', 0)
+
         build_home_dir.build()
         should_install.ask_for_user_choose()
         Utils.getInstalledAppList()
@@ -38,39 +48,41 @@ class IOS():
 
     def finish_static_analyse(self):
         self.t_static.join()
-        print "Static analyse has been done"
+        Utils.printy_result('Static Analyse.', 1)
         return True
 
     def start_dynamic_check(self):
         self.t_socket.start()
+        time.sleep(1)
         while True:
-            user_input = raw_input('Do you want to detect MITM? [Y/N]')
+            user_input = raw_input(clint.textui.colored.yellow('> >> >>> Do you want to detect MITM? [Y/N] > '))
             if user_input == 'Y' or user_input == 'y':
-                print '================================================================='
-                print '=   If you want to detect the MITM, please config on phone:     ='
-                print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
-                print '================================================================='
-                print "MITM detect start"
+                with clint.textui.indent(4):
+                    print '================================================================='
+                    print '=   If you want to detect the MITM, please config on phone:     ='
+                    print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
+                    print '================================================================='
+                Utils.printy('Start MITM detect.', 0)
                 while not data.MITM_Done:
                     time.sleep(2)
-                print "MITM detect done"
-                print "Change settings to start runtime check"
+                Utils.printy_result('MITM Check.', 1)
+                Utils.printy("Change settings to start runtime check", 4)
                 break
             elif user_input == 'N' or user_input == 'n':
                 data.MITM_Done = True
-                print "Change settings to start runtime check"
+                Utils.printy("Change settings to start runtime check", 3)
                 break
             else:
-                print 'Invalid input! Please input Y or N\n'
+                Utils.printy('Invalid input! Please input Y or N', 0)
 
     def finish_dynamic_check(self):
         self.t_socket.join()
-        print "Dynamic check has been done."
+        Utils.printy_result("Dynamic Check .", 1)
         return True
 
     def finish_server_scan(self):
         self.server.join()
-        print "Server scan done"
+        Utils.printy_result('Server Scan.', 1)
 
     @staticmethod
     def storage_check():
@@ -133,7 +145,6 @@ class IOS():
             report_gen = Generator()
             report_gen.generate()
         if self.finish_server_scan():
-            print "ALL DONE"
             self.clean()
 
     def clean(self):

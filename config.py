@@ -1,6 +1,6 @@
 import ConfigParser
+from Utils import Utils
 
-print 'config begin...'
 config = ConfigParser.SafeConfigParser()
 config.read("./config/para_config.conf")
 
@@ -19,5 +19,5 @@ socket_port = config.get('socket', 'socket_port')
 
 respring_time = config.get('other', 'respring_time')
 
-print 'config end...'
+Utils.printy('Finished configuration.', 0)
 

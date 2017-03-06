@@ -23,7 +23,7 @@ class url_builder:
         # build url from static detect (only use scheme info)
         self.build_from_static()
 
-        print 'url fuzz:', self.url_results
+        # print 'url fuzz:', self.url_results
         return self.url_results
 
     def build_from_dynamic(self):

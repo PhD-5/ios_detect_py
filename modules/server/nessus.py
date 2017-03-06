@@ -4,6 +4,7 @@ import sys
 import time
 import data
 import threading
+from Utils import Utils
 
 
 class Nessus(threading.Thread):
@@ -35,12 +36,12 @@ class Nessus(threading.Thread):
         login = {'username': self.usr, 'password': self.pwd}
         data = self.connect('POST', '/session', data=login)
         self.token = data['token']
-        print 'Login!!!'
-        print 'token:', self.token
+        Utils.printy('Log into the Nessus system.', 0)
+        # print 'token:', self.token
 
     def logout(self):
         self.connect('DELETE', '/session')
-        print 'Logout!!!!'
+        # print 'Logout!!!!'
 
     def get_policies(self):
         data = self.connect('GET', '/editor/policy/templates')
@@ -61,7 +62,7 @@ class Nessus(threading.Thread):
             r = requests.get(self.build_url(resource), params=params, headers=headers, verify=verify)
         if r.status_code != 200:
             e = r.json()
-            print e['error']
+            # print e['error']
             if e['error'] == 'Invalid Credentials':
                 self.login()
             else:
@@ -117,7 +118,7 @@ class Nessus(threading.Thread):
     def download(self, sid, fid):
         nessus_data = self.connect('GET', '/scans/{0}/export/{1}/download'.format(sid, fid))
         filename = './temp/{}/report/{}.nessus'.format(data.start_time, data.app_bundleID)
-        print('Saving scan results to {0}.'.format(filename))
+        # print('Saving scan results to {0}.'.format(filename))
         with open(filename, 'w') as f:
             f.write(nessus_data)
 
@@ -135,10 +136,10 @@ class Nessus(threading.Thread):
             # print time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
             time.sleep(10)
 
-        print('Exporting the completed scan.')
+        # print('Exporting the completed scan.')
         file_id = self.export(scan_id, history_id)
         self.download(scan_id, file_id)
 
-        print('Deleting the scan.')
+        # print('Deleting the scan.')
         self.delete(scan_id)
         self.logout()

@@ -4,21 +4,21 @@ import data
 from modules.dynamic.open_app import open_some_app
 import time
 import config
+import clint
 
 
 def ask_for_user_choose():
-    print 'iOS Detect Start!'
+    Utils.printy('[1]: I have installed the app .', 1)
+    Utils.printy('[2]: I have the ipa file local to install.', 1)
     while True:
-        print '\n[1]: I have installed the app .'
-        print '[2]: I have the ipa file local to install.'
-        user_choose_input = raw_input("plz choose : ")
+        user_choose_input = raw_input(clint.textui.colored.yellow("> >> >>> Enter your choice please [1/2]: > "))
         if user_choose_input == '1':
             break
         elif user_choose_input == '2':
             install_ipa_from_local()
             break
         else:
-            print 'invalid input! input again...'
+            Utils.printy('Invalid input!', 2)
 
 
 def install_ipa_from_local():

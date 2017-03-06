@@ -4,7 +4,7 @@ import paramiko
 import os
 import subprocess
 import signal
-
+from Utils import Utils
 import config
 import data
 
@@ -54,7 +54,7 @@ class Checker:
                 print 'time_out:',file
 
             count += 1
-        print 'plist file check DONE!'
+        Utils.printy_result('Plist Check.', 1)
         t.close()
 
     def parse_plist(self, file):
