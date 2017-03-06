@@ -26,7 +26,7 @@ class Plist():
                 out.append(file)
         # No files found
         if not out:
-            print("No Plist files found")
+            Utils.printy("No Plist files found ",2)
             return
 
         # Add data protection class

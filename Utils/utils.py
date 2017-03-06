@@ -153,8 +153,14 @@ class Utils():
         apps = app_dict.keys()
         for app in apps:
             Utils.printy('[{}] {}'.format(apps.index(app), app), 1)
-        app_index = int(raw_input(colored.yellow("> >> >>> Choose the app to analyze: > ")))
-        data.app_bundleID = apps[app_index]
+        while True:
+            try:
+                app_index = int(raw_input(colored.yellow("> >> >>> Choose the app to analyze: > ")))
+                data.app_bundleID = apps[app_index]
+                break
+            except IndexError:
+                Utils.printy_result('Index out of range ', 0)
+
         # print('Start analyzing {}'.format(data.app_bundleID))
         # Utils.cut_off()
 

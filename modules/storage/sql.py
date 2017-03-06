@@ -2,6 +2,7 @@ import data
 from Utils.utils import Utils
 from check_db import Checker
 
+
 class Sql():
 
 
@@ -34,7 +35,7 @@ class Sql():
         # print 'sqlite:',out
         # No files found
         if not out:
-            print("No SQL files found")
+            Utils.printy("No SQL files found ", 2)
             return
         # Add data protection class
         retrieved_files = Utils.get_dataprotection(out)

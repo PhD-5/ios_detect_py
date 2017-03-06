@@ -57,23 +57,23 @@ class IOS():
         while True:
             user_input = raw_input(clint.textui.colored.yellow('> >> >>> Do you want to detect MITM? [Y/N] > '))
             if user_input == 'Y' or user_input == 'y':
-                with clint.textui.indent(4):
-                    print '================================================================='
-                    print '=   If you want to detect the MITM, please config on phone:     ='
-                    print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
-                    print '================================================================='
-                Utils.printy('Start MITM detect.', 0)
+                # print '================================================================='
+                # print '=   If you want to detect the MITM, please config on phone:     ='
+                # print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
+                # print '================================================================='
+                Utils.printy('CONFIG YOUR PHONE : MITM ON and Traffic OFF', 3)
+                # Utils.printy('Start MITM detect.', 0)
                 while not data.MITM_Done:
                     time.sleep(2)
                 Utils.printy_result('MITM Check.', 1)
-                Utils.printy("Change settings to start runtime check", 4)
+                Utils.printy("CONFIG YOUR PHONE : MITM OFF and Traffic ON", 3)
                 break
             elif user_input == 'N' or user_input == 'n':
                 data.MITM_Done = True
-                Utils.printy("Change settings to start runtime check", 3)
+                Utils.printy("CONFIG YOUR PHONE : MITM OFF and Traffic ON", 3)
                 break
             else:
-                Utils.printy('Invalid input! Please input Y or N', 0)
+                Utils.printy('Invalid input! Please input Y or N', 1)
 
     def finish_dynamic_check(self):
         self.t_socket.join()
