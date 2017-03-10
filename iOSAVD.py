@@ -26,7 +26,7 @@ class IOS():
         while True:
             try:
                 Utils.printy('Conneting..', 0)
-                data.client = set_ssl_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
+                data.client = set_ssh_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
                 break
             except socket.error:
                 time.sleep(5)
@@ -98,6 +98,7 @@ class IOS():
         SharedLibrary().get()
         protect_check().check()
         String().get_strings()
+        Utils.printy_result('Binary Check', 1)
 
     def server_scan(self):
         hosts = ','.join(String().get_url(data.strings))
@@ -109,6 +110,7 @@ class IOS():
         input_md5_list = get_md5(self.app_dynamic_info.user_input)
         input_md5_list.extend(self.app_dynamic_info.user_input)
         data.input_list = set(input_md5_list)
+        print data.input_list
 
         # detect sensitive content according to user input
         input_json_parser = input_parser()
@@ -134,10 +136,10 @@ class IOS():
         fuzzer.fuzz()
 
     def run(self):
-        self.start_static_analyse()
-        self.start_dynamic_check()
         IOS.binary_check()
         self.server_scan()
+        self.start_static_analyse()
+        self.start_dynamic_check()
         if self.finish_dynamic_check():
             self.analyse()
             IOS.storage_check()

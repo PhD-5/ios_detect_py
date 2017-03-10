@@ -23,7 +23,7 @@ import config
 #     client.connect(ip, port, username=username, password=password)
 #     data.client = client
 
-def set_ssl_conn(ip, port, username, password):
+def set_ssh_conn(ip, port, username, password):
     c = paramiko.SSHClient()
     c.load_system_host_keys()
     c.set_missing_host_key_policy(paramiko.AutoAddPolicy())

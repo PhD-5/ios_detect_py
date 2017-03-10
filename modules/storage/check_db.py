@@ -13,12 +13,12 @@ class Checker:
         # print files
         self.files = files
         self.black_list = list(data.input_list)
-        self.read_txt()
-        self.results=dict()
-        self.cur_db=''
-        self.cur_table=''
+        self.extend_blacklist_from_txt()
+        self.results = dict()
+        self.cur_db = ''
+        self.cur_table = ''
 
-    def read_txt(self):
+    def extend_blacklist_from_txt(self):
         file = open('./config/sensitive.txt')
         lines = file.readlines()
         for line in lines:
@@ -31,58 +31,51 @@ class Checker:
         t = paramiko.Transport(config.mobile_ip, config.ssh_port)
         t.connect(username=config.mobile_user, password=config.mobile_password)
         sftp = paramiko.SFTPClient.from_transport(t)
-        count =0
+        count = 0
         for file in self.files:
             self.cur_db = file
-            # print 'getting db file ',file,' from iPhone.'
-            file_name = '{}_{}'.format(os.path.basename(file),count)
-            local_file_path = './temp/{}/files/{}'.format(data.start_time,file_name)
+            file_name = '{}_{}'.format(os.path.basename(file), count)
+            local_file_path = './temp/{}/files/{}'.format(data.start_time, file_name)
             sftp.get(file, local_file_path)
-            # print 'got the db file: ',local_file_path
-            # print 'start db file check'
-            # set time_out
             try:
                 signal.signal(signal.SIGALRM, self.my_handler)
                 signal.alarm(60*2)
-
                 self.read_db(local_file_path)
-
                 signal.alarm(0)
             except AssertionError:
-                print 'time_out:',file
-
-            count+=1
+                # print 'time_out:', file
+                Utils.printy_result('Download db files from app', 0)
+            count += 1
         Utils.printy_result('Database Check.', 1)
         t.close()
 
-    def read_db(self,file):
+    def read_db(self, file):
         conn = sqlite3.connect(file)
         c = conn.cursor()
         # get all tables
         c.execute("select name from sqlite_master where type='table' order by name")
-        tables=c.fetchall()
-        # print tables
+        tables = c.fetchall()
         for table in tables:
-            self.cur_table=table[0]
-            query = 'select * from '+table[0]
+            self.cur_table = table[0]
+            query = 'select * from ' + table[0]
             c.execute(query)
-            # print query
             for row in c:
                 self.check_row(row)
         conn.close()
 
-    def check_row(self,row):
+    def check_row(self, row):
         for i in range(len(row)):
             for black_item in self.black_list:
                 try:
                     if black_item in str(row[i]):
-                        if not self.results.has_key(self.cur_db):
-                            self.results[self.cur_db]=[]
-                        info = (self.cur_table,str(row),black_item)
+                        if self.cur_db not in self.results:
+                            self.results[self.cur_db] = []
+                        info = (self.cur_table, str(row), black_item)
                         self.results[self.cur_db].append(info)
                         return
                 except:
-                    print 'read row errer,',row
+                    # print 'read row errer,', row
+                    Utils.printy_result('READ ROW FROM DB', 0)
 
     def my_handler(self, signum, frame):
         raise AssertionError

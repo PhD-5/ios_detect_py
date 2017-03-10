@@ -7,24 +7,18 @@ class Keychain():
     def __init__(self):
         self.client = data.client
         self.send_tool()
-        self.all_keychain_values=[]
-        self.results=[]
+        self.all_keychain_values = []
+        self.results = []
 
     def send_tool(self):
         Utils.sftp_put(ip=config.mobile_ip, port=config.ssh_port,
                        username=config.mobile_user, password=config.mobile_password,
                        local_file="./tools/keychain_dumper", remote_path='./keychain_dumper')
 
-
     def dump(self):
-        # Composing the command string
         cmd = './keychain_dumper'
-
-        # Dump Keychain
         out = Utils.cmd_block(self.client, cmd)
-
         lines = out.split('\n')
-
         for line in lines:
             if line.startswith('Keychain Data:') and not '(null)' in line:
                 content = line[15:]

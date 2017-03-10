@@ -90,7 +90,7 @@ class Utils():
         t.connect(username=username, password=password)
         # print '{} -> {}'.format(remote_file, local_path)
         sftp = paramiko.SFTPClient.from_transport(t)
-        sftp.get(remote_file,local_path)
+        sftp.get(remote_file, local_path)
         t.close()
 
     @staticmethod

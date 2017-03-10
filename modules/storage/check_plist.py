@@ -12,7 +12,6 @@ import data
 class Checker:
 
     def __init__(self, files):
-        # print files
         self.files = files
         self.black_list = list(data.input_list)
         self.read_txt()
@@ -34,7 +33,7 @@ class Checker:
         sftp = paramiko.SFTPClient.from_transport(t)
         count = 0
         for file in self.files:
-            self.cur_file=file
+            self.cur_file = file
             # print 'getting plist file ', file, ' from iPhone.'
             sep = os.path.sep
             file_name = '{}_{}'.format(os.path.basename(file), count)
@@ -59,7 +58,7 @@ class Checker:
 
     def parse_plist(self, file):
         pl_cmd = 'plutil -convert xml1 '+file
-        subprocess.call(pl_cmd,shell=True)# 防止使用plistlib解析plist文件报错
+        subprocess.call(pl_cmd, shell=True)# 防止使用plistlib解析plist文件报错
         try:
             pl = plistlib.readPlist(file)
             key_path = []
@@ -80,13 +79,10 @@ class Checker:
             # print key_path, ":", item
             for black_item in self.black_list:
                 if (black_item in str(key_path)) or (black_item in str(item)):
-                    if not self.results.has_key(self.cur_file):
+                    if self.cur_file not in self.results:
                         self.results[self.cur_file] = []
                     info = (str(key_path), str(item), black_item)
                     self.results[self.cur_file].append(info)
 
-
-
-
-    def my_handler(sell, signum, frame):
+    def my_handler(self, signum, frame):
         raise AssertionError

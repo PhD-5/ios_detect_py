@@ -39,7 +39,7 @@ static_file_path = ''
 #strings in mach-o binary file
 strings = []
 
-#input strings got from dynamic detect
+#input strings got from dynamic detect (MD5 included)
 input_list = None
 
 # traffic detect result
