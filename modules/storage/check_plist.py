@@ -13,9 +13,18 @@ class Checker:
 
     def __init__(self, files):
         self.files = files
-        self.black_list = list(data.input_list)
+        self.input_list = list(data.input_list)
+
+        self.txt_list = list()
         self.read_txt()
+
+        self.keyiv_list = list()
+        self.get_key_iv()
+
         self.results = dict()
+        self.input_results = dict()
+        self.keyiv_results = dict()
+        self.txt_results   = dict()
         self.cur_file = ''
 
     def read_txt(self):
@@ -23,7 +32,16 @@ class Checker:
         lines = file.readlines()
         for line in lines:
             line = line.strip('\n')
-            self.black_list.append(line)
+            self.txt_list.append(line)
+
+    def get_key_iv(self):
+        json_list = data.dynamic_json.cccrtpy_json_list
+        if json_list:
+            for json in json_list:
+                if "key" in json and json["key"] != "":
+                    self.keyiv_list.append(json["key"])
+                if "iv" in json and json["iv"] != "":
+                    self.keyiv_list.append(json["iv"])
 
     def start_check(self):
         # sftp to local
@@ -53,6 +71,9 @@ class Checker:
                 print 'time_out:',file
 
             count += 1
+        self.results["input"] = self.input_results
+        self.results["keyiv"] = self.keyiv_results
+        self.results["txt"]   = self.txt_results
         Utils.printy_result('Plist Check.', 1)
         t.close()
 
@@ -76,13 +97,29 @@ class Checker:
                 self.parse_element(item[key], key_path)
                 key_path.remove(key)
         else:
-            # print key_path, ":", item
-            for black_item in self.black_list:
+            # parse input list
+            for black_item in self.input_list:
                 if (black_item in str(key_path)) or (black_item in str(item)):
-                    if self.cur_file not in self.results:
-                        self.results[self.cur_file] = []
+                    if self.cur_file not in self.input_results:
+                        self.input_results[self.cur_file] = []
                     info = (str(key_path), str(item), black_item)
-                    self.results[self.cur_file].append(info)
+                    self.input_results[self.cur_file].append(info)
+
+            # parse key iv list
+            for black_item in self.keyiv_list:
+                if (black_item in str(key_path)) or (black_item in str(item)):
+                    if self.cur_file not in self.keyiv_results:
+                        self.keyiv_results[self.cur_file] = []
+                    info = (str(key_path), str(item), black_item)
+                    self.keyiv_results[self.cur_file].append(info)
+
+            # parse txt list
+            for black_item in self.txt_list:
+                if (black_item in str(key_path)) or (black_item in str(item)):
+                    if self.cur_file not in self.txt_results:
+                        self.txt_results[self.cur_file] = []
+                    info = (str(key_path), str(item), black_item)
+                    self.txt_results[self.cur_file].append(info)
 
     def my_handler(self, signum, frame):
         raise AssertionError

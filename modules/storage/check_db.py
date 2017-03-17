@@ -12,18 +12,37 @@ class Checker:
     def __init__(self, files):
         # print files
         self.files = files
-        self.black_list = list(data.input_list)
-        self.extend_blacklist_from_txt()
+        self.input_list = list(data.input_list)
+
+        self.txt_list = list()
+        self.read_txt()
+
+        self.keyiv_list = list()
+        self.get_key_iv()
+
         self.results = dict()
+        self.input_results = dict()
+        self.keyiv_results = dict()
+        self.txt_results = dict()
+
         self.cur_db = ''
         self.cur_table = ''
 
-    def extend_blacklist_from_txt(self):
+    def read_txt(self):
         file = open('./config/sensitive.txt')
         lines = file.readlines()
         for line in lines:
             line = line.strip('\n')
-            self.black_list.append(line)
+            self.txt_list.append(line)
+
+    def get_key_iv(self):
+        json_list = data.dynamic_json.cccrtpy_json_list
+        if json_list:
+            for json in json_list:
+                if "key" in json and json["key"] != "":
+                    self.keyiv_list.append(json["key"])
+                if "iv" in json and json["iv"] != "":
+                    self.keyiv_list.append(json["iv"])
 
     def start_check(self):
         # sftp to local
@@ -46,6 +65,10 @@ class Checker:
                 # print 'time_out:', file
                 Utils.printy_result('Download db files from app', 0)
             count += 1
+        self.results["input"] = self.input_results
+        self.results["keyiv"] = self.keyiv_results
+        self.results["txt"]   = self.txt_results
+
         Utils.printy_result('Database Check.', 1)
         t.close()
 
@@ -65,17 +88,36 @@ class Checker:
 
     def check_row(self, row):
         for i in range(len(row)):
-            for black_item in self.black_list:
+            for black_item in self.input_list:
                 try:
                     if black_item in str(row[i]):
-                        if self.cur_db not in self.results:
-                            self.results[self.cur_db] = []
+                        if self.cur_db not in self.input_results:
+                            self.input_results[self.cur_db] = []
                         info = (self.cur_table, str(row), black_item)
-                        self.results[self.cur_db].append(info)
-                        return
+                        self.input_results[self.cur_db].append(info)
                 except:
                     # print 'read row errer,', row
-                    Utils.printy_result('READ ROW FROM DB', 0)
+                    Utils.printy_result('READ ROW FROM DB ERROE', 0)
+            for black_item in self.keyiv_list:
+                try:
+                    if black_item in str(row[i]):
+                        if self.cur_db not in self.keyiv_results:
+                            self.keyiv_results[self.cur_db] = []
+                        info = (self.cur_table, str(row), black_item)
+                        self.keyiv_results[self.cur_db].append(info)
+                except:
+                    # print 'read row errer,', row
+                    Utils.printy_result('READ ROW FROM DB ERROE', 0)
+            for black_item in self.txt_list:
+                try:
+                    if black_item in str(row[i]):
+                        if self.cur_db not in self.txt_results:
+                            self.txt_results[self.cur_db] = []
+                        info = (self.cur_table, str(row), black_item)
+                        self.txt_results[self.cur_db].append(info)
+                except:
+                    # print 'read row errer,', row
+                    Utils.printy_result('READ ROW FROM DB ERROE', 0)
 
     def my_handler(self, signum, frame):
         raise AssertionError

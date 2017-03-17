@@ -51,6 +51,9 @@ mitm_results = dict()
 #dynamic sensitive json
 dynamic_sensitive_json = dict()
 
+#dynamic json receive from iOS
+dynamic_json = None
+
 # fuzz result
 fuzz_result = dict()
 

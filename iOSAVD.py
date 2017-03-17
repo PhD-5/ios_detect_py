@@ -77,6 +77,7 @@ class IOS():
 
     def finish_dynamic_check(self):
         self.t_socket.join()
+        data.dynamic_json = self.app_dynamic_info
         Utils.printy_result("Dynamic Check .", 1)
         return True
 
