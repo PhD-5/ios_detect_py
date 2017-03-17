@@ -234,7 +234,7 @@ class Generator:
             head5_cells[0].text = u'表名'
             head5_cells[1].text = u'行信息'
             head5_cells[2].text = u'敏感数据'
-            for item in data.db_file_results[file_path]:
+            for item in data.db_file_results["input"][file_path]:
                 row5_cells = table5.add_row().cells
                 row5_cells[0].text = item[0]
                 row5_cells[1].text = str(item[1])
@@ -248,7 +248,7 @@ class Generator:
             head5_cells[0].text = u'表名'
             head5_cells[1].text = u'行信息'
             head5_cells[2].text = u'敏感数据'
-            for item in data.db_file_results[file_path]:
+            for item in data.db_file_results["keyiv"][file_path]:
                 row5_cells = table5.add_row().cells
                 row5_cells[0].text = item[0]
                 row5_cells[1].text = str(item[1])
@@ -262,7 +262,7 @@ class Generator:
             head5_cells[0].text = u'表名'
             head5_cells[1].text = u'行信息'
             head5_cells[2].text = u'敏感数据'
-            for item in data.db_file_results[file_path]:
+            for item in data.db_file_results["txt"][file_path]:
                 row5_cells = table5.add_row().cells
                 row5_cells[0].text = item[0]
                 row5_cells[1].text = str(item[1])
@@ -279,7 +279,7 @@ class Generator:
             head6_cells[0].text = u'key路径'
             head6_cells[1].text = u'单元信息'
             head6_cells[2].text = u'敏感数据'
-            for item in data.plist_file_results[file_path]:
+            for item in data.plist_file_results["input"][file_path]:
                 row6_cells = table6.add_row().cells
                 row6_cells[0].text = item[0]
                 row6_cells[1].text = str(item[1])
@@ -293,7 +293,7 @@ class Generator:
             head6_cells[0].text = u'key路径'
             head6_cells[1].text = u'单元信息'
             head6_cells[2].text = u'敏感数据'
-            for item in data.plist_file_results[file_path]:
+            for item in data.plist_file_results["keyiv"][file_path]:
                 row6_cells = table6.add_row().cells
                 row6_cells[0].text = item[0]
                 row6_cells[1].text = str(item[1])
@@ -307,7 +307,7 @@ class Generator:
             head6_cells[0].text = u'key路径'
             head6_cells[1].text = u'单元信息'
             head6_cells[2].text = u'敏感数据'
-            for item in data.plist_file_results[file_path]:
+            for item in data.plist_file_results["txt"][file_path]:
                 row6_cells = table6.add_row().cells
                 row6_cells[0].text = item[0]
                 row6_cells[1].text = str(item[1])
