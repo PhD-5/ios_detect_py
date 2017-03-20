@@ -1,14 +1,14 @@
+import os
+import time
+import socket
+import clint
 from PreProcess import *
 from modules import *
 from Utils import *
 from Report.DocGenerator import Generator
 import data
-from AppDynamicInfo import AppDynamicInfo
-import os
 import config
-import time
-import clint
-import socket
+from modules.dynamic.AppDynamicInfo import AppDynamicInfo
 
 
 class IOS():
@@ -87,8 +87,8 @@ class IOS():
 
     @staticmethod
     def storage_check():
-        Sql().get()
-        Plist().get()
+        Sql().check()
+        Plist().check()
         # detect keychain
         keychain_checker = Keychain()
         keychain_checker.dump()
@@ -97,12 +97,12 @@ class IOS():
     @staticmethod
     def binary_check():
         SharedLibrary().get()
+        get_seg_info()
         protect_check().check()
         String().get_strings()
         Utils.printy_result('Binary Check', 1)
 
-    def server_scan(self):
-        hosts = ','.join(String().get_url(data.strings))
+    def server_scan(self, hosts):
         self.server.set_args(hosts, data.app_bundleID)
         self.server.start()
 
@@ -111,7 +111,7 @@ class IOS():
         input_md5_list = get_md5(self.app_dynamic_info.user_input)
         input_md5_list.extend(self.app_dynamic_info.user_input)
         data.input_list = set(input_md5_list)
-        print data.input_list
+        # print data.input_list
 
         # detect sensitive content according to user input
         input_json_parser = input_parser()
@@ -138,7 +138,7 @@ class IOS():
 
     def run(self):
         IOS.binary_check()
-        self.server_scan()
+        # self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
         self.start_dynamic_check()
         if self.finish_dynamic_check():
@@ -147,8 +147,8 @@ class IOS():
         if self.finish_static_analyse():
             report_gen = Generator()
             report_gen.generate()
-        if self.finish_server_scan():
-            self.clean()
+        # if self.finish_server_scan():
+        #     self.clean()
 
     def clean(self):
         data.client.close()

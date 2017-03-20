@@ -1,10 +1,13 @@
 import commands
 import data
+from Utils import Utils
 
-def get_info():
+def get_seg_info():
     file_path = data.static_file_path
-    cmd = 'otool -l {}'.format(file_path)
-    out = commands.getoutput(cmd)
+    # cmd = 'otool -l {}'.format(file_path)
+    # out = commands.getoutput(cmd)
+    cmd = '{bin} -l {app}'.format(bin=data.DEVICE_TOOLS['OTOOL'], app=data.metadata['binary_path'])
+    out = Utils.cmd_block(data.client, cmd)
     segment_dict = dict()
 
     lines = out.split('\n')

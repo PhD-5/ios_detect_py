@@ -3,6 +3,7 @@ from binary.protect_checks import protect_check
 from binary.strings import String
 from binary.metadata import Metadata
 from binary.HardCode import HarCodeDetect
+from binary.SegmentInfo import get_seg_info
 from storage.plist import Plist
 from storage.keychain_dump import Keychain
 from storage.sql import Sql
