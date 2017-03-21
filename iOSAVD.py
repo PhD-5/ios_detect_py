@@ -87,12 +87,11 @@ class IOS():
 
     @staticmethod
     def storage_check():
-        Sql().check()
+        data.db_file_results = sql_check()
         Plist().check()
         # detect keychain
         keychain_checker = Keychain()
-        keychain_checker.dump()
-        data.keychain_values = keychain_checker.results
+        data.keychain_values = keychain_checker.dump()
 
     @staticmethod
     def binary_check():
@@ -129,7 +128,7 @@ class IOS():
         data.mitm_results = mitm_parser.results
 
         # detect Hard Code
-        hardcode_detect = HarCodeDetect(self.app_dynamic_info.cccrtpy_json_list)
+        hardcode_detect = HardCodeDetect(self.app_dynamic_info.cccrtpy_json_list)
         hardcode_detect.start_detect()
         # print 'hardcode:',hardcode_detect.result
 

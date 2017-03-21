@@ -2,7 +2,7 @@ import data
 import re
 
 
-class HarCodeDetect:
+class HardCodeDetect:
     def __init__(self, input_list):
         self.black_list = []
         self.init_black_list_from_dynamic(input_list)

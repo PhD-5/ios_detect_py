@@ -25,6 +25,8 @@ class Keychain():
                 if content:
                     self.all_keychain_values.append(content)
         self.filter()
+        Utils.printy_result('Keychain Dump', 1)
+        return self.results
 
     def filter(self):
         for value in self.all_keychain_values:
