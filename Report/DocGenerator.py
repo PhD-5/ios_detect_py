@@ -225,94 +225,98 @@ class Generator:
                 row4_cells[0].text = item
 
         self.document.add_heading(u"数据库文件", level=3)
-        self.document.add_heading(u"用户隐私检测", level=4)
-        for file_path in data.db_file_results["input"].keys():
-            self.document.add_paragraph(u'文件路径：'+file_path)
-            table5 = self.document.add_table(rows=1,cols=3)
-            table5.style = 'Table Grid'
-            head5_cells = table5.rows[0].cells
-            head5_cells[0].text = u'表名'
-            head5_cells[1].text = u'行信息'
-            head5_cells[2].text = u'敏感数据'
-            for item in data.db_file_results["input"][file_path]:
-                row5_cells = table5.add_row().cells
-                row5_cells[0].text = item[0]
-                row5_cells[1].text = str(item[1])
-                row5_cells[2].text = item[2]
-        self.document.add_heading(u"密钥信息检测", level=4)
-        for file_path in data.db_file_results["keyiv"].keys():
-            self.document.add_paragraph(u'文件路径：'+file_path)
-            table5 = self.document.add_table(rows=1,cols=3)
-            table5.style = 'Table Grid'
-            head5_cells = table5.rows[0].cells
-            head5_cells[0].text = u'表名'
-            head5_cells[1].text = u'行信息'
-            head5_cells[2].text = u'敏感数据'
-            for item in data.db_file_results["keyiv"][file_path]:
-                row5_cells = table5.add_row().cells
-                row5_cells[0].text = item[0]
-                row5_cells[1].text = str(item[1])
-                row5_cells[2].text = item[2]
-        self.document.add_heading(u"自定义项检测", level=4)
-        for file_path in data.db_file_results["txt"].keys():
-            self.document.add_paragraph(u'文件路径：'+file_path)
-            table5 = self.document.add_table(rows=1,cols=3)
-            table5.style = 'Table Grid'
-            head5_cells = table5.rows[0].cells
-            head5_cells[0].text = u'表名'
-            head5_cells[1].text = u'行信息'
-            head5_cells[2].text = u'敏感数据'
-            for item in data.db_file_results["txt"][file_path]:
-                row5_cells = table5.add_row().cells
-                row5_cells[0].text = item[0]
-                row5_cells[1].text = str(item[1])
-                row5_cells[2].text = item[2]
-
+        if data.db_file_results:
+            self.document.add_heading(u"用户隐私检测", level=4)
+            for file_path in data.db_file_results["input"].keys():
+                self.document.add_paragraph(u'文件路径：'+file_path)
+                table5 = self.document.add_table(rows=1,cols=3)
+                table5.style = 'Table Grid'
+                head5_cells = table5.rows[0].cells
+                head5_cells[0].text = u'表名'
+                head5_cells[1].text = u'行信息'
+                head5_cells[2].text = u'敏感数据'
+                for item in data.db_file_results["input"][file_path]:
+                    row5_cells = table5.add_row().cells
+                    row5_cells[0].text = item[0]
+                    row5_cells[1].text = str(item[1])
+                    row5_cells[2].text = item[2]
+            self.document.add_heading(u"密钥信息检测", level=4)
+            for file_path in data.db_file_results["keyiv"].keys():
+                self.document.add_paragraph(u'文件路径：'+file_path)
+                table5 = self.document.add_table(rows=1,cols=3)
+                table5.style = 'Table Grid'
+                head5_cells = table5.rows[0].cells
+                head5_cells[0].text = u'表名'
+                head5_cells[1].text = u'行信息'
+                head5_cells[2].text = u'敏感数据'
+                for item in data.db_file_results["keyiv"][file_path]:
+                    row5_cells = table5.add_row().cells
+                    row5_cells[0].text = item[0]
+                    row5_cells[1].text = str(item[1])
+                    row5_cells[2].text = item[2]
+            self.document.add_heading(u"自定义项检测", level=4)
+            for file_path in data.db_file_results["txt"].keys():
+                self.document.add_paragraph(u'文件路径：'+file_path)
+                table5 = self.document.add_table(rows=1, cols=3)
+                table5.style = 'Table Grid'
+                head5_cells = table5.rows[0].cells
+                head5_cells[0].text = u'表名'
+                head5_cells[1].text = u'行信息'
+                head5_cells[2].text = u'敏感数据'
+                for item in data.db_file_results["txt"][file_path]:
+                    row5_cells = table5.add_row().cells
+                    row5_cells[0].text = item[0]
+                    row5_cells[1].text = str(item[1])
+                    row5_cells[2].text = item[2]
+        else:
+            self.document.add_paragraph(u"无数据库文件")
 
         self.document.add_heading(u"Plist文件", level=3)
-        self.document.add_heading(u"用户隐私检测", level=4)
-        for file_path in data.plist_file_results["input"].keys():
-            self.document.add_paragraph(u'文件路径：'+file_path)
-            table6 = self.document.add_table(rows=1,cols=3)
-            table6.style = 'Table Grid'
-            head6_cells = table6.rows[0].cells
-            head6_cells[0].text = u'key路径'
-            head6_cells[1].text = u'单元信息'
-            head6_cells[2].text = u'敏感数据'
-            for item in data.plist_file_results["input"][file_path]:
-                row6_cells = table6.add_row().cells
-                row6_cells[0].text = item[0]
-                row6_cells[1].text = str(item[1])
-                row6_cells[2].text = item[2]
-        self.document.add_heading(u"密钥信息检测", level=4)
-        for file_path in data.plist_file_results["keyiv"].keys():
-            self.document.add_paragraph(u'文件路径：'+file_path)
-            table6 = self.document.add_table(rows=1,cols=3)
-            table6.style = 'Table Grid'
-            head6_cells = table6.rows[0].cells
-            head6_cells[0].text = u'key路径'
-            head6_cells[1].text = u'单元信息'
-            head6_cells[2].text = u'敏感数据'
-            for item in data.plist_file_results["keyiv"][file_path]:
-                row6_cells = table6.add_row().cells
-                row6_cells[0].text = item[0]
-                row6_cells[1].text = str(item[1])
-                row6_cells[2].text = item[2]
-        self.document.add_heading(u"自定义项检测", level=4)
-        for file_path in data.plist_file_results["txt"].keys():
-            self.document.add_paragraph(u'文件路径：'+file_path)
-            table6 = self.document.add_table(rows=1,cols=3)
-            table6.style = 'Table Grid'
-            head6_cells = table6.rows[0].cells
-            head6_cells[0].text = u'key路径'
-            head6_cells[1].text = u'单元信息'
-            head6_cells[2].text = u'敏感数据'
-            for item in data.plist_file_results["txt"][file_path]:
-                row6_cells = table6.add_row().cells
-                row6_cells[0].text = item[0]
-                row6_cells[1].text = str(item[1])
-                row6_cells[2].text = item[2]
-
+        if data.plist_file_results:
+            self.document.add_heading(u"用户隐私检测", level=4)
+            for file_path in data.plist_file_results["input"].keys():
+                self.document.add_paragraph(u'文件路径：'+file_path)
+                table6 = self.document.add_table(rows=1,cols=3)
+                table6.style = 'Table Grid'
+                head6_cells = table6.rows[0].cells
+                head6_cells[0].text = u'key路径'
+                head6_cells[1].text = u'单元信息'
+                head6_cells[2].text = u'敏感数据'
+                for item in data.plist_file_results["input"][file_path]:
+                    row6_cells = table6.add_row().cells
+                    row6_cells[0].text = item[0]
+                    row6_cells[1].text = str(item[1])
+                    row6_cells[2].text = item[2]
+            self.document.add_heading(u"密钥信息检测", level=4)
+            for file_path in data.plist_file_results["keyiv"].keys():
+                self.document.add_paragraph(u'文件路径：'+file_path)
+                table6 = self.document.add_table(rows=1,cols=3)
+                table6.style = 'Table Grid'
+                head6_cells = table6.rows[0].cells
+                head6_cells[0].text = u'key路径'
+                head6_cells[1].text = u'单元信息'
+                head6_cells[2].text = u'敏感数据'
+                for item in data.plist_file_results["keyiv"][file_path]:
+                    row6_cells = table6.add_row().cells
+                    row6_cells[0].text = item[0]
+                    row6_cells[1].text = str(item[1])
+                    row6_cells[2].text = item[2]
+            self.document.add_heading(u"自定义项检测", level=4)
+            for file_path in data.plist_file_results["txt"].keys():
+                self.document.add_paragraph(u'文件路径：'+file_path)
+                table6 = self.document.add_table(rows=1,cols=3)
+                table6.style = 'Table Grid'
+                head6_cells = table6.rows[0].cells
+                head6_cells[0].text = u'key路径'
+                head6_cells[1].text = u'单元信息'
+                head6_cells[2].text = u'敏感数据'
+                for item in data.plist_file_results["txt"][file_path]:
+                    row6_cells = table6.add_row().cells
+                    row6_cells[0].text = item[0]
+                    row6_cells[1].text = str(item[1])
+                    row6_cells[2].text = item[2]
+        else:
+            self.document.add_paragraph(u"无plist文件")
 
         self.document.add_heading(u"本地文件保护检测", level=3)
         table7 = self.document.add_table(rows=1,cols=2)

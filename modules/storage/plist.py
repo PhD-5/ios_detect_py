@@ -19,8 +19,8 @@ class Plist():
         data.local_file_protection.extend(retrieved_files)
 
         # start check plist sensitive data
-        check = Checker(files)
-        check.start('PLIST')
+        check = Checker(files, 'PLIST')
+        check.start()
         data.plist_file_results = check.results
         Utils.printy_result('Plist Check.', 1)
 

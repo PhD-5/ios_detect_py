@@ -9,12 +9,14 @@ import subprocess
 import plistlib
 
 class Checker():
-    def __init__(self, files):
+    def __init__(self, files, type):
 
         self.results = dict()
         self.input_results = dict()
         self.keyiv_results = dict()
         self.txt_results = dict()
+
+        self.type = type
 
         self.files = files
         self.input_list = list(data.input_list)
@@ -43,7 +45,13 @@ class Checker():
                     keyiv_list.append(json["iv"])
         return keyiv_list
 
-    def start(self, type):
+    def parse_file(self, local_file_path):
+        if self.type == 'PLIST':
+            self.parse_plist(local_file_path)
+        else:
+            self.read_db(local_file_path)
+
+    def start(self):
         t = paramiko.Transport(config.mobile_ip, config.ssh_port)
         t.connect(username=config.mobile_user, password=config.mobile_password)
         sftp = paramiko.SFTPClient.from_transport(t)
@@ -56,10 +64,7 @@ class Checker():
             try:
                 signal.signal(signal.SIGALRM, self.my_handler)
                 signal.alarm(60 * 2)
-                if type == 'PLIST':
-                    self.parse_plist(local_file_path)
-                else:
-                    self.read_db(local_file_path)
+                self.parse_file(local_file_path)
                 signal.alarm(0)
             except AssertionError:
                 # print 'time_out:', file

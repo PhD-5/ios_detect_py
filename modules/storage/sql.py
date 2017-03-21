@@ -15,8 +15,8 @@ class Sql():
             return
         retrieved_files = Utils.get_dataprotection(files)
         data.local_file_protection.extend(retrieved_files)
-        check = Checker(files)
-        check.start('SQL')
+        check = Checker(files, 'SQL')
+        check.start()
         data.db_file_results = check.results
         Utils.printy_result('Database Check.', 1)
 
