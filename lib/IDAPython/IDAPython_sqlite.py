@@ -96,9 +96,16 @@ def parse_LDR(addr):
 
 
 def parse_B(func_name, addr):
+	ignore_list = ["_objc_autorelease","_objc_release","_objc_retain","___stack_chk_fail"]
 	imp_msg = ["_objc_msgSend", "_objc_msgSendSuper2", "_objc_msgSendSuper2_stret", "_objc_msgSend_stret"]
 	lable = idc.GetOpnd(addr,0)
-	reg_info = json.dumps(regs)
+
+	for item in ignore_list:
+		if item in lable:
+			return
+
+
+	reg_info = json.dumps(get_x0_to_x7_from_dict(regs))
 	value = (func_name, lable, reg_info,)
 	conn.execute("INSERT INTO BlTable VALUES (?,?,?)", value)
 	'''
@@ -134,6 +141,14 @@ def getX0FromFuncName(func_name):
 def analysis_Xt(addr, xt, start_addr):
 	if idc.GetMnem(addr) == 'LDR':
 		return parse_LDR(addr)
+
+def get_x0_to_x7_from_dict(regs_dict):
+    x_keys = ('X0','X1','X2','X3','X4','X5','X6','X7')
+    newDict = dict()
+    for item in regs_dict:
+        if item in x_keys:
+            newDict[item] = regs_dict[item]
+    return newDict
 
 
 def main():
