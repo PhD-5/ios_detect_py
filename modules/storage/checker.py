@@ -99,7 +99,8 @@ class Checker():
                         info = (table, str(row), black_item)
                         self.input_results[self.cur_file].append(info)
                 except:
-                    Utils.printy_result('READ ROW FROM DB ', 0)
+                    # Utils.printy_result('READ ROW FROM DB ', 0)
+                    pass
             for black_item in self.keyiv_list:
                 try:
                     if black_item in str(row[i]):
@@ -108,7 +109,8 @@ class Checker():
                         info = (table, str(row), black_item)
                         self.keyiv_results[self.cur_file].append(info)
                 except:
-                    Utils.printy_result('READ ROW FROM DB ', 0)
+                    # Utils.printy_result('READ ROW FROM DB ', 0)
+                    pass
             for black_item in self.txt_list:
                 try:
                     if black_item in str(row[i]):
@@ -117,7 +119,8 @@ class Checker():
                         info = (table, str(row), black_item)
                         self.txt_results[self.cur_file].append(info)
                 except:
-                    Utils.printy_result('READ ROW FROM DB ', 0)
+                    # Utils.printy_result('READ ROW FROM DB ', 0)
+                    pass
 
     def parse_plist(self, file):
         pl_cmd = 'plutil -convert xml1 '+file

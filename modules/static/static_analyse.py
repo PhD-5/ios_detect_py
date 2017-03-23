@@ -15,7 +15,7 @@ class static_analyzer(threading.Thread):
         Utils.printy('Start static analysis', 0)
         time.sleep(1)
         cmd = 'java -jar ' + "ios-vulnerability-detection_fat.jar {} {}/temp/{}/report".format(data.static_file_path, os.path.abspath('..'), data.start_time)
-        print cmd
-        print os.path.abspath('.')
-        print os.path.abspath('..')
+        # print cmd
+        # print os.path.abspath('.')
+        # print os.path.abspath('..')
         subprocess.call(cmd, shell=True)
