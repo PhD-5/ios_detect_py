@@ -1,8 +1,12 @@
 import ConfigParser
+import os
+
 from Utils import Utils
 
 config = ConfigParser.SafeConfigParser()
-config.read("./config/para_config.conf")
+config_path = os.path.abspath('.')+os.sep+'config'+os.sep+'para_config.conf'
+print config_path
+config.read(config_path)
 
 mobile_ip = config.get('mobile', 'mobile_ip')
 mobile_user = config.get('mobile', 'mobile_user')

@@ -5,6 +5,7 @@ import time
 import data
 import threading
 from Utils import Utils
+import os
 
 
 class Nessus(threading.Thread):
@@ -117,7 +118,7 @@ class Nessus(threading.Thread):
 
     def download(self, sid, fid):
         nessus_data = self.connect('GET', '/scans/{0}/export/{1}/download'.format(sid, fid))
-        filename = './temp/{}/report/{}.nessus'.format(data.start_time, data.app_bundleID)
+        filename = os.path.abspath('.')+os.sep+'temp'+os.sep+data.start_time+os.sep+'report'+os.sep+data.app_bundleID+'.nessus'
         # print('Saving scan results to {0}.'.format(filename))
         with open(filename, 'w') as f:
             f.write(nessus_data)

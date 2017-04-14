@@ -4,6 +4,9 @@ import sys
 # project start time, also is the project home directory in ./temp
 start_time = ''
 
+# current task workspace : ./temp/{start_time}
+cur_workspace=''
+
 # this is the main ssh connection
 client = None
 

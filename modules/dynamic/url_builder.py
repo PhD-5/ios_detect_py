@@ -12,7 +12,7 @@ class url_builder:
     def build(self):
         # read fuzz.txt to get fuzz factors
         # print os.path.abspath('.')
-        fuzz_txt = open('./config/fuzz.txt')
+        fuzz_txt = open(os.path.abspath('.')+os.sep+'config'+os.path+'fuzz.txt')
         lines = fuzz_txt.readlines()
         for line in lines:
             self.fuzz_factors.append(line.strip('\n'))

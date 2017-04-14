@@ -4,7 +4,11 @@ import os
 
 
 def build():
-    data.start_time = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
-    os.makedirs('./temp/{}/binary'.format(data.start_time))
-    os.makedirs('./temp/{}/report'.format(data.start_time))
-    os.makedirs('./temp/{}/files'.format(data.start_time))
+    start_time = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
+    cur_workspace = os.path.abspath('.')+os.sep+'temp'+os.sep+start_time
+    os.makedirs(cur_workspace+os.sep+'binary')
+    os.makedirs(cur_workspace+os.sep+'report')
+    os.makedirs(cur_workspace+os.sep+'files')
+
+    data.start_time = start_time
+    data.cur_workspace = cur_workspace

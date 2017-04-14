@@ -1,3 +1,5 @@
 paramiko
 simplejson
 python-docx
+request
+clint

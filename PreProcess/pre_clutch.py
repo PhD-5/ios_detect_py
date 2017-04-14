@@ -53,6 +53,7 @@ def clutch():
 
     else:
         # print 'the application is not encrypted'
+        print data.metadata['binary_path']
         data.static_file_path = bin_get.via_sftp(data.metadata['binary_path'])
 
 

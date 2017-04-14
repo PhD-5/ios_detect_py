@@ -52,7 +52,8 @@ class Metadata():
         # Compose binary path
         binary_folder = binary_directory
         binary_name = os.path.splitext(binary_folder.rsplit('/', 1)[-1])[0]
-        binary_path = Utils.escape_path(os.path.join(binary_folder, binary_name))
+
+        binary_path = Utils.escape_path(binary_folder + '/' + binary_name)
 
         # Detect architectures
         architectures = self._detect_architectures(binary_path)

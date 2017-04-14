@@ -27,7 +27,7 @@ class Checker():
 
     def read_txt(self):
         txt_list = list()
-        file = open('./config/sensitive.txt')
+        file = open(os.path.abspath('.')+os.sep+'config'+ os.sep+'sensitive.txt')
         lines = file.readlines()
         for line in lines:
             line = line.strip('\n')
@@ -59,7 +59,8 @@ class Checker():
         for file in self.files:
             self.cur_file = file
             file_name = '{}_{}'.format(os.path.basename(file), count)
-            local_file_path = './temp/{}/files/{}'.format(data.start_time, file_name)
+            # local_file_path = './temp/{}/files/{}'.format(data.start_time, file_name)
+            local_file_path = data.cur_workspace+os.sep+'files'+ os.sep+file_name
             sftp.get(file, local_file_path)
             try:
                 signal.signal(signal.SIGALRM, self.my_handler)

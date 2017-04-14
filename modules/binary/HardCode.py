@@ -1,5 +1,6 @@
 import data
 import re
+import os
 
 
 class HardCodeDetect:
@@ -28,7 +29,7 @@ class HardCodeDetect:
                 self.black_list.append(json['key'])
 
     def init_black_list_from_txt(self):
-        txt_file = open('./config/hardcode.txt')
+        txt_file = open(os.path.abspath('.')+os.sep+'config'+os.sep+'hardcode.txt')
         lines = txt_file.readlines()
         for line in lines:
             line = line.strip('\n')

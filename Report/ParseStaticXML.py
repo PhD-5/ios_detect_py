@@ -13,7 +13,8 @@ class XMLParser:
 
     def start_parse(self):
         # find the xml
-        report_dir = './temp/{}/report'.format(data.start_time)
+        #report_dir = './temp/{}/report'.format(data.start_time)
+        report_dir = os.path.abspath('.')+os.sep+'temp'+data.start_time+os.sep+'report'
         for file in os.listdir(report_dir):
             if file.endswith('.xml'):
                 self.parse_xml(os.path.join(report_dir, file))

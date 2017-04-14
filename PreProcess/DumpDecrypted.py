@@ -11,7 +11,7 @@ def dump_binary():
     Utils.sftp_put(ip=config.mobile_ip, port=config.ssh_port,
                    username=config.mobile_user, password=config.mobile_password,
                    remote_path=target_doc_file,
-                   local_file='./tools/dumpdecrypted.dylib')
+                   local_file=os.path.abspath('.')+os.sep+'tools'+os.sep+'dumpdecrypted.dylib')
 
     target_bin_path = data.metadata['binary_path']
     dump_cmd = 'DYLD_INSERT_LIBRARIES={} {}'.format(target_doc_file, target_bin_path)

@@ -1,6 +1,7 @@
 #coding=utf-8
 from docx import Document
 import data
+import os
 from ParseStaticXML import XMLParser
 
 class Generator:
@@ -17,8 +18,8 @@ class Generator:
         self.write_static_results()
 
 
-        self.document.save('./temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID))
-
+        # self.document.save('./temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID))
+        path = os.path.abspath('.')+os.sep+'temp'+os.sep+data.start_time+os.sep+'report'+os.sep+data.app_bundleID+'.docx'
         #write app info
 
     def write_head(self):

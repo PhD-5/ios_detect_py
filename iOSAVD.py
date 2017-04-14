@@ -19,7 +19,7 @@ class IOS():
         self.t_static = static_analyzer()
         self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
         self.t_socket = SocketServerThread(self.app_dynamic_info)
-        self.server = Nessus()
+        # self.server = Nessus()
 
     @staticmethod
     def prepare_for_basic_info():

@@ -1,6 +1,7 @@
 import data
 from Utils.utils import Utils
 import config
+import os
 
 class Keychain():
 
@@ -13,7 +14,7 @@ class Keychain():
     def send_tool(self):
         Utils.sftp_put(ip=config.mobile_ip, port=config.ssh_port,
                        username=config.mobile_user, password=config.mobile_password,
-                       local_file="./tools/keychain_dumper", remote_path='./keychain_dumper')
+                       local_file=os.path.abspath('.')+os.sep+'tools'+os.sep+'keychain_dumper', remote_path='./keychain_dumper')
 
     def dump(self):
         cmd = './keychain_dumper'
