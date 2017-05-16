@@ -2,7 +2,7 @@ import paramiko
 import os
 import sqlite3
 import signal
-from Utils import Utils
+from Util.utils import Utils
 import config
 import data
 import subprocess
@@ -99,7 +99,7 @@ class Checker():
                         info = (table, str(row), black_item)
                         self.input_results[self.cur_file].append(info)
                 except:
-                    # Utils.printy_result('READ ROW FROM DB ', 0)
+                    # Util.printy_result('READ ROW FROM DB ', 0)
                     pass
             for black_item in self.keyiv_list:
                 try:
@@ -109,7 +109,7 @@ class Checker():
                         info = (table, str(row), black_item)
                         self.keyiv_results[self.cur_file].append(info)
                 except:
-                    # Utils.printy_result('READ ROW FROM DB ', 0)
+                    # Util.printy_result('READ ROW FROM DB ', 0)
                     pass
             for black_item in self.txt_list:
                 try:
@@ -119,7 +119,7 @@ class Checker():
                         info = (table, str(row), black_item)
                         self.txt_results[self.cur_file].append(info)
                 except:
-                    # Utils.printy_result('READ ROW FROM DB ', 0)
+                    # Util.printy_result('READ ROW FROM DB ', 0)
                     pass
 
     def parse_plist(self, file):

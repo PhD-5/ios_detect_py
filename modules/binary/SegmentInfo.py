@@ -1,6 +1,6 @@
 import commands
 import data
-from Utils import Utils
+from Util.utils import Utils
 
 def get_seg_info():
     file_path = data.static_file_path

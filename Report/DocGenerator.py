@@ -16,8 +16,8 @@ class Generator:
         self.write_storage_info()
         self.write_static_results()
 
-
-        self.document.save('./temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID))
+        data.report_path = './temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID)
+        self.document.save(data.report_path)
 
         #write app info
 

@@ -4,7 +4,7 @@ import sys
 import time
 import data
 import threading
-from Utils import Utils
+from Util.utils import Utils
 
 
 class Nessus(threading.Thread):
@@ -131,15 +131,22 @@ class Nessus(threading.Thread):
         scan_data = self.add(app, 'Test urls in {0}'.format(app), target, self.policy_id)
         scan_id = scan_data['id']
         scan_uuid = self.launch(scan_id)
-        history_id = self.get_history_ids(scan_id)[scan_uuid]
-        while self.status(scan_id, history_id) != 'completed':
-            # print time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
-            time.sleep(10)
-
-        # print('Exporting the completed scan.')
-        file_id = self.export(scan_id, history_id)
-        self.download(scan_id, file_id)
-
-        # print('Deleting the scan.')
-        self.delete(scan_id)
+        # history_id = self.get_history_ids(scan_id)[scan_uuid]
+        # while self.status(scan_id, history_id) != 'completed':
+        #     # print time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
+        #     time.sleep(10)
+        #
+        # # print('Exporting the completed scan.')
+        # file_id = self.export(scan_id, history_id)
+        # self.download(scan_id, file_id)
+        #
+        # # print('Deleting the scan.')
+        # self.delete(scan_id)
         self.logout()
+
+hosts = ['www.baidu.com']
+server = Nessus()
+def server_scan(hosts):
+    server.set_args(hosts, "test")
+    server.start()
+server_scan(hosts)

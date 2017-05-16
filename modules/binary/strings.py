@@ -2,7 +2,7 @@ from urlparse import urlparse
 import re
 import data
 import sys
-from Utils.utils import Utils
+from Util.utils import Utils
 import commands
 
 reload(sys)
@@ -20,7 +20,7 @@ class String():
             result_str = commands.getstatusoutput(cmd_strings)
             if (result_str[0] == 0):
                 data.strings = result_str[1].split('\n')
-                # data.strings = Utils.cmd_block(data.client, cmd_strings).split('\n')
+                # data.strings = Util.cmd_block(data.client, cmd_strings).split('\n')
         self.strings = data.strings
         # print "----------------strings--------------------"
         # print "strings count:", len(self.strings)

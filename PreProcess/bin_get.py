@@ -1,5 +1,5 @@
 import data
-from Utils import Utils
+from Util.utils import Utils
 import config
 import os
 

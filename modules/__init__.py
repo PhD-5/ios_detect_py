@@ -7,7 +7,7 @@ from binary.SegmentInfo import get_seg_info
 from storage.plist import Plist
 from storage.keychain import Keychain
 from storage.sql import sql_check
-from static.static_analyse import static_analyzer
+# from static.static_analyse import static_analyzer
 from dynamic.url_scheme_fuzzer import url_scheme_fuzzer
 from dynamic.sensitive_json_parser import input_parser
 from dynamic.traffic_json_parser import TrafficParser

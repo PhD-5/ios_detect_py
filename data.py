@@ -9,7 +9,7 @@ client = None
 
 omp_client = None
 
-db = None
+dbServer = None
 
 # all installed app info
 app_dict = {}
@@ -120,3 +120,5 @@ DEVICE_SETUP = {
 DEVICE_TOOLS = dict([(k, v['COMMAND']) for k, v in DEVICE_SETUP['TOOLS'].iteritems() if v['COMMAND'] is not None])
 
 crash_report_folder = '/var/mobile/Library/Logs/CrashReporter'
+
+report_path = ""

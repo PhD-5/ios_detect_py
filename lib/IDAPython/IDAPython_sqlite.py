@@ -154,11 +154,12 @@ def get_x0_to_x7_from_dict(regs_dict):
 def main():
 
 	for func in Functions():
-		
+		print "this is main"
 		if idc.SegName(func) == '__stubs':
 			continue
 			
 		func_name = idc.GetFunctionName(func)
+		print func_name
 
 		
 		regs.clear()

@@ -1,5 +1,5 @@
 import data
-from Utils.utils import Utils
+from Util.utils import Utils
 import time
 from url_builder import url_builder
 

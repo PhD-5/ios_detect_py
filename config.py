@@ -1,5 +1,5 @@
 import ConfigParser
-from Utils import Utils
+from Util.utils import Utils
 
 config = ConfigParser.SafeConfigParser()
 config.read("./config/para_config.conf")

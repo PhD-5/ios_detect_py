@@ -1,7 +1,7 @@
 import re
 import collections
 import data
-from Utils.utils import Utils
+from Util.utils import Utils
 
 
 class protect_check():

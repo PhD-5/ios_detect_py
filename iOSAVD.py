@@ -1,10 +1,16 @@
+import sys
+sys.path.append('modules/static/gen-py')
 import os
 import time
 import socket
+
 import clint
-from PreProcess import *
+
 from modules import *
-from Utils import *
+import modules.static.static_analyse as static_analyze
+from Util import ssh, MD5, socketServer
+from Util.utils import Utils
+from PreProcess import should_install, pre_clutch
 from Report.DocGenerator import Generator
 import data
 import config
@@ -12,31 +18,38 @@ from modules.dynamic.AppDynamicInfo import AppDynamicInfo
 
 
 class IOS():
-    def __init__(self):
-        IOS.prepare_for_basic_info()
-        # self.db = DBServer()
-        # self.db.on()
-        self.t_static = static_analyzer()
+    def __init__(self, ipa_path, bundle_id):
+        IOS.connect()
+        Utils.build()
+        IOS.prepare_for_basic_info(ipa_path, bundle_id)
+        self.t_static = static_analyze.static_analyzer()
         self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
-        self.t_socket = SocketServerThread(self.app_dynamic_info)
+        self.t_socket = socketServer.SocketServerThread(self.app_dynamic_info)
         self.server = Nessus()
 
     @staticmethod
-    def prepare_for_basic_info():
+    def prepare_for_basic_info(ipa_path, bundle_id):
+        data.app_dict = Utils.ret_LastLaunch()  # set app_dict
+        if ipa_path:
+            should_install.install_ipa_from_local(ipa_path)  # set bundleID
+        elif bundle_id:
+            data.app_bundleID = bundle_id
+        else:
+            should_install.ask_for_user_choose()
+            Utils.getInstalledAppList()  # set bundle_ID
+        Metadata().get_metadata()
+        pre_clutch.clutch()
+
+    @staticmethod
+    def connect():
         while True:
             try:
                 Utils.printy('Conneting..', 0)
-                data.client = set_ssh_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
+                data.client = ssh.set_ssh_conn(config.mobile_ip, config.ssh_port, config.mobile_user, config.mobile_password)
                 break
             except socket.error:
                 time.sleep(5)
                 Utils.printy_result('Operation timed out.', 0)
-
-        build_home_dir.build()
-        should_install.ask_for_user_choose()
-        Utils.getInstalledAppList()
-        Metadata().get_metadata()
-        pre_clutch.clutch()
 
     def start_static_analyse(self):
         file_separator = os.path.sep
@@ -62,7 +75,7 @@ class IOS():
                 # print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
                 # print '================================================================='
                 Utils.printy('CONFIG YOUR PHONE : MITM ON and Traffic OFF', 3)
-                # Utils.printy('Start MITM detect.', 0)
+                # Util.printy('Start MITM detect.', 0)
                 while not data.MITM_Done:
                     time.sleep(2)
                 Utils.printy_result('MITM Check.', 1)
@@ -107,7 +120,7 @@ class IOS():
 
     def analyse(self):
         # copy the input data to class data
-        input_md5_list = get_md5(self.app_dynamic_info.user_input)
+        input_md5_list = MD5.get_md5(self.app_dynamic_info.user_input)
         input_md5_list.extend(self.app_dynamic_info.user_input)
         data.input_list = set(input_md5_list)
         # print data.input_list
@@ -137,7 +150,7 @@ class IOS():
 
     def run(self):
         IOS.binary_check()
-        # self.server_scan(','.join(String().get_url(data.strings)))
+        self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
         self.start_dynamic_check()
         if self.finish_dynamic_check():
@@ -147,12 +160,12 @@ class IOS():
             report_gen = Generator()
             report_gen.generate()
         # if self.finish_server_scan():
-        #     self.clean()
+        self.clean()
 
     def clean(self):
         data.client.close()
-        # self.db.down()
 
-IOS().run()
+
+# IOS(None, None).run()
 
 

@@ -1,6 +1,5 @@
 import os
-from Utils.database import DBServer
-from Utils.utils import Utils
+from Util.utils import Utils
 import data
 import plistlib
 

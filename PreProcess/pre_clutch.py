@@ -2,7 +2,7 @@
 import re
 import os
 import config
-from Utils.utils import Utils
+from Util.utils import Utils
 import data
 import DumpDecrypted
 import sys
@@ -10,7 +10,6 @@ import bin_get
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
 
 # ------get clutch -i result-----
 def clutch():
