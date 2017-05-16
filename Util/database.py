@@ -55,6 +55,7 @@ class DBServer():
     def execute(self, query):
         try:
             self.c.execute(query)
+            self.con.commit()
             return self.c.fetchall()
         except sqlite3.Error as e:
             print e.args[0]
@@ -63,6 +64,7 @@ class DBServer():
     def execute(self, query, args):
         try:
             self.c.execute(query, args)
+            self.con.commit()
             return self.c.fetchall()
         except sqlite3.Error as e:
             print "here", e.args[0]

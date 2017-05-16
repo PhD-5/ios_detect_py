@@ -6,13 +6,22 @@ import time
 dbServer = DBServer()
 dbServer.on()
 while True:
-    result = dbServer.execute("select appid, name, path from ios_app where status=?", "2")[0]
-    id = result[0]
-    name = result[1]
-    path = result[2]
-    task = iOSAVD.IOS(path, name).run()
-    dbServer.execute("update ios_app set reportpath=? where appid=?", (data.report_path, id))
-    # result = dbServer.execute("select * from ios_app where appid=?", (id,))
+    # status == 2  untested
+    try:
+        result = dbServer.execute("select appid, name, path from ios_app where status=?", "2")[0]
+        id = result[0]
+        name = result[1]
+        path = result[2]
+        # status == 3 in progress
+        dbServer.execute("update ios_app set status=? where appid=?", (3, id))
+        # result = dbServer.execute("select * from ios_app where appid=?", (id,))
+        task = iOSAVD.IOS(path, name).run()
+        # data.report_path = "report"
+        dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))
+        # result = dbServer.execute("select * from ios_app where appid=?", (id,))
+        # result = dbServer.execute("select * from ios_app where appid=?", (id,))
+    except IndexError:
+        time.sleep(30)
 
 
 

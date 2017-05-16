@@ -184,7 +184,12 @@ class Utils():
         Utils.cmd_block(client, 'rm /var/mobile/Library/MobileInstallation/temp.plist')
         Utils.cmd_block(client, 'rm /var/mobile/Library/MobileInstallation/temp.json')
         json_dict = simplejson.loads(json)
-        return json_dict['User']
+        app_dict = json_dict['User']
+        with open('apps.txt', 'w') as file:
+            for bundle_id in app_dict.keys():
+                file.write(bundle_id + "\r")
+        file.close()
+        return app_dict
 
     @staticmethod
     def build():
@@ -194,7 +199,6 @@ class Utils():
         for dir in ["binary", "report", "files"]:
             os.makedirs(os.path.join(root, dir))
         Utils.cmd_block(data.client, "mkdir /tmp/detect/")
-
         # os.makedirs('./temp/{}/binary'.format(data.start_time))
         # os.makedirs('./temp/{}/report'.format(data.start_time))
         # os.makedirs('./temp/{}/files'.format(data.start_time))
