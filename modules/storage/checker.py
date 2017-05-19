@@ -96,7 +96,7 @@ class Checker():
                     if black_item in str(row[i]):
                         if self.cur_file not in self.input_results:
                             self.input_results[self.cur_file] = []
-                        info = (table, str(row), black_item)
+                        info = (table, str(row[i]), black_item)
                         self.input_results[self.cur_file].append(info)
                 except:
                     # Util.printy_result('READ ROW FROM DB ', 0)
@@ -106,7 +106,7 @@ class Checker():
                     if black_item in str(row[i]):
                         if self.file not in self.keyiv_results:
                             self.keyiv_results[self.cur_file] = []
-                        info = (table, str(row), black_item)
+                        info = (table, str(row[i]), black_item)
                         self.keyiv_results[self.cur_file].append(info)
                 except:
                     # Util.printy_result('READ ROW FROM DB ', 0)
@@ -116,7 +116,7 @@ class Checker():
                     if black_item in str(row[i]):
                         if self.cur_file not in self.txt_results:
                             self.txt_results[self.cur_file] = []
-                        info = (table, str(row), black_item)
+                        info = (table, str(row[i]), black_item)
                         self.txt_results[self.cur_file].append(info)
                 except:
                     # Util.printy_result('READ ROW FROM DB ', 0)

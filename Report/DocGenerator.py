@@ -36,9 +36,9 @@ class Generator:
         self.document.add_paragraph(data.metadata['name'])
         self.document.add_paragraph(u'应用版本：', style='List Bullet')
         self.document.add_paragraph(data.metadata['app_version'])
-        self.document.add_paragraph(u'Bundle路径：', style='List Bullet')
+        self.document.add_paragraph(u'应用路径：', style='List Bullet')
         self.document.add_paragraph(data.metadata['bundle_directory'])
-        self.document.add_paragraph(u'Data路径：', style='List Bullet')
+        self.document.add_paragraph(u'沙盒路径：', style='List Bullet')
         self.document.add_paragraph(data.metadata['data_directory'])
 
     def write_binary_info(self):
@@ -49,10 +49,10 @@ class Generator:
         table.style = 'Table Grid'
         head_cell = table.rows[0].cells
         head_cell[0].text = u'架构'
-        head_cell[1].text = 'Encrypted'
-        head_cell[2].text = 'Stack Canaries'
-        head_cell[3].text = 'ARC'
-        head_cell[4].text = 'PIE'
+        head_cell[1].text = u'加密保护(Encrypted)'
+        head_cell[2].text = u'栈保护(Stack Canaries)'
+        head_cell[3].text = u'自动内存管理(ARC)'
+        head_cell[4].text = u'地址随机化(PIE)'
         for arch in data.protection_check_lables.keys():
             row_cells = table.add_row().cells
             row_cells[0].text = arch
@@ -95,12 +95,14 @@ class Generator:
                 row_cells[1].text = 'Crash'
             else:
                 row_cells[1].text = 'Safe'
+        self.document.add_paragraph(u"应用程序通过appDelegate中的-[application: openURL: sourceApplicaiton: annotation:]处理接受到的URL")
 
         self.document.add_heading(u"反注入检测", level=2)
         if data.segment_dict.has_key('__RESTRICT') and '__restrict' in data.segment_dict['data.segment_dict']:
             self.document.add_paragraph(u"采用了[__RESTRICT,__restrict]，具备一定的反注入能力")
         else:
             self.document.add_paragraph(u"不具备反注入能力，建议添加[__RESTRICT,__restrict]")
+            self.document.add_paragraph(u"攻击者可以通过注入dylib对应用中的方法和函数进行劫持和替换，严重威胁应用安全。")
 
 
     def write_transport_info(self):
