@@ -194,6 +194,8 @@ class Utils():
 
     @staticmethod
     def get_bundle_name_byID(app_dict, bundle_id):
+        bundle_name = ''
+
         bundle_dir= app_dict[bundle_id]['Path']
         info_plist_path = bundle_dir+'/Info.plist'
         tmp_plist_path = '/var/tmp/Info_tmp.plist'
@@ -203,8 +205,12 @@ class Utils():
         info_plist_json = Utils.cmd_block(data.client,'cat ' + tmp_json_path)
         Utils.cmd_block(data.client,'rm ' + tmp_json_path)
         Utils.cmd_block(data.client, 'rm ' + tmp_plist_path)
-        info_plist_dict = simplejson.loads(info_plist_json)
-        return info_plist_dict['CFBundleName']
+        try:
+            info_plist_dict = simplejson.loads(info_plist_json)
+            bundle_name = info_plist_dict['CFBundleName']
+        except:
+            bundle_name = u"解析异常，请尝试重启手机"
+        return bundle_name
 
     @staticmethod
     def build():
