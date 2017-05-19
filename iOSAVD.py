@@ -52,12 +52,12 @@ class IOS():
                 Utils.printy_result('Operation timed out.', 0)
 
     def start_static_analyse(self):
-        file_separator = os.path.sep
-        os.chdir(os.path.abspath('.') + file_separator + 'lib')
+        # file_separator = os.path.sep
+        # os.chdir(os.path.abspath('.') + file_separator + 'lib')
         self.t_static.start()
         # need to change dir to root, because in static thread the dir is changed to lib dir.
         time.sleep(2)  # make sure java -jar in thread can get into directory lib
-        os.chdir(os.path.abspath('..'))
+        # os.chdir(os.path.abspath('..'))
 
     def finish_static_analyse(self):
         self.t_static.join()

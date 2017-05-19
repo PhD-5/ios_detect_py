@@ -122,3 +122,5 @@ DEVICE_TOOLS = dict([(k, v['COMMAND']) for k, v in DEVICE_SETUP['TOOLS'].iterite
 crash_report_folder = '/var/mobile/Library/Logs/CrashReporter'
 
 report_path = ""
+
+root = ""
