@@ -187,9 +187,24 @@ class Utils():
         app_dict = json_dict['User']
         with open('apps.txt', 'w') as file:
             for bundle_id in app_dict.keys():
-                file.write(bundle_id + "\r")
+                bundle_name = Utils.get_bundle_name_byID(app_dict,bundle_id)
+                file.write(bundle_id +'<{}>'.format(bundle_name)+ "\r")
         file.close()
         return app_dict
+
+    @staticmethod
+    def get_bundle_name_byID(app_dict, bundle_id):
+        bundle_dir= app_dict[bundle_id]['Path']
+        info_plist_path = bundle_dir+'/Info.plist'
+        tmp_plist_path = '/var/tmp/Info_tmp.plist'
+        tmp_json_path  = '/var/tmp/Info_tmp.json'
+        Utils.cmd_block(data.client,'cp '+info_plist_path+' ' + tmp_plist_path)
+        Utils.cmd_block(data.client,'plutil -convert json ' + tmp_plist_path)
+        info_plist_json = Utils.cmd_block(data.client,'cat ' + tmp_json_path)
+        Utils.cmd_block(data.client,'rm ' + tmp_json_path)
+        Utils.cmd_block(data.client, 'rm ' + tmp_plist_path)
+        info_plist_dict = simplejson.loads(info_plist_json)
+        return info_plist_dict['CFBundleName']
 
     @staticmethod
     def build():
