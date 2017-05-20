@@ -48,8 +48,12 @@ class Checker():
     def parse_file(self, local_file_path):
         if self.type == 'PLIST':
             self.parse_plist(local_file_path)
-        else:
+        elif self.type == 'SQL':
             self.read_db(local_file_path)
+        elif self.type == 'LOG':
+            self.read_log(local_file_path)
+        else:
+            pass
 
     def start(self):
         t = paramiko.Transport(config.mobile_ip, config.ssh_port)
@@ -74,6 +78,36 @@ class Checker():
         self.results["keyiv"] = self.keyiv_results
         self.results["txt"] = self.txt_results
         t.close()
+
+    def read_log(self, file):
+        # clear the log in iphone
+        Utils.cmd_block('cat /dev/null > /var/log/syslog')
+
+        log_file = open(file)
+        while 1:
+            line = log_file.readline()
+
+    def check_log_line(self, line):
+        for black_item in self.input_list:
+            if black_item in line:
+                if self.file not in self.input_results:
+                    self.input_results[self.cur_file]=[]
+                info = (line, black_item)
+                self.input_results[self.cur_file].append(info)
+
+        for black_item in self.txt_list:
+            if black_item in line:
+                if self.file not in self.txt_results:
+                    self.txt_results[self.cur_file]=[]
+                info = (line, black_item)
+                self.txt_results[self.cur_file].append(info)
+
+        for black_item in self.keyiv_list:
+            if black_item in line:
+                if self.file not in self.keyiv_results:
+                    self.keyiv_results[self.cur_file]=[]
+                info = (line, black_item)
+                self.keyiv_results[self.cur_file].append(info)
 
     def read_db(self, file):
         conn = sqlite3.connect(file)

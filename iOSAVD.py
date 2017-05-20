@@ -102,6 +102,8 @@ class IOS():
     def storage_check():
         data.db_file_results = sql_check()
         Plist().check()
+        Log().check()
+
         # detect keychain
         keychain_checker = Keychain()
         data.keychain_values = keychain_checker.dump()

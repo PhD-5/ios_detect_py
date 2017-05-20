@@ -5,6 +5,7 @@ from binary.metadata import Metadata
 from binary.HardCode import HardCodeDetect
 from binary.SegmentInfo import get_seg_info
 from storage.plist import Plist
+from storage.log import Log
 from storage.keychain import Keychain
 from storage.sql import sql_check
 # from static.static_analyse import static_analyzer

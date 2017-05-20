@@ -320,6 +320,47 @@ class Generator:
         else:
             self.document.add_paragraph(u"无plist文件")
 
+        self.document.add_heading(u"Log审计", level=3)
+        if data.log_file_results:
+            self.document.add_heading(u"用户隐私检测", level=4)
+            for file_path in data.plist_file_results["input"].keys():
+                self.document.add_paragraph(u'文件路径：' + file_path)
+                table6 = self.document.add_table(rows=1, cols=2)
+                table6.style = 'Table Grid'
+                head6_cells = table6.rows[0].cells
+                head6_cells[0].text = u'log信息'
+                head6_cells[1].text = u'敏感信息'
+                for item in data.plist_file_results["input"][file_path]:
+                    row6_cells = table6.add_row().cells
+                    row6_cells[0].text = item[0]
+                    row6_cells[2].text = item[1]
+            self.document.add_heading(u"秘钥信息检测", level=4)
+            for file_path in data.plist_file_results["keyiv"].keys():
+                self.document.add_paragraph(u'文件路径：' + file_path)
+                table6 = self.document.add_table(rows=1, cols=2)
+                table6.style = 'Table Grid'
+                head6_cells = table6.rows[0].cells
+                head6_cells[0].text = u'log信息'
+                head6_cells[1].text = u'敏感信息'
+                for item in data.plist_file_results["keyiv"][file_path]:
+                    row6_cells = table6.add_row().cells
+                    row6_cells[0].text = item[0]
+                    row6_cells[2].text = item[1]
+            self.document.add_heading(u"自定义项检测", level=4)
+            for file_path in data.plist_file_results["txt"].keys():
+                self.document.add_paragraph(u'文件路径：' + file_path)
+                table6 = self.document.add_table(rows=1, cols=2)
+                table6.style = 'Table Grid'
+                head6_cells = table6.rows[0].cells
+                head6_cells[0].text = u'log信息'
+                head6_cells[1].text = u'敏感信息'
+                for item in data.plist_file_results["txt"][file_path]:
+                    row6_cells = table6.add_row().cells
+                    row6_cells[0].text = item[0]
+                    row6_cells[2].text = item[1]
+        else:
+            self.document.add_paragraph(u"无敏感信息")
+
         self.document.add_heading(u"本地文件保护检测", level=3)
         table7 = self.document.add_table(rows=1,cols=2)
         table7.style = 'Table Grid'
