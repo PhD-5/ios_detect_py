@@ -60,7 +60,6 @@ fuzz_result = dict()
 # local files check results
 db_file_results = dict()
 plist_file_results = dict()
-log_file_results = dict()
 
 # keychain values
 keychain_values = []

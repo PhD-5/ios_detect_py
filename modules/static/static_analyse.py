@@ -25,11 +25,12 @@ class static_analyzer(threading.Thread):
         Utils.printy('Start static analysis', 0)
         time.sleep(1)
         try:
-            transport = TSocket.TSocket('192.168.2.74', 9090)
+            transport = TSocket.TSocket('192.168.133.128', 9090)
             transport = TTransport.TBufferedTransport(transport)
             protocol = TBinaryProtocol.TBinaryProtocol(transport)
             client = StaticAnalyze.Client(protocol)
             transport.open()
+            client.connect()
             # print "check connection"
             # print "server - " + client.connect()
             # print "start static analysis"

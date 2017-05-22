@@ -188,7 +188,7 @@ class Utils():
         with open('apps.txt', 'w') as file:
             for bundle_id in app_dict.keys():
                 bundle_name = Utils.get_bundle_name_byID(app_dict,bundle_id)
-                file.write(bundle_id +'<{}>'.format(bundle_name)+ "\r")
+                file.write(bundle_id +'<{}>'.format(bundle_name) + "\r\n")
         file.close()
         return app_dict
 
@@ -214,9 +214,10 @@ class Utils():
 
     @staticmethod
     def build():
+        data.root = os.path.abspath('.')
         data.start_time = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
         root = os.path.join(".", "temp", data.start_time)
-        print root
+        # print root
         for dir in ["binary", "report", "files"]:
             os.makedirs(os.path.join(root, dir))
         Utils.cmd_block(data.client, "mkdir /tmp/detect/")
@@ -224,7 +225,11 @@ class Utils():
         # os.makedirs('./temp/{}/report'.format(data.start_time))
         # os.makedirs('./temp/{}/files'.format(data.start_time))
 
-
+    @staticmethod
+    def ret_name_from_db(name):
+        name = name.strip()
+        bundle_id = name.split("<")[0]
+        return bundle_id
 
 
 

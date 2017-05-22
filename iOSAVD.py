@@ -38,6 +38,7 @@ class IOS():
             should_install.ask_for_user_choose()
             Utils.getInstalledAppList()  # set bundle_ID
         Metadata().get_metadata()
+        print data.app_bundleID
         pre_clutch.clutch()
 
     @staticmethod
@@ -66,27 +67,27 @@ class IOS():
 
     def start_dynamic_check(self):
         self.t_socket.start()
-        time.sleep(1)
-        while True:
-            user_input = raw_input(clint.textui.colored.yellow('> >> >>> Do you want to detect MITM? [Y/N] > '))
-            if user_input == 'Y' or user_input == 'y':
-                # print '================================================================='
-                # print '=   If you want to detect the MITM, please config on phone:     ='
-                # print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
-                # print '================================================================='
-                Utils.printy('CONFIG YOUR PHONE : MITM ON and Traffic OFF', 3)
-                # Util.printy('Start MITM detect.', 0)
-                while not data.MITM_Done:
-                    time.sleep(2)
-                Utils.printy_result('MITM Check.', 1)
-                Utils.printy("CONFIG YOUR PHONE : MITM OFF and Traffic ON", 3)
-                break
-            elif user_input == 'N' or user_input == 'n':
-                data.MITM_Done = True
-                Utils.printy("CONFIG YOUR PHONE : MITM OFF and Traffic ON", 3)
-                break
-            else:
-                Utils.printy('Invalid input! Please input Y or N', 1)
+        # time.sleep(1)
+        # while True:
+        #     user_input = raw_input(clint.textui.colored.yellow('> >> >>> Do you want to detect MITM? [Y/N] > '))
+        #     if user_input == 'Y' or user_input == 'y':
+        #         # print '================================================================='
+        #         # print '=   If you want to detect the MITM, please config on phone:     ='
+        #         # print '=   OPEN the "MITM" and CLOSE the "Traffic"!                    ='
+        #         # print '================================================================='
+        #         Utils.printy('CONFIG YOUR PHONE : MITM ON and Traffic OFF', 3)
+        #         # Util.printy('Start MITM detect.', 0)
+        #         while not data.MITM_Done:
+        #             time.sleep(2)
+        #         Utils.printy_result('MITM Check.', 1)
+        #         Utils.printy("CONFIG YOUR PHONE : MITM OFF and Traffic ON", 3)
+        #         break
+        #     elif user_input == 'N' or user_input == 'n':
+        #         data.MITM_Done = True
+        #         Utils.printy("CONFIG YOUR PHONE : MITM OFF and Traffic ON", 3)
+        #         break
+        #     else:
+        #         Utils.printy('Invalid input! Please input Y or N', 1)
 
     def finish_dynamic_check(self):
         self.t_socket.join()
@@ -102,8 +103,6 @@ class IOS():
     def storage_check():
         data.db_file_results = sql_check()
         Plist().check()
-        Log().check()
-
         # detect keychain
         keychain_checker = Keychain()
         data.keychain_values = keychain_checker.dump()

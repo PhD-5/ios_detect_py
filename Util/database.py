@@ -38,7 +38,7 @@ class DBServer():
 
     def on(self):
         try:
-            self.con = sqlite3.connect("test.db")
+            self.con = sqlite3.connect("task.db")
             self.c = self.con.cursor()
 
         except sqlite3.Error as e:
@@ -69,6 +69,10 @@ class DBServer():
         except sqlite3.Error as e:
             print "here", e.args[0]
             return False
+
+    def refresh_status(self):
+        self.execute("update ios_app set status=? where status=?", ('2', '3'))
+
 
 
 
