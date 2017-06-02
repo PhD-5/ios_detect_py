@@ -16,7 +16,7 @@ class Generator:
         self.write_storage_info()
         self.write_static_results()
 
-        data.report_path = './temp/{}/report/{}.docx'.format(data.start_time, data.app_bundleID)
+        data.report_path = './temp/{}/report/{}.doc'.format(data.start_time, data.app_bundleID)
         self.document.save(data.report_path)
 
         #write app info
@@ -107,7 +107,10 @@ class Generator:
 
     def write_transport_info(self):
         self.document.add_heading(u"传输层检测结果", level=1)
-        self.document.add_heading(u"中间人攻击检测", level=2)
+        all_item_count = 0
+        for key in data.mitm_results.keys():
+            all_item_count += len(data.mitm_results[key])
+        self.document.add_heading(u"中间人攻击检测(中危：{}个)".format(all_item_count), level=2)
         if len(data.mitm_results.keys())==0:
             self.document.add_paragraph(u"未发现中间人攻击漏洞")
         else:
@@ -127,7 +130,7 @@ class Generator:
                 row_1_cell[i].text = str(data.mitm_results[key])
                 i+=1
 
-        self.document.add_heading(u"不安全协议使用", level=2)
+        self.document.add_heading(u"不安全协议使用(中危：{}个)".format(len(data.traffic_unsafe_result)), level=2)
         table_2 = self.document.add_table(rows=1,cols=1)
         table_2.style = 'Table Grid'
         head_2_cell = table_2.rows[0].cells
@@ -139,7 +142,7 @@ class Generator:
             row_2_cell = table_2.add_row().cells
             row_2_cell[0].text = u"无"
 
-        self.document.add_heading(u"敏感信息传输", level=2)
+        self.document.add_heading(u"敏感信息传输(高危：{}个)".format(len(data.dynamic_sensitive_json['traffic'])), level=2)
         table_3 = self.document.add_table(rows=1, cols=3)
         table_3.style = 'Table Grid'
         head_3_cell = table_3.rows[0].cells
@@ -160,7 +163,7 @@ class Generator:
         self.document.add_heading(u"存储层检测结果", level=1)
 
         self.document.add_heading(u"动态检测结果", level=2)
-        self.document.add_heading(u"KeyChain", level=3)
+        self.document.add_heading(u"KeyChain(中危：{}个)".format(len(data.dynamic_sensitive_json['keychain'])), level=3)
         table1 = self.document.add_table(rows=1,cols=3)
         table1.style = 'Table Grid'
         head1_cells = table1.rows[0].cells
@@ -178,7 +181,7 @@ class Generator:
                     row1_cells[1].text = item[0]['attributesToUpdate']['kSecValueData']
             row1_cells[2].text = '-'.join(item[1])
 
-        self.document.add_heading(u"NSUserDefaults", level=3)
+        self.document.add_heading(u"NSUserDefaults(中危：{}个)".format(len(data.dynamic_sensitive_json['nsuserdefaults'])), level=3)
         table2 = self.document.add_table(rows=1, cols=4)
         table2.style = 'Table Grid'
         head2_cells = table2.rows[0].cells
@@ -193,7 +196,7 @@ class Generator:
             row2_cells[2].text = item[0]['sourceType']
             row2_cells[3].text = '-'.join(item[1])
 
-        self.document.add_heading(u"Plist", level=3)
+        self.document.add_heading(u"Plist(中危：{}个)".format(len(data.dynamic_sensitive_json['plist'])), level=3)
         table3 = self.document.add_table(rows=1, cols=4)
         table3.style = 'Table Grid'
         head3_cells = table3.rows[0].cells
@@ -213,7 +216,7 @@ class Generator:
 
 
         self.document.add_heading(u"本地审计检测结果", level=2)
-        self.document.add_heading(u"KeyChain", level=3)
+        self.document.add_heading(u"KeyChain(中危：{}个)".format(len(data.keychain_values)), level=3)
         table4 = self.document.add_table(rows=1, cols=1)
         table4.style = 'Table Grid'
         head4_cells = table4.rows[0].cells
@@ -228,7 +231,10 @@ class Generator:
 
         self.document.add_heading(u"数据库文件", level=3)
         if data.db_file_results:
-            self.document.add_heading(u"用户隐私检测", level=4)
+            count = 0
+            for key in data.db_file_results["input"]:
+                count += len(data.db_file_results["imput"][key])
+            self.document.add_heading(u"用户隐私检测(中危：{}个)".format(count), level=4)
             for file_path in data.db_file_results["input"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
                 table5 = self.document.add_table(rows=1,cols=3)
@@ -242,7 +248,11 @@ class Generator:
                     row5_cells[0].text = item[0]
                     row5_cells[1].text = str(item[1])
                     row5_cells[2].text = item[2]
-            self.document.add_heading(u"密钥信息检测", level=4)
+
+            count = 0
+            for key in data.db_file_results["keyiv"]:
+                count += len(data.db_file_results["keyiv"][key])
+            self.document.add_heading(u"密钥信息检测(高危：{}个)".format(count), level=4)
             for file_path in data.db_file_results["keyiv"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
                 table5 = self.document.add_table(rows=1,cols=3)
@@ -256,7 +266,10 @@ class Generator:
                     row5_cells[0].text = item[0]
                     row5_cells[1].text = str(item[1])
                     row5_cells[2].text = item[2]
-            self.document.add_heading(u"自定义项检测", level=4)
+            count = 0
+            for key in data.db_file_results["txt"]:
+                count += len(data.db_file_results["txt"][key])
+            self.document.add_heading(u"自定义项检测(高危：{}个)".format(count), level=4)
             for file_path in data.db_file_results["txt"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
                 table5 = self.document.add_table(rows=1, cols=3)
@@ -275,7 +288,10 @@ class Generator:
 
         self.document.add_heading(u"Plist文件", level=3)
         if data.plist_file_results:
-            self.document.add_heading(u"用户隐私检测", level=4)
+            count = 0
+            for key in data.plist_file_results["input"]:
+                count += len(data.plist_file_results["input"][key])
+            self.document.add_heading(u"用户隐私检测(中危：{}个)".format(count), level=4)
             for file_path in data.plist_file_results["input"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
                 table6 = self.document.add_table(rows=1,cols=3)
@@ -289,7 +305,11 @@ class Generator:
                     row6_cells[0].text = item[0]
                     row6_cells[1].text = str(item[1])
                     row6_cells[2].text = item[2]
-            self.document.add_heading(u"密钥信息检测", level=4)
+
+            count = 0
+            for key in data.plist_file_results["keyiv"]:
+                count += len(data.plist_file_results["keyiv"][key])
+            self.document.add_heading(u"密钥信息检测(高危：{}个)".format(count), level=4)
             for file_path in data.plist_file_results["keyiv"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
                 table6 = self.document.add_table(rows=1,cols=3)
@@ -303,7 +323,11 @@ class Generator:
                     row6_cells[0].text = item[0]
                     row6_cells[1].text = str(item[1])
                     row6_cells[2].text = item[2]
-            self.document.add_heading(u"自定义项检测", level=4)
+
+            count = 0
+            for key in data.plist_file_results["txt"]:
+                count += len(data.plist_file_results["txt"][key])
+            self.document.add_heading(u"自定义项检测(高危：{}个)".format(count), level=4)
             for file_path in data.plist_file_results["txt"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
                 table6 = self.document.add_table(rows=1,cols=3)
@@ -322,7 +346,10 @@ class Generator:
 
         self.document.add_heading(u"Log审计", level=3)
         if data.log_file_results:
-            self.document.add_heading(u"用户隐私检测", level=4)
+            count = 0
+            for key in data.log_file_results["input"]:
+                count += len(data.log_file_results["input"][key])
+            self.document.add_heading(u"用户隐私检测(中危：{}个)".format(count), level=4)
             for file_path in data.plist_file_results["input"].keys():
                 self.document.add_paragraph(u'文件路径：' + file_path)
                 table6 = self.document.add_table(rows=1, cols=2)
@@ -334,7 +361,11 @@ class Generator:
                     row6_cells = table6.add_row().cells
                     row6_cells[0].text = item[0]
                     row6_cells[2].text = item[1]
-            self.document.add_heading(u"秘钥信息检测", level=4)
+
+            count = 0
+            for key in data.log_file_results["keyiv"]:
+                count += len(data.log_file_results["keyiv"][key])
+            self.document.add_heading(u"密钥信息检测(高危：{}个)".format(count), level=4)
             for file_path in data.plist_file_results["keyiv"].keys():
                 self.document.add_paragraph(u'文件路径：' + file_path)
                 table6 = self.document.add_table(rows=1, cols=2)
@@ -346,7 +377,11 @@ class Generator:
                     row6_cells = table6.add_row().cells
                     row6_cells[0].text = item[0]
                     row6_cells[2].text = item[1]
-            self.document.add_heading(u"自定义项检测", level=4)
+
+            count = 0
+            for key in data.log_file_results["txt"]:
+                count += len(data.log_file_results["txt"][key])
+            self.document.add_heading(u"自定义项检测(高危：{}个)".format(count), level=4)
             for file_path in data.plist_file_results["txt"].keys():
                 self.document.add_paragraph(u'文件路径：' + file_path)
                 table6 = self.document.add_table(rows=1, cols=2)

@@ -150,10 +150,10 @@ class IOS():
         fuzzer.fuzz()
 
     def run(self):
+        self.start_dynamic_check()
         IOS.binary_check()
         self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
-        self.start_dynamic_check()
         if self.finish_dynamic_check():
             self.analyse()
             IOS.storage_check()

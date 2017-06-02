@@ -86,6 +86,7 @@ class Checker():
         log_file = open(file)
         while 1:
             line = log_file.readline()
+            self.check_log_line(line)
 
     def check_log_line(self, line):
         for black_item in self.input_list:

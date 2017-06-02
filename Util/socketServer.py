@@ -26,11 +26,8 @@ class SocketServerThread(threading.Thread):
             input_data = conn.recv(2048)
             input_data = input_data[0:-1]
             if input_data == ('DONE:' + data.app_bundleID):
-                if data.MITM_Done:
-                    s.close()
-                    break
-                if not data.MITM_Done:
-                    data.MITM_Done = True
+                s.close()
+                break
             self.parse_json(self.app_info, input_data)
 
     # classify and store jsons according to type
