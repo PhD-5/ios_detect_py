@@ -61,7 +61,7 @@ class Generator:
             row_cells[3].text = str(data.protection_check_lables[arch]['ARC'])
             row_cells[4].text = str(data.protection_check_lables[arch]['PIE'])
 
-        self.document.add_heading(u"依赖库检测", level=2)
+        self.document.add_heading(u"依赖库检测(参考：{}个)".format(len(data.shared_lib)), level=2)
         table_share_lib = self.document.add_table(rows=1, cols=1)
         table_share_lib.style = 'Table Grid'
         head_cell_lib = table_share_lib.rows[0].cells
@@ -70,7 +70,7 @@ class Generator:
             row_lib_cells = table_share_lib.add_row().cells
             row_lib_cells[0].text = lib
 
-        self.document.add_heading(u"硬编码", level=2)
+        self.document.add_heading(u"硬编码(参考：{}个)".format(len(data.hardcode)), level=2)
         table_hard_code = self.document.add_table(rows=1, cols=1)
         table_hard_code.style = 'Table Grid'
         head_hard_code = table_hard_code.rows[0].cells
@@ -82,7 +82,11 @@ class Generator:
             row_lib_cells = table_hard_code.add_row().cells
             row_lib_cells[0].text = code
 
-        self.document.add_heading(u"URL Fuzz", level=2)
+        url_crash_count = 0
+        for key in data.fuzz_result:
+            if data.fuzz_result[key]:
+                url_crash_count += 1
+        self.document.add_heading(u"URL Fuzz(低危：{}个)".format(url_crash_count), level=2)
         table_fuzz = self.document.add_table(rows=1, cols=2)
         table_fuzz.style = 'Table Grid'
         head_fuzz = table_fuzz.rows[0].cells
@@ -97,7 +101,7 @@ class Generator:
                 row_cells[1].text = 'Safe'
         self.document.add_paragraph(u"应用程序通过appDelegate中的-[application: openURL: sourceApplicaiton: annotation:]处理接受到的URL")
 
-        self.document.add_heading(u"反注入检测", level=2)
+        self.document.add_heading(u"反注入检测(中危)", level=2)
         if data.segment_dict.has_key('__RESTRICT') and '__restrict' in data.segment_dict['data.segment_dict']:
             self.document.add_paragraph(u"采用了[__RESTRICT,__restrict]，具备一定的反注入能力")
         else:
@@ -396,7 +400,7 @@ class Generator:
         else:
             self.document.add_paragraph(u"无敏感信息")
 
-        self.document.add_heading(u"本地文件保护检测", level=3)
+        self.document.add_heading(u"本地文件保护检测(参考：{}个)".format(len(data.local_file_protection)), level=3)
         table7 = self.document.add_table(rows=1,cols=2)
         table7.style = 'Table Grid'
         head7_cells = table7.rows[0].cells
