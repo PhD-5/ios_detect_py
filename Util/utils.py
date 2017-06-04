@@ -188,7 +188,7 @@ class Utils():
         with open('apps.txt', 'w') as file:
             for bundle_id in app_dict.keys():
                 bundle_name = Utils.get_bundle_name_byID(app_dict,bundle_id)
-                file.write(bundle_id +'<{}>'.format(bundle_name) + "\r\n")
+                file.write(bundle_id +' * {} *'.format(bundle_name) + "\r\n")
         file.close()
         return app_dict
 
@@ -228,7 +228,7 @@ class Utils():
     @staticmethod
     def ret_name_from_db(name):
         name = name.strip()
-        bundle_id = name.split("<")[0]
+        bundle_id = name.split("*")[0].strip()
         return bundle_id
 
 

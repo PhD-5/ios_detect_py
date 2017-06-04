@@ -5,6 +5,7 @@ from Util.utils import Utils
 import time
 import os
 import sys
+import config
 sys.path.append('gen-py')
 import importlib
 from staticAnalyzer import StaticAnalyze
@@ -25,7 +26,7 @@ class static_analyzer(threading.Thread):
         Utils.printy('Start static analysis', 0)
         time.sleep(1)
         try:
-            transport = TSocket.TSocket('192.168.133.128', 9090)
+            transport = TSocket.TSocket(config.thrift_ip, config.thrift_port)
             transport = TTransport.TBufferedTransport(transport)
             protocol = TBinaryProtocol.TBinaryProtocol(transport)
             client = StaticAnalyze.Client(protocol)

@@ -116,6 +116,7 @@ class IOS():
         Utils.printy_result('Binary Check', 1)
 
     def server_scan(self, hosts):
+        print "hosts", hosts
         self.server.set_args(hosts, data.app_bundleID)
         self.server.start()
 

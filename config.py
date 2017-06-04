@@ -19,5 +19,8 @@ socket_port = config.get('socket', 'socket_port')
 
 respring_time = config.get('other', 'respring_time')
 
+thrift_ip = config.get('thrift', 'server_ip')
+thrift_port = config.get('thrift', 'server_port')
+
 Utils.printy('Finished configuration.', 0)
 
