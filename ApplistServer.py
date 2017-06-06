@@ -39,12 +39,7 @@ class ApplistThread(threading.Thread):
 
 if __name__ == '__main__':
 
-    mydict = {'1':'aa','2':'招商银行'}
-
     t = ApplistThread()
     t.start()
 
-    sleep(3)
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('192.168.2.117',9003))
-    s.send(json.dumps(mydict))
+   
