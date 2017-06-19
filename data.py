@@ -125,3 +125,5 @@ crash_report_folder = '/var/mobile/Library/Logs/CrashReporter'
 report_path = ""
 
 root = ""
+
+nessus_url = ""

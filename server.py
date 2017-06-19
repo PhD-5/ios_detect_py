@@ -17,6 +17,7 @@ while True:
         # status == 3 in progress
         dbServer.execute("update ios_app set status=? where appid=?", (3, id))
         # result = dbServer.execute("select * from ios_app where appid=?", (id,))
+        reload(data)
         task = iOSAVD.IOS(path, name).run()
         # data.report_path = "report"
         dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))

@@ -15,8 +15,9 @@ class Generator:
         self.write_transport_info()
         self.write_storage_info()
         self.write_static_results()
+        self.write_nessus_url()
 
-        data.report_path = './temp/{}/report/{}.doc'.format(data.start_time, data.app_bundleID)
+        data.report_path = data.root + '/temp/{}/report/{}.doc'.format(data.start_time, data.app_bundleID)
         self.document.save(data.report_path)
 
         #write app info
@@ -113,7 +114,7 @@ class Generator:
         self.document.add_heading(u"传输层检测结果", level=1)
         all_item_count = 0
         for key in data.mitm_results.keys():
-            all_item_count += len(data.mitm_results[key])
+            all_item_count += data.mitm_results[key]
         self.document.add_heading(u"中间人攻击检测(中危：{}个)".format(all_item_count), level=2)
         if len(data.mitm_results.keys())==0:
             self.document.add_paragraph(u"未发现中间人攻击漏洞")
@@ -237,7 +238,7 @@ class Generator:
         if data.db_file_results:
             count = 0
             for key in data.db_file_results["input"]:
-                count += len(data.db_file_results["imput"][key])
+                count += len(data.db_file_results["input"][key])
             self.document.add_heading(u"用户隐私检测(中危：{}个)".format(count), level=4)
             for file_path in data.db_file_results["input"].keys():
                 self.document.add_paragraph(u'文件路径：'+file_path)
@@ -250,7 +251,10 @@ class Generator:
                 for item in data.db_file_results["input"][file_path]:
                     row5_cells = table5.add_row().cells
                     row5_cells[0].text = item[0]
-                    row5_cells[1].text = str(item[1])
+                    try:
+                        row5_cells[1].text = str(item[1])
+                    except:
+                        row5_cells[1].text = u"内容无法正常显示"
                     row5_cells[2].text = item[2]
 
             count = 0
@@ -268,7 +272,10 @@ class Generator:
                 for item in data.db_file_results["keyiv"][file_path]:
                     row5_cells = table5.add_row().cells
                     row5_cells[0].text = item[0]
-                    row5_cells[1].text = str(item[1])
+                    try:
+                        row5_cells[1].text = str(item[1])
+                    except:
+                        row5_cells[1].text = u"内容无法正常显示"
                     row5_cells[2].text = item[2]
             count = 0
             for key in data.db_file_results["txt"]:
@@ -285,7 +292,10 @@ class Generator:
                 for item in data.db_file_results["txt"][file_path]:
                     row5_cells = table5.add_row().cells
                     row5_cells[0].text = item[0]
-                    row5_cells[1].text = str(item[1])
+                    try:
+                        row5_cells[1].text = str(item[1])
+                    except:
+                        row5_cells[1].text = u"内容无法正常显示"
                     row5_cells[2].text = item[2]
         else:
             self.document.add_paragraph(u"无数据库文件")
@@ -460,3 +470,7 @@ class Generator:
                 cells[2].text = rule._desc
                 cells[3].text = rule._solution
                 cells[4].text = rule._risk_level
+
+    def write_nessus_url(self):
+        self.document.add_heading(u"服务器扫描结果", level=1)
+        self.document.add_paragraph(data.nessus_url)

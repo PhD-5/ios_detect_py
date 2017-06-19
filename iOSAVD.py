@@ -3,9 +3,7 @@ sys.path.append('modules/static/gen-py')
 import os
 import time
 import socket
-
 import clint
-
 from modules import *
 import modules.static.static_analyse as static_analyze
 from Util import ssh, MD5, socketServer
@@ -15,6 +13,8 @@ from Report.DocGenerator import Generator
 import data
 import config
 from modules.dynamic.AppDynamicInfo import AppDynamicInfo
+from modules.dynamic.open_app import open_some_app
+
 
 
 class IOS():
@@ -29,14 +29,26 @@ class IOS():
 
     @staticmethod
     def prepare_for_basic_info(ipa_path, bundle_id):
-        data.app_dict = Utils.ret_LastLaunch()  # set app_dict
+        # data.app_dict = Utils.ret_LastLaunch()  # set app_dict
+        # if ipa_path:
+        #     should_install.install_ipa_from_local(ipa_path)  # set bundleID
+        # elif bundle_id:
+        #     data.app_bundleID = bundle_id
+        # else:
+        #     should_install.ask_for_user_choose()
+        #     Utils.getInstalledAppList()  # set bundle_ID
+        # Metadata().get_metadata()
+        # print data.app_bundleID
+        # pre_clutch.clutch()
         if ipa_path:
             should_install.install_ipa_from_local(ipa_path)  # set bundleID
         elif bundle_id:
             data.app_bundleID = bundle_id
         else:
+            data.app_dict = Utils.ret_LastLaunch()  # set app_dict
             should_install.ask_for_user_choose()
             Utils.getInstalledAppList()  # set bundle_ID
+        data.app_dict = Utils.ret_LastLaunch()  # set app_dict
         Metadata().get_metadata()
         print data.app_bundleID
         pre_clutch.clutch()
@@ -66,6 +78,7 @@ class IOS():
         return True
 
     def start_dynamic_check(self):
+        open_some_app(data.app_bundleID)
         self.t_socket.start()
         # time.sleep(1)
         # while True:

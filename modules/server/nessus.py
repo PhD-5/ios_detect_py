@@ -130,6 +130,7 @@ class Nessus(threading.Thread):
         app = self.app
         scan_data = self.add(app, 'Test urls in {0}'.format(app), target, self.policy_id)
         scan_id = scan_data['id']
+        data.nessus_url = self.url + '/#/scans/{}/hosts'.format(scan_id)
         scan_uuid = self.launch(scan_id)
         # history_id = self.get_history_ids(scan_id)[scan_uuid]
         # while self.status(scan_id, history_id) != 'completed':
@@ -144,9 +145,9 @@ class Nessus(threading.Thread):
         # self.delete(scan_id)
         self.logout()
 
-hosts = ['www.baidu.com']
-server = Nessus()
-def server_scan(hosts):
-    server.set_args(hosts, "test")
-    server.start()
-server_scan(hosts)
+# hosts = ['www.baidu.com']
+# server = Nessus()
+# def server_scan(hosts):
+#     server.set_args(hosts, "test")
+#     server.start()
+# server_scan(hosts)
