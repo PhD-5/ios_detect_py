@@ -8,10 +8,13 @@ com.wemomo.momoappdemo1 * MomoChat *
 com.zhirong.yongqianbaoonline * 用钱宝 *
 com.chinapower.geiApp * AppCansdk10774 *
 com.campmobile.snowcamera * B612 *
+com.tencent.QQKSong * 全民K歌 *
 cn.lnts.iosapp.sghome * S+365 *
 com.superbox.ios.starhexa * starhexa *
 com.bupt13.337.testest * testest *
+com.xiachufang.recipe * 下厨房 *
 d.cn.Downjoy-Game-Center * 当乐游戏中心 *
+com.quickbytegames.chezz * chezz *
 com.highaltitudehacks.dvia * DamnVulnerableIOSApp *
 com.christine.VirtualDemoForiOS * VirtualDemoForiOS *
 studio.dream.crscesc * crscesc *

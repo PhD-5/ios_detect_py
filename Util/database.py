@@ -4,7 +4,7 @@ from Util.utils import Utils
 
 class DBServer():
     def __init__(self):
-        Utils.printy("Initiate DB", 1)
+        Utils.printy("Initiate DB", 0)
         # try:
         #     con = sqlite3.connect("test.db")
         #     c = con.cursor()

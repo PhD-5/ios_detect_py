@@ -15,7 +15,7 @@ def dump_binary():
 
     target_bin_path = data.metadata['binary_path']
     dump_cmd = 'DYLD_INSERT_LIBRARIES={} {}'.format(target_doc_file, target_bin_path)
-    Utils.cmd_block(data.client, dump_cmd)
+    print Utils.cmd_block(data.client, dump_cmd)
 
     # get decrypted file from iphone
     remote_file = './{}.decrypted'.format(data.metadata['binary_name'])

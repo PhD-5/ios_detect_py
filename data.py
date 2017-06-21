@@ -127,3 +127,5 @@ report_path = ""
 root = ""
 
 nessus_url = ""
+
+database_appid = None

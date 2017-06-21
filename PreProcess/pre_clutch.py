@@ -23,11 +23,11 @@ def clutch():
         m = pat.match(line)
         if m:
             if m.group(1) == data.app_bundleID:
-                clutch_app_id = int(line[0])
+                clutch_app_id = int(line.split(':')[0])
 
     if clutch_app_id != -1:
         clutch_success = False
-        print 'the application is encrypted, and use clutch to decrypt'
+        Utils.printy('the application is encrypted, and use clutch to decrypt', 0)
         # clean the decrypted ipas already done by clutch
         cmd = 'rm /private/var/mobile/Documents/Dumped/*.ipa'
         Utils.cmd_block(client, cmd)

@@ -50,7 +50,7 @@ class IOS():
             Utils.getInstalledAppList()  # set bundle_ID
         data.app_dict = Utils.ret_LastLaunch()  # set app_dict
         Metadata().get_metadata()
-        print data.app_bundleID
+        Utils.printy("start analyse " + data.app_bundleID, 4)
         pre_clutch.clutch()
 
     @staticmethod
@@ -129,7 +129,7 @@ class IOS():
         Utils.printy_result('Binary Check', 1)
 
     def server_scan(self, hosts):
-        print "hosts", hosts
+        # print "hosts", hosts
         self.server.set_args(hosts, data.app_bundleID)
         self.server.start()
 
@@ -179,6 +179,7 @@ class IOS():
 
     def clean(self):
         data.client.close()
+        Utils.printy("Analyze Done.", 4)
 
 
 # IOS(None, None).run()
