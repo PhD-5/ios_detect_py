@@ -18,7 +18,6 @@ class analyzerHandler:
     def connect(self):
         return "Connected"
     def analyze(self, bin_path, report_dir):
-
         root_dir = os.path.abspath(".")
         sep = os.path.sep
         local_bin_path = root_dir + sep + "temp" + sep + "temp.macho"

@@ -75,6 +75,7 @@ class IOS():
     def finish_static_analyse(self):
         self.t_static.join()
         Utils.printy_result('Static Analyse.', 1)
+        data.status ^= 0b0010
         return True
 
     def start_dynamic_check(self):
@@ -106,6 +107,9 @@ class IOS():
         self.t_socket.join()
         data.dynamic_json = self.app_dynamic_info
         Utils.printy_result("Dynamic Check .", 1)
+        self.analyse()
+        IOS.storage_check()
+        data.status ^= 0b0001
         return True
 
     def finish_server_scan(self):
@@ -168,19 +172,42 @@ class IOS():
         IOS.binary_check()
         self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
-        if self.finish_dynamic_check():
-            self.analyse()
-            IOS.storage_check()
-        if self.finish_static_analyse():
-            report_gen = Generator()
-            report_gen.generate()
+        self.check_status()
+        # if self.finish_dynamic_check():
+        #     self.analyse()
+        #     IOS.storage_check()
+        # if self.finish_static_analyse():
+        #     report_gen = Generator()
+        #     report_gen.generate()
         # if self.finish_server_scan():
         self.clean()
 
+    def check_status(self):
+        process_time = 0
+        while True:
+            time.sleep(1)
+            process_time += 10
+            status = data.status & 0b11
+            if status == 0b11:
+                Utils.printy("Analyze Done.", 4)
+                break
+            # dynamic not finished
+            elif status == 0b10:
+                if process_time >= 80:
+                    # kill dynamic process
+                    # os.system("kill -9 " + str(data.dynamic_process_id))
+                    try:
+                        self.t_socket.stop()
+                    except Exception, e:
+                        print e
+                    self.t_socket.join()
+                    pass
+                    break
+            else:
+                continue
+
     def clean(self):
         data.client.close()
-        Utils.printy("Analyze Done.", 4)
-
 
 # IOS(None, None).run()
 

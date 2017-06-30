@@ -129,3 +129,12 @@ root = ""
 nessus_url = ""
 
 database_appid = None
+
+logger = None
+
+status = 0b0000
+
+dynamic_process_id = 0
+
+static_process_id = 0
+

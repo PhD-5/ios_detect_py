@@ -21,6 +21,7 @@ class static_analyzer(threading.Thread):
         self.do_analyse()
 
     def do_analyse(self):
+        data.static_process_id = os.getpid()
         exec "from staticAnalyzer import StaticAnalyze"
         exec "from staticAnalyzer.ttypes import *"
         Utils.printy('Start static analysis', 0)
@@ -41,5 +42,6 @@ class static_analyzer(threading.Thread):
             msg = client.analyze(data.static_file_path, report_dir)
             # print "server - " + msg
             transport.close()
+            data.status ^= 0b0010
         except Thrift.TException, ex:
             print "%s" % ex.message

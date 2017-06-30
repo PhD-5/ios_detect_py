@@ -5,9 +5,12 @@ import time
 from Util.utils import Utils
 import signal
 import os
+import logging
+import logging.config
 
 
 def when_killed(signum, frame):
+    print frame
     Utils.printy("Server Down", 2)
     dbServer.execute("update ios_app set status=? where status=?", (2, 3))
     os.system("kill -9 " + str(os.getpid()))
@@ -29,12 +32,13 @@ while True:
         dbServer.execute("update ios_app set status=? where appid=?", (3, id))
         # result = dbServer.execute("select * from ios_app where appid=?", (id,))
         reload(data)
+        logging.config.fileConfig('config/logging.conf')
+        data.logger = logging.getLogger('root')
         task = iOSAVD.IOS(path, name).run()
         # data.report_path = "report"
         dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))
-        # result = dbServer.execute("select * from ios_app where appid=?", (id,))
-        # result = dbServer.execute("select * from ios_app where appid=?", (id,))
     except IndexError:
+        Utils.printy("Waiting for Task", 0)
         time.sleep(5)
 
 

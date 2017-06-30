@@ -1,4 +1,5 @@
 import sqlite3
+import data
 from Util.utils import Utils
 
 
@@ -40,9 +41,10 @@ class DBServer():
         try:
             self.con = sqlite3.connect("task.db")
             self.c = self.con.cursor()
-
         except sqlite3.Error as e:
-            print e.args[0]
+            # print e.args[0]
+            data.logger.debug("Can't Connect to Database")
+            Utils.shutdown()
 
     def down(self):
         try:
@@ -58,7 +60,7 @@ class DBServer():
             self.con.commit()
             return self.c.fetchall()
         except sqlite3.Error as e:
-            print e.args[0]
+            data.logger.debug(e.args[0])
             return False
 
     def execute(self, query, args):
@@ -67,7 +69,7 @@ class DBServer():
             self.con.commit()
             return self.c.fetchall()
         except sqlite3.Error as e:
-            print "here", e.args[0]
+            data.logger.debug(e.args[0])
             return False
 
     def refresh_status(self):

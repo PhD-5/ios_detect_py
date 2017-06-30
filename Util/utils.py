@@ -8,6 +8,7 @@ import pipes
 from clint.textui import colored, puts, indent
 import sys
 import time
+import socket
 from PreProcess import *
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -77,8 +78,14 @@ class Utils():
     # ==================================================================================================================
     @staticmethod
     def cmd_block(client, cmd):
-        # print 'remote shell:', cmd
-        stdin, out, err = client.exec_command(cmd)
+        data.logger.debug("cmd_block " + cmd)
+        while True:
+            try:
+                stdin, out, err = client.exec_command(cmd)
+                break
+            except:
+                time.sleep(5)
+                data.logger.debug("Command Transfer Error")
         if type(out) is tuple: out = out[0]
         str = ''
         for line in out:
@@ -88,21 +95,33 @@ class Utils():
     @staticmethod
     def sftp_get(ip, port, username, password, remote_file, local_path):
         # -----set up sftp to get decrypted ipa file-----
-        t = paramiko.Transport(ip, port)
-        t.connect(username=username, password=password)
-        # print '{} -> {}'.format(remote_file, local_path)
-        sftp = paramiko.SFTPClient.from_transport(t)
-        sftp.get(remote_file, local_path)
-        t.close()
+        while True:
+            try:
+                t = paramiko.Transport(ip, port)
+                t.connect(username=username, password=password)
+                data.logger.info('{} -> {}'.format(remote_file, local_path))
+                sftp = paramiko.SFTPClient.from_transport(t)
+                sftp.get(remote_file, local_path)
+                t.close()
+                break
+            except:
+                time.sleep(5)
+                data.logger.debug("SFTP GET FILE Error")
 
     @staticmethod
     def sftp_put(ip, port, username, password, remote_path, local_file):
-        t = paramiko.Transport(ip, port)
-        t.connect(username=username, password=password)
-        sftp = paramiko.SFTPClient.from_transport(t)
-        # print '{} -> {}'.format(local_file, remote_path)
-        sftp.put(localpath=local_file, remotepath=remote_path)
-        t.close()
+        while True:
+            try:
+                t = paramiko.Transport(ip, port)
+                t.connect(username=username, password=password)
+                sftp = paramiko.SFTPClient.from_transport(t)
+                # print '{} -> {}'.format(local_file, remote_path)
+                sftp.put(localpath=local_file, remotepath=remote_path)
+                t.close()
+                break
+            except:
+                time.sleep(5)
+                data.logger.debug("SFTP PUT FILE Error")
 
     # @staticmethod
     # def sftp_get_files(ip, port, username, password, remote_files, local_dir):
@@ -230,6 +249,10 @@ class Utils():
         name = name.strip()
         bundle_id = name.split("*")[0].strip()
         return bundle_id
+
+    @staticmethod
+    def shutdown():
+        print "SHUTDOWN"
 
 
 
