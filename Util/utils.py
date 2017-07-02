@@ -77,15 +77,15 @@ class Utils():
     #  SSH UTILS
     # ==================================================================================================================
     @staticmethod
-    def cmd_block(client, cmd):
+    def  cmd_block(client, cmd):
         data.logger.debug("cmd_block " + cmd)
         while True:
             try:
                 stdin, out, err = client.exec_command(cmd)
                 break
-            except:
+            except Exception, e:
                 time.sleep(5)
-                data.logger.debug("Command Transfer Error")
+                data.logger.debug("Command Transfer Error" + e)
         if type(out) is tuple: out = out[0]
         str = ''
         for line in out:

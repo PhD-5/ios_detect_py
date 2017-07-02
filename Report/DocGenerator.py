@@ -116,7 +116,7 @@ class Generator:
         for key in data.mitm_results.keys():
             all_item_count += data.mitm_results[key]
         self.document.add_heading(u"中间人攻击检测(中危：{}个)".format(all_item_count), level=2)
-        if len(data.mitm_results.keys())==0:
+        if len(data.mitm_results.keys()) == 0:
             self.document.add_paragraph(u"未发现中间人攻击漏洞")
         else:
             cols_count = len(data.mitm_results.keys())+1
@@ -147,22 +147,29 @@ class Generator:
             row_2_cell = table_2.add_row().cells
             row_2_cell[0].text = u"无"
 
-        self.document.add_heading(u"敏感信息传输(高危：{}个)".format(len(data.dynamic_sensitive_json['traffic'])), level=2)
+        if "traffic" not in data.dynamic_sensitive_json:
+            count = 0
+        else:
+            count = len(data.dynamic_sensitive_json['traffic'])
+        self.document.add_heading(u"敏感信息传输(高危：{}个)".format(count), level=2)
         table_3 = self.document.add_table(rows=1, cols=3)
         table_3.style = 'Table Grid'
         head_3_cell = table_3.rows[0].cells
         head_3_cell[0].text = 'url'
         head_3_cell[1].text = 'body'
         head_3_cell[2].text = u'敏感内容'
-        for item in data.dynamic_sensitive_json['traffic']:
-            # print item
-            row_3_cell = table_3.add_row().cells
-            row_3_cell[0].text = item[0]['url']
-            if item[0].has_key('body'):
-                row_3_cell[1].text = item[0]['body']
-            else:
-                row_3_cell[1].text = u"无"
-            row_3_cell[2].text = '-'.join(item[1])
+        try:
+            for item in data.dynamic_sensitive_json['traffic']:
+                # print item
+                row_3_cell = table_3.add_row().cells
+                row_3_cell[0].text = item[0]['url']
+                if item[0].has_key('body'):
+                    row_3_cell[1].text = item[0]['body']
+                else:
+                    row_3_cell[1].text = u"无"
+                row_3_cell[2].text = '-'.join(item[1])
+        except Exception, e:
+            pass
 
     def write_storage_info(self):
         self.document.add_heading(u"存储层检测结果", level=1)

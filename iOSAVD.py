@@ -172,7 +172,14 @@ class IOS():
         IOS.binary_check()
         self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
+        # data.status ^= 0b0010
         self.check_status()
+        data.dynamic_json = self.app_dynamic_info
+        self.analyse()
+        IOS.storage_check()
+        report_gen = Generator()
+        report_gen.generate()
+        Utils.printy("Analyze Done.", 4)
         # if self.finish_dynamic_check():
         #     self.analyse()
         #     IOS.storage_check()
@@ -185,23 +192,17 @@ class IOS():
     def check_status(self):
         process_time = 0
         while True:
-            time.sleep(1)
+            time.sleep(10)
             process_time += 10
             status = data.status & 0b11
             if status == 0b11:
-                Utils.printy("Analyze Done.", 4)
                 break
             # dynamic not finished
             elif status == 0b10:
-                if process_time >= 80:
-                    # kill dynamic process
-                    # os.system("kill -9 " + str(data.dynamic_process_id))
-                    try:
-                        self.t_socket.stop()
-                    except Exception, e:
-                        print e
-                    self.t_socket.join()
-                    pass
+                if process_time >= 180:
+                    self.t_socket.stop()
+                    # self.t_socket.join()
+                    Utils.printy_result("Stop Dynamic Analysis, Timeout", 0)
                     break
             else:
                 continue

@@ -9,20 +9,23 @@ class Plist():
         self.client = data.client
 
     def check(self):
-        files = self.get_files()
-        if not files:
-            Utils.printy("No Plist files found ", 2)
-            return
+        try:
+            files = self.get_files()
+            if not files:
+                Utils.printy("No Plist files found ", 2)
+                return
+            # Add data protection class
+            retrieved_files = Utils.get_dataprotection(files)
+            data.local_file_protection.extend(retrieved_files)
 
-        # Add data protection class
-        retrieved_files = Utils.get_dataprotection(files)
-        data.local_file_protection.extend(retrieved_files)
-
-        # start check plist sensitive data
-        check = Checker(files, 'PLIST')
-        check.start()
-        data.plist_file_results = check.results
-        Utils.printy_result('Plist Check.', 1)
+            # start check plist sensitive data
+            check = Checker(files, 'PLIST')
+            check.start()
+            data.plist_file_results = check.results
+        except Exception, e:
+            data.logger.warn("Plist_Check" + e)
+        finally:
+            Utils.printy_result('Plist Check.', 1)
 
     def get_files(self):
         files = []

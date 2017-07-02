@@ -4,16 +4,19 @@ from checker import Checker
 
 
 def sql_check():
-    files = get_files()
-    if not files:
-        Utils.printy("No SQL files found ", 2)
-        return
-    retrieved_files = Utils.get_dataprotection(files)
-    data.local_file_protection.extend(retrieved_files)
-    check = Checker(files, 'SQL')
-    check.start()
-    Utils.printy_result('Database Check.', 1)
-    return check.results
+    try:
+        files = get_files()
+        if not files:
+            Utils.printy("No SQL files found ", 2)
+            return
+        retrieved_files = Utils.get_dataprotection(files)
+        data.local_file_protection.extend(retrieved_files)
+        check = Checker(files, 'SQL')
+        check.start()
+        Utils.printy_result('Database Check.', 1)
+        return check.results
+    except Exception, e:
+        data.logger.warn("SQL_CHKECK," + e)
 
 
 def get_files():

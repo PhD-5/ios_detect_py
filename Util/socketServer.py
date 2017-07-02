@@ -12,17 +12,27 @@ class SocketServerThread(threading.Thread):
         threading.Thread.__init__(self)
         self.dynamic_socket = None
         self._stop_event = threading.Event()
-        print "stop_event0", self._stop_event.is_set()
         self.app_info = app_dy_info
+        apps_plist = '/var/mobile/Library/Preferences/com.softsec.iosdefect.app.plist'
+        socket_settings_plist = '/var/mobile/Library/Preferences/com.softsec.iosdefect.socket.plist'
+        Utils.cmd_block(data.client, "plutil -key {} -value {} {}".format(data.app_bundleID, "YES", apps_plist))
+        Utils.cmd_block(data.client,
+                        "plutil -key {} -value {} {}".format("MITMIP", config.socket_ip, socket_settings_plist))
+        Utils.cmd_block(data.client,
+                        "plutil -key {} -value {} {}".format("ServerIP", config.socket_ip, socket_settings_plist))
+        Utils.cmd_block(data.client,
+                        "plutil -key {} -value {} {}".format("ServerPort", config.socket_port, socket_settings_plist))
 
     def stop(self):
+        data.logger.info("Stop Dynamic Analysie, Run out of Time")
         self._stop_event.set()
-        self.dynamic_socket.shutdown(0)
-        self.dynamic_socket.close()
-        print "stop_event1", self._stop_event.is_set()
+        s = socket.socket(
+            socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((config.socket_ip, int(config.socket_port)))
+        s.send('Timeout')
+        s.close()
 
     def stopped(self):
-        print "stop_event2", self._stop_event.is_set()
         return self._stop_event.is_set()
 
     def run(self):
@@ -40,9 +50,14 @@ class SocketServerThread(threading.Thread):
             input_data = conn.recv(2048)
             input_data = input_data[0:-1]
             if input_data == ('DONE:' + data.app_bundleID):
+                Utils.printy_result("Dynamic Check .", 1)
+                self.dynamic_socket.close()
+                break
+            elif input_data == 'Timeout':
                 self.dynamic_socket.close()
                 break
             self.parse_json(self.app_info, input_data)
+        data.status ^= 0b0001
 
     # classify and store jsons according to type
     def parse_json(self, app_info, json_str):

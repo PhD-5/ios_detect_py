@@ -32,15 +32,16 @@ class static_analyzer(threading.Thread):
             protocol = TBinaryProtocol.TBinaryProtocol(transport)
             client = StaticAnalyze.Client(protocol)
             transport.open()
-            client.connect()
-            # print "check connection"
-            # print "server - " + client.connect()
-            # print "start static analysis"
-            # print data.root
-            # print os.path.abspath('.')
+            while True:
+                if client.connect() == "Connected":
+                    Utils.printy_result("Connect to IDA Server", 1)
+                    break
             report_dir = "{}/temp/{}/report".format(data.root, data.start_time)
             msg = client.analyze(data.static_file_path, report_dir)
-            # print "server - " + msg
+            if msg == "Fail":
+                Utils.printy_result("Static Analyse", 0)
+            else:
+                Utils.printy_result('Static Analyse.', 1)
             transport.close()
             data.status ^= 0b0010
         except Thrift.TException, ex:

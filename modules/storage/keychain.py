@@ -16,17 +16,21 @@ class Keychain():
                        local_file="./tools/keychain_dumper", remote_path='./keychain_dumper')
 
     def dump(self):
-        cmd = './keychain_dumper'
-        out = Utils.cmd_block(self.client, cmd)
-        lines = out.split('\n')
-        for line in lines:
-            if line.startswith('Keychain Data:') and not '(null)' in line:
-                content = line[15:]
-                if content:
-                    self.all_keychain_values.append(content)
-        self.filter()
-        Utils.printy_result('Keychain Dump', 1)
-        return self.results
+        try:
+            cmd = './keychain_dumper'
+            out = Utils.cmd_block(self.client, cmd)
+            lines = out.split('\n')
+            for line in lines:
+                if line.startswith('Keychain Data:') and not '(null)' in line:
+                    content = line[15:]
+                    if content:
+                        self.all_keychain_values.append(content)
+            self.filter()
+        except Exception, e:
+            data.logger.warn("Keychain_check" + e)
+        finally:
+            Utils.printy_result('Keychain Dump', 1)
+            return self.results
 
     def filter(self):
         for value in self.all_keychain_values:

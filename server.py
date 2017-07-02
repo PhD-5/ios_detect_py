@@ -39,7 +39,7 @@ while True:
         dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))
     except IndexError:
         Utils.printy("Waiting for Task", 0)
-        time.sleep(5)
+        time.sleep(10)
 
 
 

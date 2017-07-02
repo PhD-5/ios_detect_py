@@ -70,9 +70,10 @@ class Checker():
                 signal.alarm(60 * 2)
                 self.parse_file(local_file_path)
                 signal.alarm(0)
-            except AssertionError:
+            except Exception, e:
+                data.logger.debug(e)
                 # print 'time_out:', file
-                Utils.printy_result('Download db files from app', 0)
+                # Utils.printy_result('Download db files from app', 0)
             count += 1
         self.results["input"] = self.input_results
         self.results["keyiv"] = self.keyiv_results
@@ -164,8 +165,9 @@ class Checker():
             pl = plistlib.readPlist(file)
             key_path = []
             self.parse_element(pl, key_path)
-        except:
-            print 'plist error'
+        except Exception, e:
+            # print 'plist error'
+            data.logger.info("PARSE_PLIST" + e)
 
     def parse_element(self, item, key_path):
         if isinstance(item, list):
