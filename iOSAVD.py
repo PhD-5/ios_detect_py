@@ -41,7 +41,11 @@ class IOS():
         # print data.app_bundleID
         # pre_clutch.clutch()
         if ipa_path:
-            should_install.install_ipa_from_local(ipa_path)  # set bundleID
+            try:
+                should_install.install_ipa_from_local(ipa_path)  # set bundleID
+            except Exception, e:
+                Utils.printy("Cannot install ipa ", 2)
+                data.logger.debug(e)
         elif bundle_id:
             data.app_bundleID = bundle_id
         else:

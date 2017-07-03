@@ -77,7 +77,7 @@ class Utils():
     #  SSH UTILS
     # ==================================================================================================================
     @staticmethod
-    def  cmd_block(client, cmd):
+    def cmd_block(client, cmd):
         data.logger.debug("cmd_block " + cmd)
         while True:
             try:

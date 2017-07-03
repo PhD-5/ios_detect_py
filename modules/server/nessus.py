@@ -144,6 +144,7 @@ class Nessus(threading.Thread):
         # # print('Deleting the scan.')
         # self.delete(scan_id)
         self.logout()
+        data.status ^= 0b0100
 
 # hosts = ['www.baidu.com']
 # server = Nessus()
