@@ -426,7 +426,11 @@ class Generator:
         for item in data.local_file_protection:
             row7_cells = table7.add_row().cells
             row7_cells[0].text = item[0]
-            row7_cells[1].text = item[1]
+            protection_info = item[1].strip()
+            if protection_info == u"NSFileProtectionNone":
+                row7_cells[1].text = u"无保护" + protection_info
+            else:
+                row7_cells[1].text = u"安全" + protection_info
 
 
     def write_static_results(self):
@@ -456,7 +460,14 @@ class Generator:
                 cells[1].text = rule._name
                 cells[2].text = rule._desc
                 cells[3].text = rule._solution
-                cells[4].text = rule._risk_level
+                if rule._risk_level.strip() == u'1':
+                    cells[4].text = u"低"
+                elif rule._risk_level.strip() == u'2':
+                    cells[4].text = u"中"
+                elif rule._risk_level.strip() == u'3':
+                    cells[4].text = u"高"
+                else:
+                    cells[4].text = rule._risk_level
 
         self.document.add_heading(u"保护措施检测结果", level=2)
         if len(safes_unmatch)==0:
@@ -476,7 +487,16 @@ class Generator:
                 cells[1].text = rule._name
                 cells[2].text = rule._desc
                 cells[3].text = rule._solution
-                cells[4].text = rule._risk_level
+                # cells[4].text = rule._risk_level
+                if rule._risk_level.strip() == u'1':
+                    cells[4].text = u"低"
+                elif rule._risk_level.strip() == u'2':
+                    cells[4].text = u"中"
+                elif rule._risk_level.strip() == u'3':
+                    cells[4].text = u"高"
+                else:
+                    cells[4].text = rule._risk_level
+
 
     def write_nessus_url(self):
         self.document.add_heading(u"服务器扫描结果", level=1)
