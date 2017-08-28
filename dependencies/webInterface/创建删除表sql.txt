@@ -1,0 +1,22 @@
+//			$sql =<<<EOF
+//      CREATE TABLE ios_app
+//      (APPID    INTEGER    PRIMARY KEY    autoincrement   NOT NULL,
+//      NAME   TEXT    NOT NULL,
+//      TIME   DATETIME     NOT NULL,
+//      PATH       TEXT,
+//      STATUS     INT NOT NULL,
+//      REPORTPATH TEXT);
+//EOF;
+//			$sql1 = <<<EOF
+//DROP TABLE ios_app;
+//EOF;
+
+
+
+$ret = $db->exec($sql);
+				if (!$ret) {
+					echo $db->lastErrorMsg();
+				} else {
+					echo "Table delete successfully\n";
+				}
+				$db->close();
