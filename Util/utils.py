@@ -180,13 +180,13 @@ class Utils():
     @staticmethod
     def printy(s, status):
         colors = ['green', 'white', 'red', 'cyan', 'yellow']
-        with indent(4, quote='......   '):
+        with indent(4, quote=time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())) + "   "):
             str = '{:10}'.format(s)
             puts(getattr(colored, colors[status])(str))
 
     @staticmethod
     def printy_result(s, status):
-        with indent(4, quote='......   '):
+        with indent(4, quote=time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())) + "   "):
             str = '{:.<40}'.format(s)
             if status:
                 puts(getattr(colored, 'green')(str + '[OK]'))

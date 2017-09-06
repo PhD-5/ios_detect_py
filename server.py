@@ -34,9 +34,17 @@ while True:
         reload(data)
         logging.config.fileConfig('config/logging.conf')
         data.logger = logging.getLogger('root')
-        task = iOSAVD.IOS(path, name).run()
-        # data.report_path = "report"
-        dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))
+        data.logger.info("Task " + name + " starts at " + time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
+        task = iOSAVD.IOS(path, name)
+        if task.status == 4:
+            dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '4', id))
+        elif task.status == 5:
+            dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '5', id))
+        else:
+            #task.run()
+            dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))
+        data.logger.info("Task " + name + " ends at " + time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
+
     except IndexError:
         Utils.printy("Waiting for Task", 0)
         time.sleep(10)

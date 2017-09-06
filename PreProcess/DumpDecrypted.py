@@ -6,19 +6,24 @@ import bin_get
 
 
 def dump_binary():
-    target_doc_path = data.metadata['data_directory']+'/Documents'
-    target_doc_file = target_doc_path+'/dumpdecrypted.dylib'
-    Utils.sftp_put(ip=config.mobile_ip, port=config.ssh_port,
-                   username=config.mobile_user, password=config.mobile_password,
-                   remote_path=target_doc_file,
-                   local_file='./tools/dumpdecrypted.dylib')
+    try:
+        target_doc_path = data.metadata['data_directory']+'/Documents'
+        target_doc_file = target_doc_path+'/dumpdecrypted.dylib'
+        Utils.sftp_put(ip=config.mobile_ip, port=config.ssh_port,
+                       username=config.mobile_user, password=config.mobile_password,
+                       remote_path=target_doc_file,
+                       local_file='./tools/dumpdecrypted.dylib')
 
-    target_bin_path = data.metadata['binary_path']
-    dump_cmd = 'DYLD_INSERT_LIBRARIES={} {}'.format(target_doc_file, target_bin_path)
-    print Utils.cmd_block(data.client, dump_cmd)
+        target_bin_path = data.metadata['binary_path']
+        dump_cmd = 'DYLD_INSERT_LIBRARIES={} {}'.format(target_doc_file, target_bin_path)
+        print Utils.cmd_block(data.client, dump_cmd)
 
-    # get decrypted file from iphone
-    remote_file = './{}.decrypted'.format(data.metadata['binary_name'])
-    data.static_file_path = bin_get.via_sftp(remote_file)
+        # get decrypted file from iphone
+        remote_file = './{}.decrypted'.format(data.metadata['binary_name'])
+        data.static_file_path = bin_get.via_sftp(remote_file)
+        return "done"
+    except Exception:
+        return "dump_fail"
+
 
 

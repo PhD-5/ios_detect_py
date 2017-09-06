@@ -14,14 +14,19 @@ import data
 import config
 from modules.dynamic.AppDynamicInfo import AppDynamicInfo
 from modules.dynamic.open_app import open_some_app
-
+from PreProcess.decryptThread import decryptThread
+from datetime import datetime
 
 
 class IOS():
     def __init__(self, ipa_path, bundle_id):
+        self.status = 0
         IOS.connect()
         Utils.build()
-        IOS.prepare_for_basic_info(ipa_path, bundle_id)
+        if IOS.prepare_for_basic_info(ipa_path, bundle_id) == 4:
+            self.status = 4
+        elif IOS.prepare_for_basic_info(ipa_path, bundle_id) == 5:
+            self.status = 5
         self.t_static = static_analyze.static_analyzer()
         self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
         self.t_socket = socketServer.SocketServerThread(self.app_dynamic_info)
@@ -46,6 +51,7 @@ class IOS():
             except Exception, e:
                 Utils.printy("Cannot install ipa ", 2)
                 data.logger.debug(e)
+                return 4
         elif bundle_id:
             data.app_bundleID = bundle_id
         else:
@@ -55,7 +61,11 @@ class IOS():
         data.app_dict = Utils.ret_LastLaunch()  # set app_dict
         Metadata().get_metadata()
         Utils.printy("start analyse " + data.app_bundleID, 4)
-        pre_clutch.clutch()
+        #pre_clutch.clutch()
+        if IOS.decrypt() == 5:
+            return 5
+
+        return 0
 
     @staticmethod
     def connect():
@@ -210,6 +220,23 @@ class IOS():
                     break
             else:
                 continue
+
+    @staticmethod
+    def decrypt():
+        dTask = decryptThread()
+        startime = datetime.now()
+        dTask.start()
+        while True:
+            if dTask.status == "done":
+                break
+            time.sleep(5)
+            period = (datetime.now() - startime).seconds
+            if period > 10 and dTask.status == "clutching":
+                dTask.stop()
+                dTask.join()
+                return 5
+            # if period > 5 * 60 and dTask.status == "dump_fail":
+            #     return 5
 
     def clean(self):
         data.client.close()
