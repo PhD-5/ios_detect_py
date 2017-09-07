@@ -23,9 +23,10 @@ class IOS():
         self.status = 0
         IOS.connect()
         Utils.build()
-        if IOS.prepare_for_basic_info(ipa_path, bundle_id) == 4:
+        pre_status = IOS.prepare_for_basic_info(ipa_path, bundle_id)
+        if pre_status == 4:
             self.status = 4
-        elif IOS.prepare_for_basic_info(ipa_path, bundle_id) == 5:
+        elif pre_status == 5:
             self.status = 5
         self.t_static = static_analyze.static_analyzer()
         self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
@@ -61,9 +62,12 @@ class IOS():
         data.app_dict = Utils.ret_LastLaunch()  # set app_dict
         Metadata().get_metadata()
         Utils.printy("start analyse " + data.app_bundleID, 4)
-        #pre_clutch.clutch()
-        if IOS.decrypt() == 5:
+        if pre_clutch.clutch():
+            pass
+        else:
             return 5
+        # if IOS.decrypt() == 5:
+        #     return 5
 
         return 0
 

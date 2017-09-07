@@ -93,6 +93,24 @@ class Utils():
         return str
 
     @staticmethod
+    def cmd_block_limited(client, cmd, timelimit):
+        data.logger.debug("cmd_block " + cmd)
+        str = ''
+        while True:
+            try:
+                stdin, out, err = client.exec_command(cmd, timeout=timelimit)
+                if type(out) is tuple: out = out[0]
+                for line in out:
+                    str += line
+                break
+            except Exception as e:
+                if type(e).__name__ == "timeout":
+                    break
+                time.sleep(5)
+                data.logger.debug("Command Transfer Error" )
+        return str
+
+    @staticmethod
     def sftp_get(ip, port, username, password, remote_file, local_path):
         # -----set up sftp to get decrypted ipa file-----
         while True:

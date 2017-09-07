@@ -34,7 +34,7 @@ def clutch():
 
         # Only dump binary files from the specified bundleID
         cmd = 'clutch -b ' + str(clutch_app_id)
-        out = Utils.cmd_block(client, cmd)
+        out = Utils.cmd_block_limited(client, cmd, 5)
         pat = re.compile(r'.+Finished.+to (.+)\[0m')
         for line in out.split('\n'):
             m = pat.match(line)
@@ -46,13 +46,16 @@ def clutch():
                                                               binary=data.metadata['binary_name'])
                 data.static_file_path = bin_get.via_sftp(source)
 
-        if not clutch_success:
-            Utils.printy('Failed to clutch! Try to dump the decrypted app into a file. ', 2)
-            DumpDecrypted.dump_binary()
+        # if not clutch_success:
+            # Utils.printy('Failed to clutch! Try to dump the decrypted app into a file. ', 2)
+            # clutch_success = DumpDecrypted.dump_binary()
+
+        return clutch_success
 
     else:
         # print 'the application is not encrypted'
         data.static_file_path = bin_get.via_sftp(data.metadata['binary_path'])
+        return True
 
 
 
