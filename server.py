@@ -41,7 +41,7 @@ while True:
         elif task.status == 5:
             dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '5', id))
         else:
-            #task.run()
+            task.run()
             dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '1', id))
         data.logger.info("Task " + name + " ends at " + time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
 
