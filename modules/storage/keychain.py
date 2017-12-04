@@ -27,7 +27,7 @@ class Keychain():
                         self.all_keychain_values.append(content)
             self.filter()
         except Exception, e:
-            data.logger.warn("Keychain_check" + e)
+            data.logger.warn(e)
         finally:
             Utils.printy_result('Keychain Dump', 1)
             return self.results

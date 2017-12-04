@@ -16,7 +16,7 @@ def sql_check():
         Utils.printy_result('Database Check.', 1)
         return check.results
     except Exception, e:
-        data.logger.warn("SQL_CHKECK," + e)
+        data.logger.warn(e)
 
 
 def get_files():

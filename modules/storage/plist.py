@@ -23,7 +23,7 @@ class Plist():
             check.start()
             data.plist_file_results = check.results
         except Exception, e:
-            data.logger.warn("Plist_Check" + e)
+            data.logger.warn(e)
         finally:
             Utils.printy_result('Plist Check.', 1)
 

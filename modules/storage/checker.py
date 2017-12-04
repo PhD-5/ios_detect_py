@@ -167,7 +167,7 @@ class Checker():
             self.parse_element(pl, key_path)
         except Exception, e:
             # print 'plist error'
-            data.logger.info("PARSE_PLIST" + e)
+            data.logger.info(e)
 
     def parse_element(self, item, key_path):
         if isinstance(item, list):
