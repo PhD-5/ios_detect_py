@@ -212,10 +212,11 @@ class Utils():
                 puts(getattr(colored, 'red')(str + '[ERROR]'))
 
     @staticmethod
-    def ret_LastLaunch():
+    def ret_last_launch():
         client = data.client
         Utils.cmd_block(client,
-                        'cp /var/mobile/Library/MobileInstallation/LastLaunchServicesMap.plist /var/mobile/Library/MobileInstallation/temp.plist')
+                        'cp /var/mobile/Library/MobileInstallation/LastLaunchServicesMap.plist '
+                        '/var/mobile/Library/MobileInstallation/temp.plist')
         Utils.cmd_block(client, 'plutil -convert json /var/mobile/Library/MobileInstallation/temp.plist')
         json = Utils.cmd_block(client, 'cat /var/mobile/Library/MobileInstallation/temp.json')
         Utils.cmd_block(client, 'rm /var/mobile/Library/MobileInstallation/temp.plist')
@@ -262,6 +263,7 @@ class Utils():
         # os.makedirs('./temp/{}/report'.format(data.start_time))
         # os.makedirs('./temp/{}/files'.format(data.start_time))
 
+
     @staticmethod
     def ret_name_from_db(name):
         name = name.strip()
@@ -271,6 +273,30 @@ class Utils():
     @staticmethod
     def shutdown():
         print "SHUTDOWN"
+
+    @staticmethod
+    def ret_last_launch_9():
+        client = data.client
+        app_ids = Utils.cmd_block(client, 'ipainstaller -l').split()
+        app_dict = {}
+        with open('apps.txt', 'w') as file:
+            for bundle_id in app_ids:
+                bundle_name = Utils.get_bundle_name_byID_9(app_dict, bundle_id)
+                file.write(bundle_id +' * {} *'.format(bundle_name) + "\r\n")
+        file.close()
+        return app_dict
+
+    @staticmethod
+    def get_bundle_name_byID_9(app_dict, bundle_id):
+        out = Utils.cmd_block(data.client, 'ipainstaller -i ' + bundle_id)
+        bundle_dir = out.split("\n")[-3].split(":")[-1]
+        app_dict[bundle_id]['Path'] = bundle_dir
+        info_plist_path = bundle_dir+'/Info.plist'
+        try:
+            bundle_name = Utils.cmd_block(data.client, "plutil -key CFBundleName '{}'".format(info_plist_path))
+        except:
+            bundle_name = u"解析异常，请尝试重启手机"
+        return bundle_name
 
 
 

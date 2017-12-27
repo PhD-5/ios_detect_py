@@ -70,7 +70,7 @@ local_file_protection = []
 
 MITM_Done = False
 
-DEVICE_PATH_TEMP_FOLDER  = '/var/root/needle/'
+DEVICE_PATH_TEMP_FOLDER  = '/tmp/ios_detect_tmp/'
 PATH_LIBS = os.path.join(sys.path[0], 'libs')
 PATH_DEVICETOOLS = os.path.join(PATH_LIBS, 'devicetools')
 

@@ -65,11 +65,10 @@ def install_ipa_from_local(ipa_path):
         json = Utils.cmd_block(data.client, "cat {}".format(json_path))
         plist = simplejson.loads(json)
         data.app_bundleID = plist["CFBundleIdentifier"]
-        # print data.app_bundleID
 
     # install ipa use ipainstaller
     Utils.cmd_block(data.client, "ipainstaller /tmp/detect/temp.ipa")
     # respring ...
-    open_some_app("com.bigboss.respring")
-    Utils.printy('Respring.. ', 0)
-    time.sleep(int(config.respring_time))
+    # open_some_app("com.bigboss.respring")
+    # Utils.printy('Respring.. ', 0)
+    # time.sleep(int(config.respring_time))

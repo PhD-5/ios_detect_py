@@ -63,4 +63,3 @@ if __name__ == '__main__':
     t = ApplistThread()
     t.start()
 
-   

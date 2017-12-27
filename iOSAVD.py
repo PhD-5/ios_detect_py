@@ -4,9 +4,11 @@ import os
 import time
 import socket
 import clint
+import thread
+import logging
 from modules import *
 import modules.static.static_analyse as static_analyze
-from Util import ssh, MD5, socketServer
+from Util import ssh, MD5, socketServer, tcprelay
 from Util.utils import Utils
 from PreProcess import should_install, pre_clutch
 from Report.DocGenerator import Generator
@@ -19,9 +21,11 @@ from datetime import datetime
 
 
 class IOS():
-    def __init__(self, ipa_path, bundle_id):
+    def __init__(self, ipa_path, bundle_id, connector):
+        if not data.logger:
+            data.logger = logging.getLogger('root')
         self.status = 0
-        IOS.connect()
+        IOS.connect(connector)
         Utils.build()
         pre_status = IOS.prepare_for_basic_info(ipa_path, bundle_id)
         if pre_status == 4:
@@ -32,6 +36,7 @@ class IOS():
         self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
         self.t_socket = socketServer.SocketServerThread(self.app_dynamic_info)
         self.server = Nessus()
+
 
     @staticmethod
     def prepare_for_basic_info(ipa_path, bundle_id):
@@ -56,10 +61,10 @@ class IOS():
         elif bundle_id:
             data.app_bundleID = bundle_id
         else:
-            data.app_dict = Utils.ret_LastLaunch()  # set app_dict
+            data.app_dict = Utils.ret_last_launch()  # set app_dict
             should_install.ask_for_user_choose()
             Utils.getInstalledAppList()  # set bundle_ID
-        data.app_dict = Utils.ret_LastLaunch()  # set app_dict
+        data.app_dict = Utils.ret_last_launch()  # set app_dict
         Metadata().get_metadata()
         Utils.printy("start analyse " + data.app_bundleID, 4)
         if pre_clutch.clutch():
@@ -72,7 +77,10 @@ class IOS():
         return 0
 
     @staticmethod
-    def connect():
+    def connect(connector):
+        if connector == "u":
+            thread.start_new_thread(tcprelay.main, (['-t', '22:2222'], ))
+            time.sleep(5)
         while True:
             try:
                 Utils.printy('Conneting..', 0)
@@ -185,7 +193,7 @@ class IOS():
         fuzzer = url_scheme_fuzzer(self.app_dynamic_info)
         fuzzer.fuzz()
 
-    def run(self):
+    def paltform_entrance(self):
         self.start_dynamic_check()
         IOS.binary_check()
         self.server_scan(','.join(String().get_url(data.strings)))
@@ -205,6 +213,20 @@ class IOS():
         #     report_gen = Generator()
         #     report_gen.generate()
         # if self.finish_server_scan():
+        self.clean()
+
+    def stand_alone_entrance(self):
+        self.start_dynamic_check()
+        IOS.binary_check()
+        self.server_scan(','.join(String().get_url(data.strings)))
+        self.start_static_analyse()
+        self.check_status()
+        data.dynamic_json = self.app_dynamic_info
+        self.analyse()
+        IOS.storage_check()
+        report_gen = Generator()
+        report_gen.generate()
+        Utils.printy("Analyze Done.", 4)
         self.clean()
 
     def check_status(self):
@@ -245,6 +267,7 @@ class IOS():
     def clean(self):
         data.client.close()
 
-# IOS(None, None).run()
+
+IOS(None, None, 'u').paltform_entrance()
 
 
