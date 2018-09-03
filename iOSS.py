@@ -20,21 +20,19 @@ from PreProcess.decryptThread import decryptThread
 from datetime import datetime
 
 
-class IOS():
-    def __init__(self, ipa_path, bundle_id, connector):
+class IOSs():
+    def __init__(self, ipa_path, bundle_id):
         if not data.logger:
             data.logger = logging.getLogger('root')
         self.status = 0
-        IOS.connect(connector)
+        self.need_connection = False
         Utils.build()
-        pre_status = IOS.prepare_for_basic_info(ipa_path, bundle_id)
+        pre_status = IOSs.prepare_for_basic_info(ipa_path, bundle_id)
         if pre_status == 4:
             self.status = 4
         elif pre_status == 5:
             self.status = 5
         self.t_static = static_analyze.static_analyzer()
-        self.app_dynamic_info = AppDynamicInfo(data.app_bundleID)
-        self.t_socket = socketServer.SocketServerThread(self.app_dynamic_info)
         self.server = Nessus()
 
 
@@ -51,10 +49,6 @@ class IOS():
         # Metadata().get_metadata()
         # print data.app_bundleID
         # pre_clutch.clutch()
-
-        # data.app_dict = Utils.ret_last_launch()   !!! NOT SUPPORTED BY iOS9 ANYMORE
-        if not data.app_dict:
-            data.app_dict = Utils.ret_last_launch_9()
         if ipa_path:
             try:
                 should_install.install_ipa_from_local(ipa_path)  # set bundleID
@@ -65,9 +59,10 @@ class IOS():
         elif bundle_id:
             data.app_bundleID = bundle_id
         else:
+            data.app_dict = Utils.ret_last_launch_9()  # set app_dict
             should_install.ask_for_user_choose()
             Utils.getInstalledAppList()  # set bundle_ID
-
+        data.app_dict = Utils.ret_last_launch()  # set app_dict
         Metadata().get_metadata()
         Utils.printy("start analyse " + data.app_bundleID, 4)
         if pre_clutch.clutch():
@@ -137,7 +132,7 @@ class IOS():
         data.dynamic_json = self.app_dynamic_info
         Utils.printy_result("Dynamic Check .", 1)
         self.analyse()
-        IOS.storage_check()
+        IOSs.storage_check()
         data.status ^= 0b0001
         return True
 
@@ -198,15 +193,14 @@ class IOS():
 
     def paltform_entrance(self):
         self.start_dynamic_check()
-        IOS.binary_check()
-        if data.strings:
-            self.server_scan(','.join(String().get_url(data.strings)))
+        IOSs.binary_check()
+        self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
         # data.status ^= 0b0010
         self.check_status()
         data.dynamic_json = self.app_dynamic_info
         self.analyse()
-        IOS.storage_check()
+        IOSs.storage_check()
         report_gen = Generator()
         report_gen.generate()
         Utils.printy("Analyze Done.", 4)
@@ -221,13 +215,13 @@ class IOS():
 
     def stand_alone_entrance(self):
         self.start_dynamic_check()
-        IOS.binary_check()
+        IOSs.binary_check()
         self.server_scan(','.join(String().get_url(data.strings)))
         self.start_static_analyse()
         self.check_status()
         data.dynamic_json = self.app_dynamic_info
         self.analyse()
-        IOS.storage_check()
+        IOSs.storage_check()
         report_gen = Generator()
         report_gen.generate()
         Utils.printy("Analyze Done.", 4)
@@ -272,6 +266,6 @@ class IOS():
         data.client.close()
 
 
-IOS(None, None, 'w').paltform_entrance()
+IOSs(None, None).paltform_entrance()
 
 

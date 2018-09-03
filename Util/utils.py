@@ -8,6 +8,7 @@ import pipes
 from clint.textui import colored, puts, indent
 import sys
 import time
+import commands
 import socket
 from PreProcess import *
 reload(sys)
@@ -78,19 +79,22 @@ class Utils():
     # ==================================================================================================================
     @staticmethod
     def cmd_block(client, cmd):
-        data.logger.debug("cmd_block " + cmd)
-        while True:
-            try:
-                stdin, out, err = client.exec_command(cmd)
-                break
-            except Exception, e:
-                time.sleep(5)
-                data.logger.debug("Command Transfer Error" + e)
-        if type(out) is tuple: out = out[0]
-        str = ''
-        for line in out:
-            str += line
-        return str
+        if client:
+            data.logger.debug("cmd_block " + cmd)
+            while True:
+                try:
+                    stdin, out, err = client.exec_command(cmd)
+                    break
+                except Exception, e:
+                    time.sleep(5)
+                    data.logger.debug("Command Transfer Error" + e)
+            if type(out) is tuple: out = out[0]
+            str = ''
+            for line in out:
+                str += line
+            return str
+        else:
+            return None
 
     @staticmethod
     def cmd_block_limited(client, cmd, timelimit):
@@ -122,9 +126,14 @@ class Utils():
                 sftp.get(remote_file, local_path)
                 t.close()
                 break
-            except:
+            except Exception as e:
                 time.sleep(5)
                 data.logger.debug("SFTP GET FILE Error")
+                cmd = "sftp -P {} {}@{}:{} {}".format(port, username, ip, remote_file, local_path)
+                out = commands.getstatusoutput(cmd)
+                if out[0] == 0:
+                    break
+
 
     @staticmethod
     def sftp_put(ip, port, username, password, remote_path, local_file):
@@ -255,14 +264,10 @@ class Utils():
         data.root = os.path.abspath('.')
         data.start_time = time.strftime("%Y_%m_%d_%H_%M_%S", time.localtime(time.time()))
         root = os.path.join(".", "temp", data.start_time)
-        # print root
         for dir in ["binary", "report", "files"]:
             os.makedirs(os.path.join(root, dir))
         Utils.cmd_block(data.client, "mkdir /tmp/detect/")
-        # os.makedirs('./temp/{}/binary'.format(data.start_time))
-        # os.makedirs('./temp/{}/report'.format(data.start_time))
-        # os.makedirs('./temp/{}/files'.format(data.start_time))
-
+        Utils.cmd_block(data.client, "mkdir {}".format(data.DEVICE_PATH_TEMP_FOLDER))
 
     @staticmethod
     def ret_name_from_db(name):
@@ -281,22 +286,35 @@ class Utils():
         app_dict = {}
         with open('apps.txt', 'w') as file:
             for bundle_id in app_ids:
-                bundle_name = Utils.get_bundle_name_byID_9(app_dict, bundle_id)
-                file.write(bundle_id +' * {} *'.format(bundle_name) + "\r\n")
+                # if bundle_id not in app_dict:
+                #     app_dict[bundle_id] = dict()
+                # (bundle_name, bundle_dir,) = Utils.get_bundle_name_byID_9(app_dict, bundle_id)
+                # if "Path" not in app_dict[bundle_id]:
+                #     app_dict[bundle_id] = bundle_dir
+                # if "CFBundleName" not in app_dict[bundle_id]:
+                #     app_dict[bundle_id] = bundle_name
+                Utils.get_bundleInfo_byID_9(app_dict, bundle_id)
+                file.write(bundle_id +' * {} *\n'.format(app_dict[bundle_id]["CFBundleName"]))
         file.close()
         return app_dict
 
     @staticmethod
-    def get_bundle_name_byID_9(app_dict, bundle_id):
-        out = Utils.cmd_block(data.client, 'ipainstaller -i ' + bundle_id)
-        bundle_dir = out.split("\n")[-3].split(":")[-1]
-        app_dict[bundle_id]['Path'] = bundle_dir
-        info_plist_path = bundle_dir+'/Info.plist'
+    def get_bundleInfo_byID_9(app_dict, bundle_id):
+        bundle_info = dict()
+        key_words = ["Identifier", "Version", "Name", "Bundle", "Application", "Data"]
+        out = Utils.cmd_block(data.client, 'ipainstaller -i ' + bundle_id).split("\n")
+        for item in out:
+            kw = item.split(":")[0]
+            if kw in key_words:
+                bundle_info[kw] = item.split(":")[-1].strip()
+        info_plist_path = bundle_info["Application"]+'/Info.plist'
+
         try:
             bundle_name = Utils.cmd_block(data.client, "plutil -key CFBundleName '{}'".format(info_plist_path))
-        except:
+        except Exception as e:
             bundle_name = u"解析异常，请尝试重启手机"
-        return bundle_name
+        bundle_info["CFBundleName"] = bundle_name
+        app_dict[bundle_id] = bundle_info
 
 
 

@@ -23,12 +23,12 @@ class Metadata():
         # client = self.client
         # data in LastLauchServicesMap.plist
         global_info = data.app_dict[self.app]
-        uuid = global_info['BundleContainer'].rsplit('/', 1)[-1]
-        name = global_info['Path'].rsplit('/', 1)[-1]
-        bundle_id = global_info['CFBundleIdentifier']
-        bundle_directory = global_info['BundleContainer']
-        data_directory = global_info['Container']
-        binary_directory = global_info['Path']
+        uuid = global_info['Bundle'].rsplit('/', 1)[-1]
+        name = global_info['Application'].rsplit('/', 1)[-1]
+        bundle_id = global_info['Identifier']
+        bundle_directory = global_info['Bundle']
+        data_directory = global_info['Data']
+        binary_directory = global_info['Application']
         try:
             entitlements = global_info['Entitlements']
         except KeyError:
