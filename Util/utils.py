@@ -1,6 +1,7 @@
 #coding=utf-8
 import os
 import re
+import zipfile
 import paramiko
 import data
 import simplejson
@@ -90,8 +91,11 @@ class Utils():
                     data.logger.debug("Command Transfer Error" + e)
             if type(out) is tuple: out = out[0]
             str = ''
-            for line in out:
-                str += line
+            try:
+                for line in out:
+                    str += line
+            except Exception as e:
+                print e
             return str
         else:
             return None
@@ -315,6 +319,17 @@ class Utils():
             bundle_name = u"解析异常，请尝试重启手机"
         bundle_info["CFBundleName"] = bundle_name
         app_dict[bundle_id] = bundle_info
+
+    @staticmethod
+    def zip_results():
+        doc_report = data.report_path
+        pdf_report = data.static_report
+        zip_name = doc_report.replace('.doc', '.zip')
+        zip = zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED)
+        zip.write(doc_report)
+        zip.write(pdf_report)
+        zip.close()
+        data.report_path = zip_name
 
 
 

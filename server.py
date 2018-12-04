@@ -35,7 +35,7 @@ while True:
         logging.config.fileConfig('config/logging.conf')
         data.logger = logging.getLogger('root')
         data.logger.info("Task " + name + " starts at " + time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time())))
-        task = iOSAVD.IOS(path, name)
+        task = iOSAVD.IOS(path, name, static_type='pdf')
         if task.status == 4:
             dbServer.execute("update ios_app set reportpath=?, status=? where appid=?", (data.report_path, '4', id))
         elif task.status == 5:

@@ -14,7 +14,8 @@ class Generator:
         self.write_binary_info()
         self.write_transport_info()
         self.write_storage_info()
-        self.write_static_results()
+        if data.static_type == 'xml':
+            self.write_static_results()
         self.write_nessus_url()
 
         data.report_path = data.root + '/temp/{}/report/{}.doc'.format(data.start_time, data.app_bundleID)

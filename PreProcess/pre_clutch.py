@@ -11,40 +11,40 @@ import bin_get
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
 # ------get clutch -i result-----
 def clutch():
+    clutch_app_id = 0
+    clutch_success = False
     client = data.client
-    clutch_i = Utils.cmd_block(client, 'clutch -i')
-    pat = re.compile(r'.+<(.+)>')
+    clutch_i = Utils.cmd_block(client, 'Clutch -i')
 
-    clutch_app_id = -1
     for line in clutch_i.split('\n'):
-        # print line
-        m = pat.match(line)
-        if m:
-            if m.group(1) == data.app_bundleID:
-                clutch_app_id = int(line.split(':')[0])
+        if data.app_bundleID in line:
+            break
+        clutch_app_id += 1
 
-    if clutch_app_id != -1:
-        clutch_success = False
-        Utils.printy('the application is encrypted, and use clutch to decrypt', 0)
+    if clutch_app_id:
+
+        Utils.printy('the application is encrypted, use Clutch to decrypt', 0)
         # clean the decrypted ipas already done by clutch
         cmd = 'rm /private/var/mobile/Documents/Dumped/*.ipa'
         Utils.cmd_block(client, cmd)
+        cmd = 'rm -rf /var/tmp/clutch/*'
+        Utils.cmd_block(client, cmd)
+
 
         # Only dump binary files from the specified bundleID
-        cmd = 'clutch -b ' + str(clutch_app_id)
+        cmd = 'Clutch -b ' + str(clutch_app_id)
         out = Utils.cmd_block_limited(client, cmd, 600)
-        pat = re.compile(r'.+Finished.+to (.+)\[0m')
-        for line in out.split('\n'):
-            m = pat.match(line)
-            if m:
-                clutch_success = True
-                # print m.group(1)
-                source = '{path}/{bundle_id}/{binary}'.format(path=m.group(1),
-                                                              bundle_id=data.metadata['bundle_id'],
-                                                              binary=data.metadata['binary_name'])
-                data.static_file_path = bin_get.via_sftp(source)
+        dumped_file = Utils.cmd_block(client, 'ls /var/tmp/clutch/*/').split()
+        if data.app_bundleID in dumped_file:
+            clutch_success = True
+            dir = Utils.cmd_block(client, 'ls -H /var/tmp/clutch/').strip()
+            source = '{path}/{bundle_id}/{binary}'.format(path='/var/tmp/clutch/{}'.format(dir),
+                                                          bundle_id=data.metadata['bundle_id'],
+                                                          binary=data.metadata['binary_name'])
+            data.static_file_path = bin_get.via_sftp(source)
 
         if not clutch_success:
             Utils.printy('Failed to clutch! Try to dump the decrypted app into a file. ', 2)
@@ -53,7 +53,7 @@ def clutch():
         return clutch_success
 
     else:
-        # print 'the application is not encrypted'
+        Utils.printy('Failed to Clutch. Get the binary might be encrypted. Static Analysis may fail.', 4)
         data.static_file_path = bin_get.via_sftp(data.metadata['binary_path'])
         return True
 

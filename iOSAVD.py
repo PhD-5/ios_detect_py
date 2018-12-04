@@ -1,3 +1,4 @@
+#coding=utf-8
 import sys
 sys.path.append('modules/static/gen-py')
 import os
@@ -21,12 +22,13 @@ from datetime import datetime
 
 
 class IOS():
-    def __init__(self, ipa_path, bundle_id, connector):
+    def __init__(self, ipa_path, bundle_id, connector, static_type=None):
+        data.static_type = static_type
         if not data.logger:
             data.logger = logging.getLogger('root')
-        self.status = 0
-        IOS.connect(connector)
-        Utils.build()
+        self.status = 0  # 作为检测任务，与server.py中对应
+        IOS.connect(connector)  # 与测试机建立连接
+        Utils.build()  # 在测试机中建立文件夹，用于检测的中间文件存储
         pre_status = IOS.prepare_for_basic_info(ipa_path, bundle_id)
         if pre_status == 4:
             self.status = 4
@@ -54,20 +56,20 @@ class IOS():
 
         # data.app_dict = Utils.ret_last_launch()   !!! NOT SUPPORTED BY iOS9 ANYMORE
         if not data.app_dict:
-            data.app_dict = Utils.ret_last_launch_9()
-        if ipa_path:
+            data.app_dict = Utils.ret_last_launch_9()  # 获取当前已安装应用列表
+        if ipa_path:  # 来自于平台
             try:
                 should_install.install_ipa_from_local(ipa_path)  # set bundleID
             except Exception, e:
                 Utils.printy("Cannot install ipa ", 2)
                 data.logger.debug(e)
-                return 4
-        elif bundle_id:
+                return 4  # 安装失败
+        elif bundle_id:  # 来自于平台
             data.app_bundleID = bundle_id
         else:
             should_install.ask_for_user_choose()
-            Utils.getInstalledAppList()  # set bundle_ID
 
+        data.app_dict = Utils.ret_last_launch_9()
         Metadata().get_metadata()
         Utils.printy("start analyse " + data.app_bundleID, 4)
         if pre_clutch.clutch():
@@ -94,12 +96,12 @@ class IOS():
                 Utils.printy_result('Operation timed out.', 0)
 
     def start_static_analyse(self):
-        # file_separator = os.path.sep
-        # os.chdir(os.path.abspath('.') + file_separator + 'lib')
-        self.t_static.start()
-        # need to change dir to root, because in static thread the dir is changed to lib dir.
+        if data.static_type:
+            self.t_static.start()
+        else:
+            data.status ^= 0b0010
         time.sleep(2)  # make sure java -jar in thread can get into directory lib
-        # os.chdir(os.path.abspath('..'))
+
 
     def finish_static_analyse(self):
         self.t_static.join()
@@ -209,6 +211,8 @@ class IOS():
         IOS.storage_check()
         report_gen = Generator()
         report_gen.generate()
+        if data.static_type == 'pdf':
+            Utils.zip_results()
         Utils.printy("Analyze Done.", 4)
         # if self.finish_dynamic_check():
         #     self.analyse()
@@ -272,6 +276,6 @@ class IOS():
         data.client.close()
 
 
-IOS(None, None, 'w').paltform_entrance()
-
+# IOS(None, None, 'w').paltform_entrance()
+IOS(None, None, 'w', static_type=True).stand_alone_entrance()
 

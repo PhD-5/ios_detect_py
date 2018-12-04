@@ -68,6 +68,10 @@ keychain_values = []
 # local files protection check
 local_file_protection = []
 
+# static analysis type
+static_type = None
+static_report = None
+
 MITM_Done = False
 
 DEVICE_PATH_TEMP_FOLDER  = '/tmp/ios_detect_tmp/'

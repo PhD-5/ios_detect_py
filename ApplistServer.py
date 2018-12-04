@@ -28,7 +28,7 @@ class ApplistThread(threading.Thread):
             input_data = conn.recv(20480)
             print input_data
             print len(input_data)
-            input_data = input_data[0:-1] # 不确定要不要
+            input_data = input_data[0:-1]  # 不确定要不要
             input_dict = json.loads(input_data)
             print input_dict
             self.writeAppListToFile(input_dict)

@@ -37,12 +37,15 @@ class static_analyzer(threading.Thread):
                     Utils.printy_result("Connect to IDA Server", 1)
                     break
             report_dir = "{}/temp/{}/report".format(data.root, data.start_time)
-            msg = client.analyze(data.static_file_path, report_dir)
+            msg = client.analyze(data.static_file_path, report_dir, report_type='pdf')
             if msg == "Fail":
                 Utils.printy_result("Static Analyse", 0)
             else:
                 Utils.printy_result('Static Analyse.', 1)
+                data.static_report = msg
             transport.close()
             data.status ^= 0b0010
         except Thrift.TException, ex:
             print "%s" % ex.message
+
+

@@ -19,11 +19,12 @@ class Iface(object):
     def connect(self):
         pass
 
-    def analyze(self, bin_path, report_path):
+    def analyze(self, bin_path, report_path, report_type):
         """
         Parameters:
          - bin_path
          - report_path
+         - report_type
         """
         pass
 
@@ -61,20 +62,22 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "connect failed: unknown result")
 
-    def analyze(self, bin_path, report_path):
+    def analyze(self, bin_path, report_path, report_type):
         """
         Parameters:
          - bin_path
          - report_path
+         - report_type
         """
-        self.send_analyze(bin_path, report_path)
+        self.send_analyze(bin_path, report_path, report_type)
         return self.recv_analyze()
 
-    def send_analyze(self, bin_path, report_path):
+    def send_analyze(self, bin_path, report_path, report_type):
         self._oprot.writeMessageBegin('analyze', TMessageType.CALL, self._seqid)
         args = analyze_args()
         args.bin_path = bin_path
         args.report_path = report_path
+        args.report_type = report_type
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
         self._oprot.trans.flush()
@@ -142,7 +145,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = analyze_result()
         try:
-            result.success = self._handler.analyze(args.bin_path, args.report_path)
+            result.success = self._handler.analyze(args.bin_path, args.report_path, args.report_type)
             msg_type = TMessageType.REPLY
         except (TTransport.TTransportException, KeyboardInterrupt, SystemExit):
             raise
@@ -264,17 +267,20 @@ class analyze_args(object):
     Attributes:
      - bin_path
      - report_path
+     - report_type
     """
 
     thrift_spec = (
         None,  # 0
         (1, TType.STRING, 'bin_path', 'UTF8', None, ),  # 1
         (2, TType.STRING, 'report_path', 'UTF8', None, ),  # 2
+        (3, TType.STRING, 'report_type', 'UTF8', None, ),  # 3
     )
 
-    def __init__(self, bin_path=None, report_path=None,):
+    def __init__(self, bin_path=None, report_path=None, report_type=None,):
         self.bin_path = bin_path
         self.report_path = report_path
+        self.report_type = report_type
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -295,6 +301,11 @@ class analyze_args(object):
                     self.report_path = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
                 else:
                     iprot.skip(ftype)
+            elif fid == 3:
+                if ftype == TType.STRING:
+                    self.report_type = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -312,6 +323,10 @@ class analyze_args(object):
         if self.report_path is not None:
             oprot.writeFieldBegin('report_path', TType.STRING, 2)
             oprot.writeString(self.report_path.encode('utf-8') if sys.version_info[0] == 2 else self.report_path)
+            oprot.writeFieldEnd()
+        if self.report_type is not None:
+            oprot.writeFieldBegin('report_type', TType.STRING, 3)
+            oprot.writeString(self.report_type.encode('utf-8') if sys.version_info[0] == 2 else self.report_type)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
